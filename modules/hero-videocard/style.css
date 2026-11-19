@@ -1,0 +1,49 @@
+[data-module="hero-videocard"] .hv{--w:25vw;--gm:clamp(20px,2.8vw,40px);position:relative;height:100vh;min-height:560px;overflow:hidden;perspective:1600px;background:var(--c-bg);color:var(--c-fg);transition:background-color .3s .1s;user-select:none;-webkit-user-select:none}
+[data-module="hero-videocard"] .hv.is-drag{background:color-mix(in srgb,var(--c-fg) 12%,var(--c-bg))}
+[data-module="hero-videocard"] .hv.is-ready{cursor:grab}
+[data-module="hero-videocard"] .hv.is-drag{cursor:grabbing}
+[data-module="hero-videocard"] .hv-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0}
+
+/* 제목: 화면 가운데 높이에서 왼쪽·오른쪽 끝으로 */
+[data-module="hero-videocard"] .hv-words{position:absolute;z-index:2;left:0;right:0;top:50%;height:0;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gm);pointer-events:none;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:min(3.3vw,48px);line-height:1}
+[data-module="hero-videocard"] .hv-l,[data-module="hero-videocard"] .hv-r{display:flex;gap:.28em;white-space:nowrap}
+[data-module="hero-videocard"] .hv-words span{display:inline-block;will-change:transform}
+
+/* 끄는 동안 보이는 번호·종류 */
+[data-module="hero-videocard"] .hv-datas{position:absolute;z-index:2;left:0;right:0;top:50%;height:0;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gm);font-size:13px;letter-spacing:.08em;opacity:0;visibility:hidden;pointer-events:none}
+[data-module="hero-videocard"] .hv-dright{display:flex;justify-content:space-between;width:calc(50% - var(--w)/2 - var(--gm))}
+
+/* 카드 띠: 카드는 화면 가운데를 기준으로 놓이고, 위치·크기는 JS가 정함 */
+[data-module="hero-videocard"] .hv-track{position:absolute;inset:0;transform-style:preserve-3d}
+[data-module="hero-videocard"] .hv-card{position:absolute;left:calc(50% - var(--w)/2);top:calc(50% - var(--w)*.28125);width:var(--w);aspect-ratio:16/9;margin:0;overflow:hidden;border-radius:calc(var(--radius)*.6);background:var(--c-fg);will-change:transform}
+[data-module="hero-videocard"] .hv-bg{position:absolute;inset:0;background:radial-gradient(120% 90% at 20% 10%,color-mix(in srgb,var(--c-accent) 85%,var(--c-bg)),transparent 60%),linear-gradient(135deg,color-mix(in srgb,var(--c-accent) calc(30% + var(--i)*8%),var(--c-fg)),color-mix(in srgb,var(--c-accent) 35%,var(--c-bg)));filter:hue-rotate(calc(var(--i)*38deg))}
+[data-module="hero-videocard"] .hv-card i{position:absolute;display:block}
+[data-module="hero-videocard"] .hv-orb{left:18%;top:30%;width:34%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--c-bg),color-mix(in srgb,var(--c-accent) 60%,var(--c-bg)) 70%);box-shadow:0 20px 40px -10px rgba(0,0,0,.35)}
+[data-module="hero-videocard"] .hv-orb2{left:56%;top:12%;width:16%;background:var(--c-bg);opacity:.85}
+[data-module="hero-videocard"] .hv-ring{left:50%;top:50%;width:46%;aspect-ratio:1;margin:-23% 0 0 -23%;border-radius:50%;border:2px dashed color-mix(in srgb,var(--c-bg) 85%,transparent)}
+[data-module="hero-videocard"] .hv-ring2{width:30%;margin:-15% 0 0 -15%;border-style:solid;border-color:color-mix(in srgb,var(--c-bg) 50%,transparent);border-right-color:transparent}
+[data-module="hero-videocard"] .hv-ring3{width:62%;margin:-31% 0 0 -31%;border-width:1px;border-style:dotted}
+[data-module="hero-videocard"] .hv-bars{position:absolute;inset:22% 18%;display:flex;align-items:flex-end;gap:6%}
+[data-module="hero-videocard"] .hv-bars .hv-bar{position:relative;flex:1;height:100%;border-radius:999px;background:var(--c-bg);opacity:.9;transform-origin:50% 100%}
+[data-module="hero-videocard"] .hv-dots{position:absolute;inset:16% 22%;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,1fr);place-items:center}
+[data-module="hero-videocard"] .hv-dots .hv-dot{position:relative;width:46%;aspect-ratio:1;border-radius:50%;background:var(--c-bg)}
+
+/* 가운데 카드 아래 번호, 왼쪽 아래 소개, 오른쪽 아래 안내 */
+[data-module="hero-videocard"] .hv-num{position:absolute;z-index:2;top:calc(50% + var(--w)*.28125*1.4 + 10px);left:calc(50% - var(--w)*.7);font-size:13px;letter-spacing:.08em;color:var(--c-muted);opacity:0;visibility:hidden}
+[data-module="hero-videocard"] .hv-join{position:absolute;z-index:3;left:var(--gm);bottom:var(--gm);max-width:366px;opacity:0;visibility:hidden}
+[data-module="hero-videocard"] .hv-join p{margin:0 0 20px;font-size:15px;line-height:1.5}
+[data-module="hero-videocard"] .hv-cta{display:inline-flex;align-items:center;height:50px;padding:0 25px;border-radius:999px;background:var(--c-fg);color:var(--c-bg);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.06em}
+[data-module="hero-videocard"] .hv-roll{position:relative;display:block;height:1.4em;line-height:1.4em;overflow:hidden}
+[data-module="hero-videocard"] .hv-roll span{display:block;transition:transform .45s cubic-bezier(.7,0,.2,1)}
+[data-module="hero-videocard"] .hv-cta:hover .hv-roll span{transform:translateY(-100%)}
+[data-module="hero-videocard"] .hv-drag{position:absolute;z-index:2;right:var(--gm);bottom:20px;margin:0;display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.08em;color:var(--c-muted);opacity:0;visibility:hidden}
+
+@media (max-width:767px){
+  [data-module="hero-videocard"] .hv{height:auto;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:96px 0 48px;perspective:none;cursor:auto}
+  [data-module="hero-videocard"] .hv-words{position:relative;order:0;top:auto;height:auto;flex-direction:column;gap:.15em;padding:0 20px;font-size:40px}
+  [data-module="hero-videocard"] .hv-join{position:relative;order:1;left:auto;bottom:auto;margin:20px auto 0;padding:0 20px;max-width:370px;text-align:center;opacity:1;visibility:visible}
+  [data-module="hero-videocard"] .hv-track{position:relative;order:2;inset:auto;display:flex;gap:15px;margin-top:44px;padding:0 30px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;transform-style:flat}
+  [data-module="hero-videocard"] .hv-track::-webkit-scrollbar{display:none}
+  [data-module="hero-videocard"] .hv-card{position:relative;left:auto;top:auto;flex:0 0 calc(100vw - 60px);width:auto;max-width:500px;scroll-snap-align:center}
+  [data-module="hero-videocard"] .hv-datas,[data-module="hero-videocard"] .hv-num,[data-module="hero-videocard"] .hv-drag{display:none}
+}

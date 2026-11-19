@@ -1,0 +1,69 @@
+[data-module="features-workflow"]{--gm:clamp(20px,2.8vw,40px);--gut:clamp(12px,1.4vw,20px);overflow:hidden;padding:var(--space-section) 0}
+[data-module="features-workflow"] .fw-head{padding:0 var(--gm)}
+[data-module="features-workflow"] .fw-title{max-width:620px;margin:0 auto calc(var(--gm)*2);text-align:center;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:clamp(34px,3.3vw,52px);line-height:1.05}
+
+/* 가로로 길게 늘어선 기능 카드 */
+[data-module="features-workflow"] .fw-inner{width:100%}
+[data-module="features-workflow"] .fw-row{display:flex;gap:var(--gut);width:max-content;padding:0 var(--gm);cursor:grab;user-select:none;-webkit-user-select:none;touch-action:pan-y;will-change:transform}
+[data-module="features-workflow"] .fw-row.is-drag{cursor:grabbing}
+[data-module="features-workflow"] .fw-item{width:calc((100vw - var(--gm)*2) / 3 - var(--gut));min-width:400px}
+[data-module="features-workflow"] .fw-media{position:relative;aspect-ratio:1.17;overflow:hidden;border-radius:var(--radius);background:var(--c-surface);pointer-events:none}
+[data-module="features-workflow"] .fw-bg{position:absolute;inset:0;background:radial-gradient(80% 70% at 30% 20%,color-mix(in srgb,var(--c-accent) 32%,var(--c-surface)),transparent 70%),linear-gradient(180deg,var(--c-surface),color-mix(in srgb,var(--c-accent) 14%,var(--c-surface)));filter:hue-rotate(calc(var(--i)*30deg))}
+[data-module="features-workflow"] .fw-media i{position:absolute;display:block}
+[data-module="features-workflow"] .fw-bottom{display:flex;flex-direction:column;gap:10px;padding:var(--gut) 12% 0 0;color:var(--c-muted);font-size:15px;line-height:1.45}
+[data-module="features-workflow"] .fw-bottom h3{margin:0;font:inherit;color:var(--c-fg);font-weight:600}
+[data-module="features-workflow"] .fw-bottom p{margin:0}
+[data-module="features-workflow"] .fw-look{display:inline-flex;align-items:center;gap:10px;color:var(--c-fg);font-size:13px;letter-spacing:.06em;text-decoration:none}
+
+/* 그림 1: 창 + 커서 */
+[data-module="features-workflow"] .fw-win{left:18%;top:22%;width:64%;height:52%;border-radius:calc(var(--radius)*.5);background:var(--c-bg);border:1px solid var(--c-line);box-shadow:0 30px 60px -30px rgba(0,0,0,.35)}
+[data-module="features-workflow"] .fw-win b{position:absolute;left:10%;height:9%;border-radius:999px;background:var(--c-line)}
+[data-module="features-workflow"] .fw-win b:nth-child(1){top:22%;width:50%;background:var(--c-accent)}
+[data-module="features-workflow"] .fw-win b:nth-child(2){top:44%;width:76%}
+[data-module="features-workflow"] .fw-win b:nth-child(3){top:62%;width:60%}
+[data-module="features-workflow"] .fw-cursor{left:64%;top:62%;width:0;height:0;border-left:11px solid var(--c-fg);border-top:6px solid transparent;border-bottom:16px solid transparent;transform:rotate(-20deg)}
+/* 그림 2: 써지는 줄 */
+[data-module="features-workflow"] .fw-lines{position:absolute;inset:26% 16%;display:flex;flex-direction:column;justify-content:space-between}
+[data-module="features-workflow"] .fw-lines .fw-line{position:relative;height:9%;border-radius:999px;background:var(--c-fg);transform-origin:0 50%;opacity:.85}
+[data-module="features-workflow"] .fw-line:nth-child(2n){width:72%;background:var(--c-accent)}
+[data-module="features-workflow"] .fw-line:nth-child(3){width:86%}
+/* 그림 3: 단계 */
+[data-module="features-workflow"] .fw-steps{position:absolute;inset:20% 14%;display:grid;grid-template-columns:1fr 1fr;gap:8%}
+[data-module="features-workflow"] .fw-steps .fw-step{position:relative;border-radius:calc(var(--radius)*.5);background:var(--c-bg);border:1px solid var(--c-line);opacity:.35}
+[data-module="features-workflow"] .fw-step:nth-child(1){background:var(--c-accent)}
+/* 그림 4: 파일 + 화살표 */
+[data-module="features-workflow"] .fw-file{left:34%;top:30%;width:32%;height:44%;border-radius:calc(var(--radius)*.4);background:var(--c-bg);border:1px solid var(--c-line);box-shadow:0 20px 40px -24px rgba(0,0,0,.35)}
+[data-module="features-workflow"] .fw-arrow{left:calc(50% - 14px);top:12%;width:28px;height:28px;border-right:4px solid var(--c-accent);border-bottom:4px solid var(--c-accent);transform:rotate(45deg)}
+/* 그림 5: 휴대폰 + 누름 */
+[data-module="features-workflow"] .fw-phone{left:38%;top:14%;width:24%;height:72%;border-radius:calc(var(--radius)*.8);background:var(--c-bg);border:6px solid var(--c-fg)}
+[data-module="features-workflow"] .fw-tap{left:calc(50% - 18px);top:calc(50% - 18px);width:36px;height:36px;border-radius:50%;background:var(--c-accent)}
+/* 그림 6: 칸 */
+[data-module="features-workflow"] .fw-grid{position:absolute;inset:18% 26%;display:grid;grid-template-columns:repeat(3,1fr);gap:8%}
+[data-module="features-workflow"] .fw-grid .fw-cell{position:relative;border-radius:calc(var(--radius)*.35);background:var(--c-fg)}
+[data-module="features-workflow"] .fw-cell:nth-child(odd){background:var(--c-accent)}
+/* 그림 7: 공 */
+[data-module="features-workflow"] .fw-orb{left:22%;top:52%;width:16%;aspect-ratio:1;border-radius:50%;background:var(--c-accent)}
+[data-module="features-workflow"] .fw-orb2{left:42%;background:var(--c-fg)}
+[data-module="features-workflow"] .fw-orb3{left:62%;background:color-mix(in srgb,var(--c-accent) 50%,var(--c-bg))}
+
+/* 앱 안내 줄 */
+[data-module="features-workflow"] .fw-app{padding:calc(var(--space-section)*.8) var(--gm) 0}
+[data-module="features-workflow"] .fw-sep{margin:0 0 var(--gm);border:0;border-top:1px solid var(--c-line)}
+[data-module="features-workflow"] .fw-app-row{display:flex;align-items:center;justify-content:space-between;gap:var(--gut)}
+[data-module="features-workflow"] .fw-app-left{display:flex;align-items:center;gap:var(--gut)}
+[data-module="features-workflow"] .fw-icon{display:grid;place-items:center;flex:0 0 auto;width:56px;height:56px;border-radius:calc(var(--radius)*.7);background:var(--c-fg);color:var(--c-bg)}
+[data-module="features-workflow"] .fw-icon svg{width:26px;height:26px}
+[data-module="features-workflow"] .fw-app-t{margin:0;font-size:17px;font-weight:600}
+[data-module="features-workflow"] .fw-app-s{max-width:380px;margin:2px 0 0;font-size:13px;color:var(--c-muted)}
+[data-module="features-workflow"] .fw-cta{display:inline-flex;flex:0 0 auto;align-items:center;height:50px;padding:0 25px;border-radius:999px;background:var(--c-fg);color:var(--c-bg);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.06em}
+[data-module="features-workflow"] .fw-roll{position:relative;display:block;height:1.4em;line-height:1.4em;overflow:hidden}
+[data-module="features-workflow"] .fw-roll span{display:block;transition:transform .45s cubic-bezier(.7,0,.2,1)}
+[data-module="features-workflow"] .fw-cta:hover .fw-roll span{transform:translateY(-100%)}
+
+@media (max-width:767px){
+  [data-module="features-workflow"] .fw-inner{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+  [data-module="features-workflow"] .fw-inner::-webkit-scrollbar{display:none}
+  [data-module="features-workflow"] .fw-row{cursor:auto;touch-action:auto}
+  [data-module="features-workflow"] .fw-item{min-width:0;width:calc(100vw - var(--gm)*2 - 15px);scroll-snap-align:center}
+  [data-module="features-workflow"] .fw-app-row{flex-direction:column;align-items:flex-start}
+}

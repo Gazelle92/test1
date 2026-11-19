@@ -1,0 +1,42 @@
+[
+ {
+  "slug": "01-hero",
+  "title": "히어로",
+  "desc": "Unique JS effects ready to use — 가운데 영상 카드와 큰 제목"
+ },
+ {
+  "slug": "02-collection",
+  "title": "컬렉션·사용 팀",
+  "desc": "Better websites… 효과 예시 카드 3개 + 1,800+ 사용 팀 로고"
+ },
+ {
+  "slug": "03-effects",
+  "title": "효과 수·카드",
+  "desc": "126+ effects 글자 등장 → 카드가 날아오며 글자가 흩어지는 고정 스크롤"
+ },
+ {
+  "slug": "04-features",
+  "title": "기능",
+  "desc": "Made to fit your workflow — Webflow 복사·AI 프롬프트 등 기능 소개"
+ },
+ {
+  "slug": "05-pricing",
+  "title": "가격",
+  "desc": "One Plan. Everything included — 분기·연간 요금 전환"
+ },
+ {
+  "slug": "06-community",
+  "title": "후기·제작자",
+  "desc": "커뮤니티 후기 + Behind the project 제작자 소개"
+ },
+ {
+  "slug": "07-showcase",
+  "title": "쇼케이스",
+  "desc": "수상 사이트·프로젝트 쇼케이스"
+ },
+ {
+  "slug": "08-closing",
+  "title": "무료 효과·마무리",
+  "desc": "무료 효과 안내 + 가입 유도 푸터"
+ }
+]

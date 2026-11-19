@@ -1,0 +1,27 @@
+[
+ {
+  "slug": "01-hero",
+  "title": "히어로·소용돌이",
+  "desc": "Empowering innovators 영상 문구 → 사진이 소용돌이치며 Energy is prosperity"
+ },
+ {
+  "slug": "02-opportunity",
+  "title": "그래프·이미지",
+  "desc": "The opportunity ahead 전력 수요 그래프 → 사진 겹치기"
+ },
+ {
+  "slug": "03-quote",
+  "title": "인용",
+  "desc": "빌 게이츠 인용문과 영상 버튼"
+ },
+ {
+  "slug": "04-keyareas",
+  "title": "다섯 분야",
+  "desc": "제조·전기·농업·교통·건물 분야와 회사 수"
+ },
+ {
+  "slug": "05-approach",
+  "title": "접근 방식",
+  "desc": "DISCOVER · DEVELOP · DEPLOY 애니메이션"
+ }
+]

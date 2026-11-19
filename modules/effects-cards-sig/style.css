@@ -1,0 +1,42 @@
+/* 원본 .h-texts / .h-cards 배치 숫자 그대로(700vh 고정, 카드 구간 -400vh 겹침, 지름 3675px 원). 색·글꼴만 테마 토큰 */
+[data-module="effects-cards-sig"]{
+  --ecs-ink:#0a0a0b;
+  --ecs-c1:color-mix(in srgb,var(--c-accent) 70%,#fff);
+  --ecs-c2:color-mix(in srgb,var(--c-accent) 45%,#fff);
+  --ecs-c3:color-mix(in srgb,var(--c-accent) 25%,#fff);
+  --ecs-c4:color-mix(in srgb,var(--c-accent) 8%,#f3f3f3);
+}
+[data-module="effects-cards-sig"] .ecs-texts{text-align:center}
+[data-module="effects-cards-sig"] .ecs-texts .ecs-pin{height:700vh}
+[data-module="effects-cards-sig"] .ecs-texts .ecs-stage{height:100vh;display:grid;place-items:center;overflow:hidden}
+[data-module="effects-cards-sig"] .ecs-title{font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:min(10vw,120px);line-height:.95;letter-spacing:-.02em;color:var(--c-fg)}
+[data-module="effects-cards-sig"] .ecs-line{margin:0;white-space:nowrap}
+
+[data-module="effects-cards-sig"] .ecs-cards{position:relative;margin-top:-400vh;text-align:center;color:var(--ecs-ink)}
+[data-module="effects-cards-sig"] .ecs-cards .ecs-pin{height:400vh}
+[data-module="effects-cards-sig"] .ecs-cards .ecs-stage{height:100vh;overflow:hidden}
+[data-module="effects-cards-sig"] .ecs-circles{position:relative;width:3675px;aspect-ratio:1/1;margin:50vh 0 0 calc(-1837.5px + 50vw)}
+[data-module="effects-cards-sig"] .ecs-circle{position:absolute;inset:0;visibility:hidden}
+[data-module="effects-cards-sig"] .ecs-circle.on{visibility:visible}
+[data-module="effects-cards-sig"] .ecs-media{position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:center;width:100%;max-width:338px;aspect-ratio:.85/1;margin:0 auto;padding:40px 0;transform:translate(0,-54%);border-radius:var(--radius);font:500 18px/1.4 var(--font-body)}
+[data-module="effects-cards-sig"] .ecs-m1{background:var(--ecs-c1)}
+[data-module="effects-cards-sig"] .ecs-m2{background:var(--ecs-c2)}
+[data-module="effects-cards-sig"] .ecs-m3{background:var(--ecs-c3)}
+[data-module="effects-cards-sig"] .ecs-m4{background:var(--ecs-c4)}
+[data-module="effects-cards-sig"] .ecs-icon{display:block;width:96px;height:96px;border:2px solid currentColor;border-radius:50%;opacity:.85}
+[data-module="effects-cards-sig"] .ecs-m2 .ecs-icon{border-radius:24px}
+[data-module="effects-cards-sig"] .ecs-m3 .ecs-icon{border-radius:50% 50% 0 50%}
+[data-module="effects-cards-sig"] .ecs-m4 .ecs-icon{border-radius:0;transform:rotate(45deg) scale(.8)}
+[data-module="effects-cards-sig"] .ecs-media span{position:absolute;bottom:32%;left:0;width:100%;font-family:var(--font-display);font-size:120px;line-height:1;opacity:.2}
+[data-module="effects-cards-sig"] .ecs-media p{margin:0;padding:0 8%}
+
+/* 원본 900px 이하: 고정 없음, 카드는 가로로 넘기기 */
+[data-module="effects-cards-sig"].ecs-mob .ecs-texts .ecs-pin{height:auto}
+[data-module="effects-cards-sig"].ecs-mob .ecs-texts .ecs-stage{height:auto;padding:150px 0}
+[data-module="effects-cards-sig"].ecs-mob .ecs-cards{margin:0}
+[data-module="effects-cards-sig"].ecs-mob .ecs-cards .ecs-pin{height:auto}
+[data-module="effects-cards-sig"].ecs-mob .ecs-cards .ecs-stage{height:auto;overflow:auto;scroll-snap-type:x mandatory;padding:0 20px 80px;scrollbar-width:none}
+[data-module="effects-cards-sig"].ecs-mob .ecs-circles{display:flex;gap:16px;width:max-content;aspect-ratio:auto;margin:0}
+[data-module="effects-cards-sig"].ecs-mob .ecs-circle{position:relative;inset:auto;visibility:visible}
+[data-module="effects-cards-sig"].ecs-mob .ecs-media{width:338px;transform:none;scroll-snap-align:center}
+@media (max-width:500px){[data-module="effects-cards-sig"].ecs-mob .ecs-media{width:calc(100vw - 55px)}}

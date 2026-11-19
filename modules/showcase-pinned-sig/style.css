@@ -1,0 +1,41 @@
+/* 원본 .h-showcase 배치 숫자 그대로(위 150px, 고정 300vh·위아래 -60vh 겹침, 썸네일 너비 20% 정사각·처음 크기 0). 색·글꼴만 테마 토큰 */
+[data-module="showcase-pinned-sig"]{padding-top:150px;overflow:hidden}
+[data-module="showcase-pinned-sig"] .sps-wrapper{position:relative;z-index:1;padding:0 25px}
+[data-module="showcase-pinned-sig"] .sps-title{width:870px;max-width:100%;margin:0 auto;text-align:center;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:65px;line-height:1.02;letter-spacing:-.02em;color:var(--c-fg)}
+[data-module="showcase-pinned-sig"] .sps-cta{display:flex;align-items:center;width:max-content;height:50px;margin:25px auto 0;padding:0 25px;border-radius:25px;background:var(--c-fg);color:var(--c-bg);text-decoration:none;font:500 13px/50px var(--font-body);letter-spacing:.06em;text-transform:uppercase}
+[data-module="showcase-pinned-sig"] .roll>span{position:relative;display:block;overflow:hidden;line-height:21px}
+[data-module="showcase-pinned-sig"] .roll .translate{display:inline-block}
+[data-module="showcase-pinned-sig"] .roll .translate>span{display:flex;align-items:center;gap:15px}
+[data-module="showcase-pinned-sig"] .roll .translate>span:last-child{position:absolute;bottom:100%;left:0}
+@keyframes sps-roll{0%{transform:translate(0,0)}100%{transform:translate(0,100%)}}
+@media (pointer:fine){[data-module="showcase-pinned-sig"] .roll.on .translate{animation:sps-roll .4s cubic-bezier(.16,.03,.08,1.55) infinite}}
+
+[data-module="showcase-pinned-sig"] .sps-pin{height:300vh;margin:-60vh 0}
+[data-module="showcase-pinned-sig"] .sps-container{height:100vh;display:flex;justify-content:flex-end;align-items:center;overflow:hidden}
+[data-module="showcase-pinned-sig"] .sps-media{position:absolute;width:20%;aspect-ratio:1/1;display:grid;place-items:center;transform:scale(0,0)}
+
+/* 썸네일 안: 원본 스크린샷처럼 사이트 화면 모양(정사각 칸 안에 contain) */
+[data-module="showcase-pinned-sig"] .sps-site{display:flex;flex-direction:column;overflow:hidden;border-radius:10px;background:var(--c-surface);box-shadow:0 30px 60px -25px rgba(0,0,0,.45)}
+[data-module="showcase-pinned-sig"] .sps-wide .sps-site{width:100%;aspect-ratio:1.57/1}
+[data-module="showcase-pinned-sig"] .sps-tall .sps-site{width:72%;aspect-ratio:.95/1}
+[data-module="showcase-pinned-sig"] .sps-square .sps-site{width:88%;aspect-ratio:1/1}
+[data-module="showcase-pinned-sig"] .sps-bar{display:flex;gap:5px;padding:8px 10px;background:color-mix(in srgb,var(--c-fg) 8%,var(--c-surface))}
+[data-module="showcase-pinned-sig"] .sps-bar i{width:7px;height:7px;border-radius:50%;background:color-mix(in srgb,var(--c-fg) 25%,transparent)}
+[data-module="showcase-pinned-sig"] .sps-hero{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:14px;background:var(--sps-tone)}
+[data-module="showcase-pinned-sig"] .sps-hero b{font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:clamp(14px,1.6vw,24px);line-height:1;color:#fff;letter-spacing:-.02em}
+[data-module="showcase-pinned-sig"] .sps-hero span{display:block;height:6px;width:60%;border-radius:3px;background:rgba(255,255,255,.55)}
+[data-module="showcase-pinned-sig"] .sps-hero span+span{width:38%}
+[data-module="showcase-pinned-sig"] .sps-c0{--sps-tone:linear-gradient(140deg,var(--c-accent),color-mix(in srgb,var(--c-accent) 40%,#000))}
+[data-module="showcase-pinned-sig"] .sps-c1{--sps-tone:linear-gradient(160deg,#1d1d22,color-mix(in srgb,var(--c-accent) 50%,#1d1d22))}
+[data-module="showcase-pinned-sig"] .sps-c2{--sps-tone:linear-gradient(120deg,color-mix(in srgb,var(--c-accent) 30%,#fff),color-mix(in srgb,var(--c-accent) 70%,#333))}
+[data-module="showcase-pinned-sig"] .sps-c3{--sps-tone:linear-gradient(180deg,#e9e4dc,#9c9286)}
+[data-module="showcase-pinned-sig"] .sps-c4{--sps-tone:linear-gradient(135deg,#2f4a6b,color-mix(in srgb,var(--c-accent) 60%,#2f4a6b))}
+
+/* 원본 900px·500px 이하 */
+@media (max-width:900px){[data-module="showcase-pinned-sig"] .sps-title{max-width:488px}[data-module="showcase-pinned-sig"] .sps-cta{margin-top:20px}}
+@media (max-width:768px){[data-module="showcase-pinned-sig"] .sps-title{font-size:40px}}
+@media (max-width:500px){
+  [data-module="showcase-pinned-sig"]{padding-top:25px}
+  [data-module="showcase-pinned-sig"] .sps-container{width:150%;margin-left:-25vw}
+  [data-module="showcase-pinned-sig"] .sps-media{width:40vw}
+}

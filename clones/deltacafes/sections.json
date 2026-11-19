@@ -1,0 +1,42 @@
+[
+ {
+  "slug": "01-hero",
+  "title": "히어로",
+  "desc": "제품 캐러셀과 세 가지 이야기(01·02·03)가 넘어가는 첫 화면"
+ },
+ {
+  "slug": "02-history",
+  "title": "역사",
+  "desc": "Since 1961 — 연도별 사진과 역사 이야기"
+ },
+ {
+  "slug": "03-journey",
+  "title": "커피의 여정",
+  "desc": "Origins · Roast · Blend · Tasting 단계 전환"
+ },
+ {
+  "slug": "04-magazine",
+  "title": "매거진",
+  "desc": "D de Delta 디지털 매거진 소개와 이미지"
+ },
+ {
+  "slug": "05-culture",
+  "title": "커피 문화",
+  "desc": "The Culture of Coffee 문화·전통 소개"
+ },
+ {
+  "slug": "06-quiz",
+  "title": "퀴즈",
+  "desc": "나의 커피 취향 찾기 퀴즈 안내"
+ },
+ {
+  "slug": "07-journal",
+  "title": "저널",
+  "desc": "The Coffee Journal 기사 카드 목록"
+ },
+ {
+  "slug": "08-closing",
+  "title": "지속가능성·푸터",
+  "desc": "Sustainability 소개 + 흐르는 글자 띠와 푸터"
+ }
+]

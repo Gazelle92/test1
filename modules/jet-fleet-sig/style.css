@@ -1,0 +1,63 @@
+/* 원본 jeskojets 기체 섹션 배치(400vh, 고정 화면 + 50vh 높이 기체 띠가 화면 가운데에 붙음, 제원 화면은 위쪽 바깥에서 대기).
+   1440×900 기준 숫자를 vw/vh로 환산. 원본 사진·마스크 그림 대신 SVG·그라디언트. 색·글꼴만 테마 토큰 */
+[data-module="jet-fleet-sig"]{overflow:clip}
+[data-module="jet-fleet-sig"] .jfs-area{position:relative;height:400vh}
+[data-module="jet-fleet-sig"] .jfs-switch{position:sticky;top:0;z-index:0;height:100vh}
+[data-module="jet-fleet-sig"] .jfs-light{position:absolute;inset:0;z-index:0;opacity:0;background:linear-gradient(color-mix(in srgb,var(--c-fg) 62%,var(--c-bg)) 0%,var(--c-bg) 100%)}
+
+/* 소개 화면: 위 빈칸 · 제목 줄 · 아래 설명(같은 비율) */
+[data-module="jet-fleet-sig"] .jfs-w{position:relative;z-index:1;height:100vh;display:flex;flex-direction:column;padding:0 6.67vw;color:var(--c-fg)}
+[data-module="jet-fleet-sig"] .jfs-top{flex:1 1 0}
+[data-module="jet-fleet-sig"] .jfs-title{display:flex;justify-content:center;align-items:center}
+[data-module="jet-fleet-sig"] .jfs-h{margin:0;white-space:nowrap;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:7.22vw;line-height:.84;letter-spacing:-.08em}
+[data-module="jet-fleet-sig"] .jfs-push{flex:0 0 auto;min-width:1.67vw;transition:flex 1s cubic-bezier(.77,0,.175,1)}
+[data-module="jet-fleet-sig"] .jfs-push.current{flex:1 1 0}
+[data-module="jet-fleet-sig"] .jfs-bot{flex:1 1 0;display:flex;justify-content:space-between;align-items:flex-end;padding:36px 0}
+[data-module="jet-fleet-sig"] .jfs-sub{align-self:flex-start;width:11.67vw;margin:0;font:500 14.4px/1.67 var(--font-body)}
+[data-module="jet-fleet-sig"] .jfs-desc{width:24.17vw;font:500 14.4px/1.11 var(--font-body)}
+[data-module="jet-fleet-sig"] .jfs-dt{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 0;padding-bottom:36px;font-size:12px;text-transform:uppercase;letter-spacing:.02em}
+[data-module="jet-fleet-sig"] .jfs-line{display:block;width:100%;height:1px;background:color-mix(in srgb,var(--c-fg) 10%,transparent)}
+[data-module="jet-fleet-sig"] .jfs-desc p{width:20vw;margin:0}
+
+/* 제원 화면(처음엔 위쪽 바깥) */
+[data-module="jet-fleet-sig"] .jfs-spec{position:absolute;left:0;right:0;bottom:100%;z-index:1;height:100vh;padding:96px 6.67vw 36px;color:var(--c-fg)}
+[data-module="jet-fleet-sig"] .jfs-grid{display:grid;grid-template-columns:348fr 528fr 348fr;gap:0 12px;height:calc(100% - 1px)}
+[data-module="jet-fleet-sig"] .jfs-left,[data-module="jet-fleet-sig"] .jfs-right{display:flex;flex-direction:column;justify-content:space-between;padding-top:12px}
+[data-module="jet-fleet-sig"] .jfs-maker{margin:0 0 24px;font-family:var(--font-display);font-weight:var(--display-weight);font-size:1.667vw;line-height:1;letter-spacing:-.064em}
+[data-module="jet-fleet-sig"] .jfs-model{margin:0;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:5vw;line-height:.88;letter-spacing:-.08em}
+[data-module="jet-fleet-sig"] .jfs-list{display:grid;grid-template-columns:1fr 1fr;gap:24px 12px;padding-top:12px;border-top:1px solid color-mix(in srgb,var(--c-fg) 10%,transparent);font:500 12px/1.2 var(--font-body)}
+[data-module="jet-fleet-sig"] .jfs-item span{display:block;opacity:.6;text-transform:uppercase}
+[data-module="jet-fleet-sig"] .jfs-item b{font-weight:500;font-size:14.4px}
+[data-module="jet-fleet-sig"] .jfs-kicker{margin:0 0 24px;font-family:var(--font-display);font-size:1.667vw;line-height:1;letter-spacing:-.064em}
+[data-module="jet-fleet-sig"] .jfs-headline{margin:0 0 24px;font:500 14.4px/1.2 var(--font-body);text-transform:uppercase}
+[data-module="jet-fleet-sig"] .jfs-body{margin:0;font:500 14.4px/1.11 var(--font-body);opacity:.8}
+[data-module="jet-fleet-sig"] .jfs-center{position:relative}
+[data-module="jet-fleet-sig"] .jfs-blueprint{position:absolute;inset:0;z-index:0;color:var(--c-fg);
+  --mask-y:50%;--mask-size:100% 0%;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 25%,#000 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 25%,#000 100%);
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:50% var(--mask-y);mask-position:50% var(--mask-y);-webkit-mask-size:var(--mask-size);mask-size:var(--mask-size)}
+[data-module="jet-fleet-sig"] .jfs-blueprint svg{width:100%;height:100%}
+
+/* 기체 띠: 소개 화면 다음(100vh 아래)에서 올라와 화면 가운데(top 50vh)에 붙는다 */
+[data-module="jet-fleet-sig"] .jfs-jet{position:sticky;top:50vh;z-index:1;height:50vh;margin-top:100vh;perspective:1000px;pointer-events:none}
+[data-module="jet-fleet-sig"] .jfs-img{width:100%;height:111.11vw;transform:translateY(-50%);
+  --mask-size:100% 150%;
+  -webkit-mask-image:linear-gradient(180deg,#000 70%,transparent 100%);mask-image:linear-gradient(180deg,#000 70%,transparent 100%);
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:50% 0%;mask-position:50% 0%;-webkit-mask-size:var(--mask-size);mask-size:var(--mask-size)}
+[data-module="jet-fleet-sig"] .jfs-img svg{display:block;width:100%;height:100%;filter:drop-shadow(0 40px 50px rgba(0,0,0,.25))}
+
+/* 원본 992px 미만: 고정·교대 없이 흐름대로 */
+[data-module="jet-fleet-sig"].jfs-mob .jfs-area{height:auto}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-switch{position:relative;height:auto}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-w{height:auto;min-height:100vh}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-title{flex-direction:column;align-items:stretch}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-hr{text-align:right}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-h{font-size:14vw}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-bot{flex-direction:column;align-items:flex-start;gap:24px}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-sub,[data-module="jet-fleet-sig"].jfs-mob .jfs-desc,[data-module="jet-fleet-sig"].jfs-mob .jfs-desc p{width:auto}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-spec{position:relative;bottom:auto;height:auto;padding:48px 20px}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-grid{grid-template-columns:1fr;gap:32px}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-center{height:90vw}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-blueprint{--mask-size:100% 150%}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-jet{position:relative;top:auto;height:auto;margin:0}
+[data-module="jet-fleet-sig"].jfs-mob .jfs-img{height:120vw;transform:none}

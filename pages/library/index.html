@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>모듈 창고</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f4f2;color:#1a1a1a;font:14px/1.5 -apple-system,'Apple SD Gothic Neo',sans-serif}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:14px 24px;background:#fff;border-bottom:1px solid #e4e4e0}
+header h1{margin:0;font-size:18px}
+header .sp{flex:1}
+.seg{display:inline-flex;border:1px solid #d8d8d2;border-radius:8px;overflow:hidden}
+.seg button{padding:6px 12px;border:0;background:#fff;font:inherit;cursor:pointer}
+.seg button+button{border-left:1px solid #d8d8d2}
+.seg button.on{background:#1a1a1a;color:#fff}
+a{color:inherit}
+.layout{display:grid;grid-template-columns:200px 1fr 320px;gap:24px;padding:24px;align-items:start}
+nav{position:sticky;top:76px;display:flex;flex-direction:column;gap:2px}
+nav button{display:flex;justify-content:space-between;padding:8px 10px;border:0;border-radius:8px;background:none;font:inherit;text-align:left;cursor:pointer;color:#1a1a1a}
+nav button.on{background:#1a1a1a;color:#fff}
+nav button.empty{color:#aaa}
+nav button.on.empty{color:#fff}
+nav small{opacity:.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.card{background:#fff;border:1px solid #e4e4e0;border-radius:14px;overflow:hidden}
+.thumb{position:relative;aspect-ratio:16/10;overflow:hidden;background:#ddd}
+.thumb iframe{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform-origin:0 0;pointer-events:none}
+.info{padding:14px 16px 16px}
+.chips{display:flex;gap:6px;margin-bottom:6px}
+.chip{padding:2px 8px;border-radius:99px;background:#f0f0ec;font-size:12px;color:#555}
+.info h3{margin:0 0 2px;font-size:15px}
+.info p{margin:0;color:#666;font-size:13px}
+.actions{display:flex;gap:8px;margin-top:12px}
+.btn{padding:7px 12px;border:1px solid #d8d8d2;border-radius:8px;background:#fff;font:inherit;cursor:pointer;text-decoration:none}
+.btn.dark{background:#1a1a1a;border-color:#1a1a1a;color:#fff}
+.ophumb{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;background:#1a1a1a;color:#ddd;font-size:13px;text-align:center;padding:16px}
+.ophumb b{font-size:16px;color:#fff}
+.kind{font-size:11px;padding:2px 6px;border-radius:4px;background:#1a1a1a;color:#fff;margin-left:4px}
+.empty-cat{padding:40px;border:1px dashed #ccc;border-radius:14px;color:#888;text-align:center}
+aside{position:sticky;top:76px;background:#fff;border:1px solid #e4e4e0;border-radius:14px;padding:16px}
+aside h2{margin:0 0 10px;font-size:15px}
+aside ol{margin:0 0 12px;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+aside li{display:flex;align-items:center;gap:6px;padding:8px;border:1px solid #ecece8;border-radius:8px}
+aside li .n{flex:1;min-width:0}
+aside li .n b{display:block;font-size:13px}
+aside li .n small{color:#888}
+aside li button{width:26px;height:26px;padding:0;border:1px solid #e0e0da;border-radius:6px;background:#fff;cursor:pointer;font-size:12px}
+aside li button.tone{width:auto;padding:0 8px}
+aside li button.tone.alt{background:#1a1a1a;color:#fff}
+aside .none{color:#999;font-size:13px;margin:0 0 12px}
+aside textarea{width:100%;height:180px;margin-top:10px;padding:8px;border:1px solid #e0e0da;border-radius:8px;font:12px/1.5 ui-monospace,Menlo,monospace;resize:vertical}
+aside .row{display:flex;gap:8px;flex-wrap:wrap}
+header{flex-wrap:wrap;row-gap:10px}
+header>*{white-space:nowrap}
+/* 좁은 화면: 분류는 가로로 넘기는 줄, 조합 바구니는 목록 아래로 */
+@media (max-width:1100px){
+  .layout{grid-template-columns:1fr;gap:16px;padding:16px}
+  nav{position:static;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  nav button{flex:none;gap:6px}
+  aside{position:static}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+}
+@media (max-width:640px){header .sp{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>모듈 창고</h1><span id="count" style="color:#888"></span>
+  <span class="sp"></span>
+  <span class="seg" id="kinds"></span>
+  <span style="color:#666">테마</span><span class="seg" id="themes"></span>
+  <a class="btn" id="back" href="/">목록으로</a>
+</header>
+<div class="layout">
+  <nav id="cats"></nav>
+  <main><div class="grid" id="grid"></div></main>
+  <aside>
+    <h2>조합</h2>
+    <ol id="tray"></ol>
+    <div class="row">
+      <a class="btn dark" id="open" target="_blank">조립하고 무드 정하기 →</a>
+      <button class="btn" id="copy">page.js 복사</button>
+      <button class="btn" id="clear">비우기</button>
+    </div>
+    <textarea id="code" readonly></textarea>
+  </aside>
+</div>
+<script type="module">
+// 입장 확인: 매니저 로그인 또는 모듈 창고 전용 비밀번호 (로컬 개발에서는 검사하지 않음)
+import { gate } from "/engine/gate.js";
+const BASE = import.meta.env.BASE_URL;
+gate().then((s) => { const b = document.getElementById("back"); if (BASE !== "/" && !s.manager) b.hidden = true; });
+import themes from "/engine/themes.js";
+import modules, { categories } from "/modules/index.js";
+// 원본 섹션(복제본 그대로, 내부 참고용) — 매니저 창고에서도 같이 보임
+import { originals } from "/clones/catalog.js";
+
+const KEY = "module-library";
+const st = Object.assign({ theme: "clean", cat: "전체", tray: [], kind: "o" }, JSON.parse(localStorage.getItem(KEY) || "{}"));
+st.tray = st.tray.map((t) => ({ kind: "m", ...t })).filter((t) => t.kind === "o" ? originals.some((o) => o.id === t.id) : modules.some((m) => m.id === t.id));
+const save = () => localStorage.setItem(KEY, JSON.stringify(st));
+const byId = (id, kind = "m") => kind === "o" ? originals.find((o) => o.id === id) : modules.find((m) => m.id === id);
+const pool = () => (st.kind === "o" ? originals : modules);
+// 원본 섹션이 하나라도 있으면 원본 조립 페이지(원본 그대로 + 무드), 아니면 다시 만든 모듈 미리보기
+const composeUrl = () => `${BASE}pages/compose/?list=${st.tray.map((t) => (t.kind === "o" ? t.id : "m:" + t.id)).join(",")}&theme=${st.theme}`;
+const camel = (id) => id.replace(/-(\w)/g, (_, c) => c.toUpperCase());
+const previewUrl = (list, panel = true) => `${BASE}pages/preview/?list=${list}&theme=${st.theme}${panel ? "" : "&panel=0"}`;
+
+const renderCount = () => (document.getElementById("count").textContent = st.kind === "o" ? `원본 섹션 ${originals.length}개` : `다시 만든 모듈 ${modules.length}개`);
+
+// 종류: 원본 섹션(복제본 그대로) / 다시 만든 모듈(테마 따름)
+const kindBox = document.getElementById("kinds");
+[["o", "원본 섹션"], ["m", "다시 만든 모듈"]].forEach(([k, name]) => {
+  const b = document.createElement("button");
+  b.textContent = name; b.dataset.k = k;
+  b.onclick = () => { st.kind = k; st.cat = "전체"; save(); renderKinds(); renderCount(); renderCats(); renderGrid(); };
+  kindBox.appendChild(b);
+});
+const renderKinds = () => kindBox.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.k === st.kind));
+
+// 테마
+const themeBox = document.getElementById("themes");
+themes.forEach((t) => {
+  const b = document.createElement("button");
+  b.textContent = t.name; b.dataset.id = t.id;
+  b.onclick = () => { st.theme = t.id; save(); renderThemes(); renderGrid(); renderTray(); };
+  themeBox.appendChild(b);
+});
+const renderThemes = () => themeBox.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.id === st.theme));
+
+// 분류
+function renderCats() {
+  const nav = document.getElementById("cats");
+  nav.innerHTML = "";
+  ["전체", ...categories].forEach((c) => {
+    const n = c === "전체" ? pool().length : pool().filter((m) => m.category === c).length;
+    const b = document.createElement("button");
+    b.className = (st.cat === c ? "on " : "") + (n ? "" : "empty");
+    b.innerHTML = `<span>${c}</span><small>${n}</small>`;
+    b.onclick = () => { st.cat = c; save(); renderCats(); renderGrid(); };
+    nav.appendChild(b);
+  });
+}
+
+// 모듈 카드(썸네일은 실제 모듈을 1440×900으로 띄워 축소)
+function renderGrid() {
+  const grid = document.getElementById("grid");
+  const list = pool().filter((m) => st.cat === "전체" || m.category === st.cat);
+  if (st.kind === "o" && list.length) {
+    // 원본 섹션은 원본 앱을 통째로 띄워 무거우므로 썸네일은 눌렀을 때만 띄운다
+    grid.innerHTML = list.map((o) => `
+    <article class="card">
+      <div class="thumb"><div class="ophumb"><b>${o.id.split("/")[0]}</b><span>${o.title}</span><button class="btn" data-thumb="${o.id}">썸네일 보기</button></div></div>
+      <div class="info">
+        <div class="chips"><span class="chip">${o.category}</span><span class="chip">원본 그대로</span></div>
+        <h3>${o.id}</h3>
+        <p>${o.title}</p>
+        <div class="actions">
+          <button class="btn dark" data-add="${o.id}">+ 조합에 담기</button>
+          <a class="btn" target="_blank" href="${BASE}clones/${o.id}/">크게 보기</a>
+        </div>
+      </div>
+    </article>`).join("");
+    grid.querySelectorAll("[data-thumb]").forEach((b) => (b.onclick = () => { const t = b.closest(".thumb"); t.innerHTML = `<iframe tabindex="-1" src="${BASE}clones/${b.dataset.thumb}/"></iframe>`; fitThumbs(); }));
+    grid.querySelectorAll("[data-add]").forEach((b) => (b.onclick = () => { st.tray.push({ kind: "o", id: b.dataset.add }); save(); renderTray(); }));
+    return;
+  }
+  if (!list.length) { grid.innerHTML = `<div class="empty-cat">아직 이 분류의 모듈이 없습니다.<br>어워드 사이트를 복제해 모듈로 만들면 여기에 쌓입니다.</div>`; return; }
+  grid.innerHTML = list.map((m) => `
+    <article class="card">
+      <div class="thumb"><iframe loading="lazy" tabindex="-1" src="${previewUrl(m.id, false)}"></iframe></div>
+      <div class="info">
+        <div class="chips"><span class="chip">${m.category}</span><span class="chip">${m.form}</span></div>
+        <h3>${m.id}</h3>
+        <p>${m.summary}</p>
+        <p style="color:#999;margin-top:4px">${m.source}</p>
+        <div class="actions">
+          <button class="btn dark" data-add="${m.id}">+ 조합에 담기</button>
+          <a class="btn" target="_blank" href="${previewUrl(m.id)}">크게 보기</a>
+        </div>
+      </div>
+    </article>`).join("");
+  grid.querySelectorAll("[data-add]").forEach((b) => (b.onclick = () => { st.tray.push({ kind: "m", id: b.dataset.add, tone: "base" }); save(); renderTray(); }));
+  fitThumbs();
+}
+function fitThumbs() {
+  document.querySelectorAll(".thumb").forEach((t) => { t.firstElementChild.style.transform = `scale(${t.clientWidth / 1440})`; });
+}
+addEventListener("resize", fitThumbs);
+
+// 조합 바구니
+function renderTray() {
+  const ol = document.getElementById("tray");
+  ol.innerHTML = st.tray.length ? "" : "";
+  ol.previousElementSibling.textContent = `조합 (${st.tray.length})`;
+  if (!st.tray.length) ol.innerHTML = `<p class="none">모듈을 담으면 여기에 순서대로 쌓입니다.</p>`;
+  st.tray.forEach((t, i) => {
+    const m = byId(t.id, t.kind);
+    const li = document.createElement("li");
+    li.innerHTML = `<div class="n"><b>${i + 1}. ${m.category}<span class="kind">${t.kind === "o" ? "원본" : "모듈"}</span></b><small>${m.id}</small></div>
+      ${t.kind === "o" ? "" : `<button class="tone ${t.tone === "alt" ? "alt" : ""}" title="배경 톤">${t.tone === "alt" ? "반전" : "기본"}</button>`}
+      <button title="위로">↑</button><button title="아래로">↓</button><button title="빼기">✕</button>`;
+    const bs = [...li.querySelectorAll("button")]; const tone = t.kind === "o" ? null : bs.shift(); const [up, down, del] = bs;
+    if (tone) tone.onclick = () => { t.tone = t.tone === "alt" ? "base" : "alt"; save(); renderTray(); };
+    up.onclick = () => { if (i) { [st.tray[i - 1], st.tray[i]] = [st.tray[i], st.tray[i - 1]]; save(); renderTray(); } };
+    down.onclick = () => { if (i < st.tray.length - 1) { [st.tray[i + 1], st.tray[i]] = [st.tray[i], st.tray[i + 1]]; save(); renderTray(); } };
+    del.onclick = () => { st.tray.splice(i, 1); save(); renderTray(); };
+    ol.appendChild(li);
+  });
+  const list = st.tray.map((t) => t.id + (t.tone === "alt" ? ":alt" : "")).join(",");
+  const open = document.getElementById("open");
+  const hasOrig = st.tray.some((t) => t.kind === "o");
+  open.href = !st.tray.length ? "#" : composeUrl();
+  open.style.opacity = st.tray.length ? 1 : 0.4;
+  const ids = [...new Set(st.tray.map((t) => t.id))];
+  if (hasOrig) { document.getElementById("code").value = `// 원본 섹션이 들어간 조합 — 조립·무드 페이지 주소\n${location.origin}${composeUrl()}`; return; }
+  document.getElementById("code").value = st.tray.length ? `// pages/{새 페이지}/page.js
+${ids.map((id) => `import ${camel(id)} from "../../modules/${id}/index.js";`).join("\n")}
+
+export default {
+  theme: "${st.theme}",
+  sections: [
+${st.tray.map((t) => `    { use: ${camel(t.id)}${t.tone === "alt" ? ', tone: "alt"' : ""}, content: {} },`).join("\n")}
+  ],
+};` : "";
+}
+document.getElementById("copy").onclick = async (e) => {
+  await navigator.clipboard.writeText(document.getElementById("code").value);
+  e.target.textContent = "복사됨"; setTimeout(() => (e.target.textContent = "page.js 복사"), 1200);
+};
+document.getElementById("clear").onclick = () => { st.tray = []; save(); renderTray(); };
+
+if (BASE !== "/") { const b = document.getElementById("back"); b.href = "/manager"; b.textContent = "매니저로"; }
+renderKinds(); renderCount(); renderThemes(); renderCats(); renderGrid(); renderTray();
+</script>
+</body>
+</html>

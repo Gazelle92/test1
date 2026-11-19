@@ -1,0 +1,60 @@
+/* 원본 .s-pricing 배치·3D 값 그대로(perspective 300px, 축 450px 뒤, 연간 쪽 54° 돌려 둠). 색·글꼴만 테마 토큰 */
+[data-module="pricing-flip-sig"]{--ps-ink:#0a0a0b;--ps-paper:color-mix(in srgb,var(--c-fg) 3%,#fff);--ps-grey:#999}
+[data-module="pricing-flip-sig"] .ps-wrap{padding:var(--space-section) 25px;color:var(--c-fg)}
+[data-module="pricing-flip-sig"] .ps-title{margin:0 auto;text-align:center;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:65px;line-height:1.02;letter-spacing:-.02em}
+[data-module="pricing-flip-sig"] .ps-save{margin:25px auto 30px;text-align:center;font:500 11px/1.39 var(--font-body);letter-spacing:.06em;text-transform:uppercase;color:var(--c-muted)}
+[data-module="pricing-flip-sig"] .ps-inner{display:flex;gap:50px;width:896px;max-width:100%;margin:0 auto;padding:10px;border-radius:20px;background:var(--c-surface)}
+[data-module="pricing-flip-sig"] .ps-card{position:relative;width:100%;max-width:440px;aspect-ratio:.92/1;color:var(--ps-ink);text-align:center}
+[data-module="pricing-flip-sig"] .ps-card-top{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:70px;width:100%;height:100%;overflow:hidden;border-radius:12px;background:var(--ps-paper)}
+[data-module="pricing-flip-sig"] .ps-top{display:flex;align-items:center}
+[data-module="pricing-flip-sig"] .ps-top button{border:0;background:none;color:inherit;cursor:pointer;font:500 13px/1.49 var(--font-body);letter-spacing:.06em;text-transform:uppercase}
+[data-module="pricing-flip-sig"] .ps-to-q,[data-module="pricing-flip-sig"] .ps-to-y{transition:opacity .2s}
+[data-module="pricing-flip-sig"] .ps-card-top:not(.on) .ps-to-y{opacity:.5}
+[data-module="pricing-flip-sig"] .ps-card-top.on .ps-to-q{opacity:.5}
+@media (hover:hover){[data-module="pricing-flip-sig"] .ps-to-q:hover,[data-module="pricing-flip-sig"] .ps-to-y:hover{opacity:1!important}}
+[data-module="pricing-flip-sig"] .ps-to-y sup{font-size:9px;margin-left:3px}
+[data-module="pricing-flip-sig"] .ps-toggle{display:grid;place-items:center;width:50px;height:40px;padding:0}
+[data-module="pricing-flip-sig"] .ps-back{display:block;width:33px;height:21px;border:1px solid var(--ps-ink);border-radius:11px;background:#fff}
+[data-module="pricing-flip-sig"] .ps-rond{display:block;width:13px;height:13px;margin:3px;border-radius:100%;background:var(--ps-ink)}
+[data-module="pricing-flip-sig"] .ps-milieu{position:relative}
+[data-module="pricing-flip-sig"] .ps-center{width:284px;height:164px;perspective:300px}
+[data-module="pricing-flip-sig"] .ps-c2{position:absolute;top:0;left:0}
+[data-module="pricing-flip-sig"] .ps-rot,[data-module="pricing-flip-sig"] .ps-rot>*{transform:translate3d(0,0,-450px);transform-style:preserve-3d}
+[data-module="pricing-flip-sig"] .ps-rot>*{transform:translate3d(0,0,450px)}
+[data-module="pricing-flip-sig"] .ps-c2 .ps-rot{transform:translate3d(0,0,-450px) rotateY(54deg)}
+[data-module="pricing-flip-sig"] .ps-price{margin:0;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:65px;line-height:1.02;letter-spacing:-.02em}
+[data-module="pricing-flip-sig"] .ps-label{margin:0;padding:7px 0 20px;font:500 13px/1.49 var(--font-body);letter-spacing:.06em;text-transform:uppercase}
+[data-module="pricing-flip-sig"] .ps-note{margin:0;font:500 12px/1.4 var(--font-body);letter-spacing:-.02em;color:var(--ps-grey)}
+
+/* 굴러 내려오는 버튼(원본 .roll) */
+[data-module="pricing-flip-sig"] .ps-cta{display:flex;align-items:center;justify-content:center;width:200px;height:50px;margin:0 auto;padding:0 25px;border-radius:25px;background:var(--c-accent);color:var(--ps-ink);text-decoration:none;font:500 13px/50px var(--font-body);letter-spacing:.06em;text-transform:uppercase}
+[data-module="pricing-flip-sig"] .ps-cta.off{display:none}
+[data-module="pricing-flip-sig"] .roll>span{position:relative;display:block;overflow:hidden;line-height:21px}
+[data-module="pricing-flip-sig"] .roll .translate{display:inline-block}
+[data-module="pricing-flip-sig"] .roll .translate>span{display:flex;align-items:center;gap:15px}
+[data-module="pricing-flip-sig"] .roll .translate>span:last-child{position:absolute;bottom:100%;left:0}
+@keyframes ps-roll{0%{transform:translate(0,0)}100%{transform:translate(0,100%)}}
+@media (pointer:fine){[data-module="pricing-flip-sig"] .roll.on .translate{animation:ps-roll .4s cubic-bezier(.16,.03,.08,1.55) infinite}}
+
+[data-module="pricing-flip-sig"] .ps-whatsin{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:48px 40px 42px 0;text-align:left}
+[data-module="pricing-flip-sig"] .ps-gt{margin:0;font:500 11px/1.39 var(--font-body);letter-spacing:.06em;text-transform:uppercase;color:var(--ps-grey)}
+[data-module="pricing-flip-sig"] .ps-whatsin ul{margin:15px 0 30px;padding:0;list-style:none;font:500 18px/1.4 var(--font-body)}
+[data-module="pricing-flip-sig"] .ps-whatsin li{display:flex;gap:15px;align-items:center}
+[data-module="pricing-flip-sig"] .ps-whatsin li span{line-height:1.5}
+[data-module="pricing-flip-sig"] .ps-whatsin li i{width:14px;height:14px;border-radius:50%;background:var(--c-accent);flex:none}
+[data-module="pricing-flip-sig"] .ps-bottom{display:flex;justify-content:space-between;align-items:flex-end;font:500 12px/1.4 var(--font-body);color:var(--ps-grey)}
+[data-module="pricing-flip-sig"] .ps-people{display:flex}
+[data-module="pricing-flip-sig"] .ps-people i{width:30px;height:30px;margin-left:-8px;border-radius:50%;border:2px solid var(--c-surface);background:color-mix(in srgb,var(--c-accent) 50%,var(--c-muted))}
+[data-module="pricing-flip-sig"] .ps-people i:nth-child(2n){background:var(--c-muted)}
+
+/* 원본 1024px 이하: 세로로 쌓기 */
+@media (max-width:1024px){
+  [data-module="pricing-flip-sig"] .ps-inner{flex-direction:column;max-width:460px;gap:30px}
+  [data-module="pricing-flip-sig"] .ps-card-top{gap:30px}
+  [data-module="pricing-flip-sig"] .ps-whatsin{padding:0 20px 30px}
+}
+@media (max-width:768px){[data-module="pricing-flip-sig"] .ps-title{font-size:40px}}
+@media (max-width:500px){
+  [data-module="pricing-flip-sig"] .ps-card{aspect-ratio:auto}
+  [data-module="pricing-flip-sig"] .ps-card-top{padding:60px 0 40px}
+}

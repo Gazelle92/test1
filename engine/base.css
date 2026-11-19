@@ -1,0 +1,10 @@
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--c-bg);color:var(--c-fg);font:16px/1.6 var(--font-body);-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+section[data-module]{position:relative}
+.show-source section[data-module]::before{content:attr(data-source);position:absolute;z-index:50;left:16px;top:16px;font:600 12px/1 -apple-system,sans-serif;background:#000;color:#fff;padding:7px 10px;border-radius:6px;opacity:.75}
+/* 배경 톤: 섹션마다 base(기본)·alt(반전) 중 하나. 모듈은 --c-bg/--c-fg만 쓰면 자동으로 따라간다. */
+section[data-module]{background:var(--c-bg);color:var(--c-fg)}
+section[data-tone="alt"]{--c-bg:var(--c-bg-alt);--c-fg:var(--c-fg-alt);--c-surface:color-mix(in srgb,var(--c-bg-alt) 90%,var(--c-fg-alt));--c-line:color-mix(in srgb,var(--c-fg-alt) 16%,transparent);--c-muted:color-mix(in srgb,var(--c-fg-alt) 60%,var(--c-bg-alt))}

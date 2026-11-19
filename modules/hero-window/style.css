@@ -1,0 +1,15 @@
+[data-module="hero-window"] .hw-area{height:320vh;position:relative}
+[data-module="hero-window"] .hw-stage{position:sticky;top:0;height:100vh;overflow:hidden}
+[data-module="hero-window"] .hw-sky{position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--c-accent) 60%,#fff) 0%,color-mix(in srgb,var(--c-accent) 12%,#fff) 75%)}
+[data-module="hero-window"] .hw-cloud{position:absolute;border-radius:50%;background:#fff;filter:blur(20px);opacity:.85}
+[data-module="hero-window"] .hw-cloud-0{width:38vw;height:12vw;left:-6vw;top:58%}
+[data-module="hero-window"] .hw-cloud-1{width:30vw;height:9vw;right:-4vw;top:40%}
+[data-module="hero-window"] .hw-cloud-2{width:22vw;height:7vw;left:30%;top:72%}
+[data-module="hero-window"] .hw-cloud-3{width:18vw;height:6vw;left:12%;top:24%;opacity:.6}
+[data-module="hero-window"] .hw-cloud-4{width:26vw;height:8vw;right:18%;top:80%}
+[data-module="hero-window"] .hw-frame{--w:min(28vw,340px);position:absolute;left:50%;top:50%;width:var(--w);height:calc(var(--w)*1.45);margin:calc(var(--w)*-.725) 0 0 calc(var(--w)*-.5);border-radius:999px;box-shadow:0 0 0 200vmax var(--c-bg),inset 0 0 0 12px var(--c-surface),inset 0 0 0 13px var(--c-line);will-change:transform;transition:box-shadow .4s}
+[data-module="hero-window"] .hw-title{position:absolute;inset:0;margin:0;display:flex;align-items:center;justify-content:center;gap:calc(min(28vw,340px) + 5vw);font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:clamp(40px,7vw,120px);line-height:1;color:var(--c-fg);pointer-events:none}
+[data-module="hero-window"] .hw-title>span{display:inline-block;overflow:hidden;padding:.1em .05em}
+[data-module="hero-window"] .hw-hint{position:absolute;left:0;right:0;bottom:5vh;margin:0;text-align:center;font-size:13px;letter-spacing:.1em;color:var(--c-muted)}
+[data-module="hero-window"] .hw-intro{max-width:1100px;margin:0 auto;padding:var(--space-section) 8vw}
+[data-module="hero-window"] .hw-intro p{margin:0;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:clamp(28px,3.8vw,58px);line-height:1.2}

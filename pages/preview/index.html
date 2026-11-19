@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>모듈 미리보기</title>
+<link rel="stylesheet" href="/engine/base.css">
+</head>
+<body>
+<main id="page"></main>
+<script type="module">
+// 주소로 조합을 바로 본다: ?list=hero-window,effects-cards:alt,pricing-flip&theme=pop
+//   모듈id[:alt]  — :alt를 붙이면 그 섹션은 반전 배경
+//   panel=0      — 조작판 숨김(창고 썸네일용)
+// 입장 확인: 매니저 로그인 또는 모듈 창고 전용 비밀번호 (로컬 개발에서는 검사하지 않음)
+import { gate } from "/engine/gate.js";
+const BASE = import.meta.env.BASE_URL;
+gate();
+import { createEngine } from "/engine/engine.js";
+import { mountPanel } from "/engine/panel.js";
+import themes from "/engine/themes.js";
+import modules from "/modules/index.js";
+
+const q = new URLSearchParams(location.search);
+const sections = (q.get("list") || modules.map((m) => m.id).join(","))
+  .split(",").filter(Boolean)
+  .map((s) => { const [id, tone] = s.split(":"); const use = modules.find((m) => m.id === id); return use && { use, tone }; })
+  .filter(Boolean);
+document.title = `미리보기 · ${sections.map((s) => s.use.category).join(" + ")}`;
+
+const engine = createEngine({ root: document.getElementById("page"), sections, themes, theme: q.get("theme") || "clean" });
+window.engine = engine;
+if (q.get("panel") !== "0") mountPanel(engine, themes);
+</script>
+</body>
+</html>

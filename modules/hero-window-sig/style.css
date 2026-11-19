@@ -1,0 +1,61 @@
+/* 원본 jeskojets 히어로 배치 숫자(1440×900 기준 → vw/vh로 환산). 원본 사진 대신 하늘·벽을 그라디언트로. 색·글꼴만 테마 토큰 */
+[data-module="hero-window-sig"]{
+  --hws-ink:#fff;
+  --hws-sky-1:color-mix(in srgb,var(--c-accent) 55%,#fff);
+  --hws-sky-2:color-mix(in srgb,var(--c-accent) 12%,#fff);
+  --hws-wall:color-mix(in srgb,var(--c-bg) 55%,#d8d2c8);
+  --hws-blind:#dbdbdb;
+}
+[data-module="hero-window-sig"] .hws-area{position:relative;height:300vh;overflow:clip}
+[data-module="hero-window-sig"] .hws-sky{position:absolute;left:0;top:0;width:100%;height:200vh;z-index:0;background:linear-gradient(180deg,var(--hws-sky-1),var(--hws-sky-2) 70%,var(--c-bg))}
+[data-module="hero-window-sig"] .hws-sticky{position:sticky;top:0;z-index:1;height:100vh}
+[data-module="hero-window-sig"] .hws-bg{position:absolute;inset:0;z-index:0}
+[data-module="hero-window-sig"] .hws-back{position:absolute;inset:0;z-index:0;overflow:hidden;background:linear-gradient(180deg,var(--hws-sky-1),var(--hws-sky-2) 80%)}
+[data-module="hero-window-sig"] .hws-clouds{position:absolute;left:0;top:45%;width:200%;height:44%;display:flex;animation:hws-marquee 48s linear infinite reverse;will-change:transform}
+[data-module="hero-window-sig"] .hws-sky .hws-clouds{top:20%;height:44vh}
+[data-module="hero-window-sig"] .hws-clouds i{flex:1;background:
+  radial-gradient(28% 40% at 12% 60%,#fff 0,rgba(255,255,255,0) 70%),
+  radial-gradient(22% 34% at 38% 40%,rgba(255,255,255,.95) 0,rgba(255,255,255,0) 70%),
+  radial-gradient(30% 44% at 66% 66%,#fff 0,rgba(255,255,255,0) 70%),
+  radial-gradient(18% 30% at 88% 38%,rgba(255,255,255,.85) 0,rgba(255,255,255,0) 70%)}
+@keyframes hws-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* 창: 원본 창 위치 x505 y136 w439 h605 (1440×900) */
+[data-module="hero-window-sig"] .hws-window,[data-module="hero-window-sig"] .hws-front{position:absolute;left:35.07vw;top:15.11vh;width:30.49vw;height:67.22vh;border-radius:46%/32%}
+[data-module="hero-window-sig"] .hws-window{z-index:1;overflow:hidden}
+[data-module="hero-window-sig"] .hws-blind{position:absolute;inset:0;background:radial-gradient(50% 50%,rgba(255,255,255,0) 0,rgba(0,0,0,.2) 80%,rgba(0,0,0,.35) 100%),var(--hws-blind)}
+[data-module="hero-window-sig"] .hws-knob-c{position:absolute;inset:0;z-index:1}
+[data-module="hero-window-sig"] .hws-knob{position:absolute;left:35%;width:30%;top:77.4%;height:19px;border-radius:10px;background:linear-gradient(#f4f4f4,#bdbdbd);box-shadow:0 2px 6px rgba(0,0,0,.25)}
+[data-module="hero-window-sig"] .hws-knob-2{z-index:1;opacity:0}
+[data-module="hero-window-sig"] .hws-front{z-index:2;pointer-events:none;box-shadow:0 0 0 300vmax var(--hws-wall),inset 0 0 0 14px color-mix(in srgb,var(--hws-wall) 85%,#000),inset 0 0 0 16px color-mix(in srgb,var(--hws-wall) 70%,#fff),inset 0 0 50px rgba(0,0,0,.35)}
+[data-module="hero-window-sig"] .hws-overlay{position:absolute;inset:0;z-index:5;background:radial-gradient(circle,rgba(0,0,0,0) 25%,rgba(0,0,0,.4))}
+
+/* 글자 층: 좌우 여백 96px, 제목 칸 위 156px·높이 528px, 아래 줄은 바닥에서 96px */
+[data-module="hero-window-sig"] .hws-s{position:relative;z-index:1;height:100vh;padding:0 6.67vw;color:var(--hws-ink)}
+[data-module="hero-window-sig"] .hws-grid{position:absolute;left:6.67vw;right:6.67vw;top:17.33vh;height:58.67vh;display:grid;grid-template-columns:1fr 1fr;gap:0 2.5vw}
+[data-module="hero-window-sig"] .hws-grid .hws-r{display:flex;align-items:flex-end;justify-content:flex-end;text-align:right}
+[data-module="hero-window-sig"] .hws-h{margin:0;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:5vw;line-height:.88;letter-spacing:-.08em}
+[data-module="hero-window-sig"] .hws-bot{position:absolute;left:6.67vw;right:6.67vw;bottom:96px;display:flex;justify-content:space-between;align-items:flex-end}
+[data-module="hero-window-sig"] .hws-desc{width:20vw}
+[data-module="hero-window-sig"] .hws-lead{margin:0;font-family:var(--font-display);font-weight:var(--display-weight);font-size:1.667vw;line-height:1;letter-spacing:-.064em}
+[data-module="hero-window-sig"] .hws-divider{padding:24px 0}
+[data-module="hero-window-sig"] .hws-divider i{display:block;width:24px;height:1px;background:currentColor;opacity:.7}
+[data-module="hero-window-sig"] .hws-p{margin:0;font:500 12px/1.33 var(--font-body);letter-spacing:-.032em}
+[data-module="hero-window-sig"] .hws-scroll{width:24.17vw;display:flex;flex-direction:column;gap:12px;font:700 10px/1.2 var(--font-body);letter-spacing:-.03em;text-transform:uppercase}
+[data-module="hero-window-sig"] .hws-vline{display:block;width:1px;height:80px;background:currentColor;opacity:.6}
+[data-module="hero-window-sig"] .hws-scroll-c{display:flex;align-items:center;gap:10px}
+[data-module="hero-window-sig"] .hws-mouse{width:14px;height:20px;border:1.5px solid currentColor;border-radius:8px}
+
+/* 소개: 하늘 위로 올라오는 문장 */
+[data-module="hero-window-sig"] .hws-about{position:relative;z-index:2;min-height:127vh;padding:0 6.67vw}
+[data-module="hero-window-sig"] .hws-about-s{padding-top:96px}
+[data-module="hero-window-sig"] .hws-about-t{margin:0;color:var(--hws-ink);font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:4.44vw;line-height:1;letter-spacing:-.08em}
+
+/* 원본 992px 미만: 좌우 분리·하늘 이동·소개 시차 없음 */
+[data-module="hero-window-sig"].hws-mob .hws-grid{grid-template-columns:1fr;row-gap:24px;height:auto}
+[data-module="hero-window-sig"].hws-mob .hws-grid .hws-r{justify-content:flex-start;text-align:left}
+[data-module="hero-window-sig"].hws-mob .hws-h{font-size:10vw}
+[data-module="hero-window-sig"].hws-mob .hws-bot{flex-direction:column;align-items:flex-start;gap:24px;bottom:48px}
+[data-module="hero-window-sig"].hws-mob .hws-desc,[data-module="hero-window-sig"].hws-mob .hws-scroll{width:auto}
+[data-module="hero-window-sig"].hws-mob .hws-lead{font-size:20px}
+[data-module="hero-window-sig"].hws-mob .hws-about-t{font-size:8vw;color:var(--c-fg)}

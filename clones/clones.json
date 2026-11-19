@@ -1,0 +1,22 @@
+[
+ {
+  "name": "jeskojets",
+  "url": "https://jeskojets.com/",
+  "note": "· 원본 스크립트 그대로 실행 · 섹션 4개"
+ },
+ {
+  "name": "madewithgsap",
+  "url": "https://madewithgsap.com/",
+  "note": "· 원본 스크립트 그대로 실행 · 섹션 8개"
+ },
+ {
+  "name": "breakthroughenergy",
+  "url": "https://www.breakthroughenergy.org/",
+  "note": "· 원본 앱(Vue) 그대로 실행 · 섹션 5개(스크롤 구간)"
+ },
+ {
+  "name": "deltacafes",
+  "url": "https://deltacafes.com/en",
+  "note": "· 원본 앱(Nuxt) 그대로 실행 · 섹션 8개"
+ }
+]

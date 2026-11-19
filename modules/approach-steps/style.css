@@ -1,0 +1,45 @@
+[data-module="approach-steps"] .as-area{position:relative;height:calc(var(--as-len) * 100vh)}
+[data-module="approach-steps"] .as-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--c-bg);color:var(--c-fg)}
+
+/* 가운데 그림 */
+[data-module="approach-steps"] .as-graphic{position:absolute;top:0;bottom:0;left:20vw;right:20vw;will-change:transform}
+[data-module="approach-steps"] .as-graphic svg{display:block;width:100%;height:100%;overflow:visible}
+[data-module="approach-steps"] .as-ring{fill:none;stroke:var(--c-line);stroke-width:1.2;vector-effect:non-scaling-stroke}
+[data-module="approach-steps"] .as-wedge{fill:color-mix(in srgb,var(--c-accent) 16%,transparent)}
+[data-module="approach-steps"] .as-edge{stroke:var(--c-accent);stroke-width:1.5;vector-effect:non-scaling-stroke}
+[data-module="approach-steps"] .as-dot{fill:var(--c-fg)}
+[data-module="approach-steps"] .as-dot.pick{fill:var(--c-accent)}
+[data-module="approach-steps"] .as-link{fill:none;stroke:var(--c-accent);stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:1;vector-effect:non-scaling-stroke}
+[data-module="approach-steps"] .as-core{fill:var(--c-accent)}
+[data-module="approach-steps"] .as-ripple{fill:none;stroke:var(--c-accent);stroke-width:1.2;opacity:0;vector-effect:non-scaling-stroke}
+[data-module="approach-steps"] .as-branch,[data-module="approach-steps"] .as-sub{fill:none;stroke:var(--c-fg);stroke-opacity:.45;stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:1}
+[data-module="approach-steps"] .as-node{fill:var(--c-bg);stroke:var(--c-accent);stroke-width:3;transform-box:fill-box;transform-origin:center;transform:scale(0)}
+[data-module="approach-steps"] .as-subnode{fill:var(--c-accent);transform-box:fill-box;transform-origin:center;transform:scale(0)}
+[data-module="approach-steps"] .as-packet{fill:var(--c-accent);opacity:0}
+
+/* 오른쪽 단계 이름 */
+[data-module="approach-steps"] .as-side{position:absolute;top:50%;right:4vw;width:22vw;transform:translateY(-50%);pointer-events:none}
+[data-module="approach-steps"] .as-side-title{position:absolute;right:0;top:0;transform:translateY(-50%);display:flex;align-items:baseline;justify-content:flex-end;gap:.5em;white-space:nowrap;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:clamp(32px,4vw,68px);line-height:1}
+[data-module="approach-steps"] .as-no{font-family:var(--font-body);font-style:normal;font-weight:500;font-size:13px;letter-spacing:.12em;color:var(--c-muted)}
+
+/* 왼쪽 점 표시 */
+[data-module="approach-steps"] .as-dots{position:absolute;left:3vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:22px}
+[data-module="approach-steps"] .as-dots i{position:relative;display:block;width:9px;height:9px;border-radius:50%;border:1px solid var(--c-muted)}
+[data-module="approach-steps"] .as-dots i::after{content:"";position:absolute;inset:-1px;border-radius:50%;background:var(--c-accent);transform:scale(0);opacity:0;transition:transform .3s,opacity .3s}
+[data-module="approach-steps"] .as-dots i.on::after{transform:scale(1);opacity:1}
+
+/* 왼쪽 글: 단계마다 화면 한 칸 */
+[data-module="approach-steps"] .as-chapters{position:absolute;top:0;bottom:0;left:calc(3vw + 40px);width:min(17em,24vw);pointer-events:none}
+[data-module="approach-steps"] .as-chapter{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;will-change:transform}
+[data-module="approach-steps"] .as-ch-title{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+[data-module="approach-steps"] .as-subtitle{margin:0 0 1.25em;font-weight:600;font-size:clamp(16px,1.2vw,19px);letter-spacing:-.01em}
+[data-module="approach-steps"] .as-body{margin:0;font-size:clamp(16px,1.2vw,19px);line-height:1.45;color:var(--c-muted);text-wrap:balance;opacity:0}
+
+@media (max-width:767px){
+  [data-module="approach-steps"] .as-graphic{left:0;right:0;bottom:40%;top:2vh}
+  [data-module="approach-steps"] .as-side{top:62%;left:24px;right:24px;width:auto;transform:none}
+  [data-module="approach-steps"] .as-side-title{left:0;right:auto;justify-content:flex-start;transform:none;font-size:34px}
+  [data-module="approach-steps"] .as-dots{left:auto;right:20px;top:62%;transform:none;flex-direction:row;gap:12px;margin-top:12px}
+  [data-module="approach-steps"] .as-chapters{top:calc(62% + 56px);bottom:0;left:24px;right:24px;width:auto;overflow:hidden}
+  [data-module="approach-steps"] .as-chapter{justify-content:flex-start}
+}

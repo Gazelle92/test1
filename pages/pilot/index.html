@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>시범 조합 페이지</title>
+<link rel="stylesheet" href="/engine/base.css">
+<style>
+#panel{position:fixed;z-index:100;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:12px;background:rgba(20,20,20,.88);color:#fff;font:13px/1.4 -apple-system,'Apple SD Gothic Neo',sans-serif;backdrop-filter:blur(8px)}
+#panel .row{display:flex;gap:6px}
+#panel button{padding:7px 12px;border:1px solid rgba(255,255,255,.25);border-radius:8px;background:transparent;color:#fff;font:inherit;cursor:pointer}
+#panel button.on{background:#fff;color:#111}
+#panel small{opacity:.65}
+#panel label{display:flex;gap:6px;align-items:center;cursor:pointer}
+</style>
+</head>
+<body>
+<main id="page"></main>
+<div id="panel">
+  <div class="row" id="themes"></div>
+  <small id="info"></small>
+  <label><input type="checkbox" id="src"> 모듈 출처 표시</label>
+</div>
+<script type="module">
+import { createEngine } from "/engine/engine.js";
+import themes from "/engine/themes.js";
+import page from "./page.js";
+
+const qs = new URLSearchParams(location.search);
+const engine = createEngine({ root: document.getElementById("page"), sections: page.sections, themes, theme: qs.get("theme") || page.theme });
+window.engine = engine;
+
+const box = document.getElementById("themes"), info = document.getElementById("info");
+function paint() {
+  const t = engine.theme;
+  box.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.id === t.id));
+  const s = t.scroll.lerp ? `스크롤 lerp ${t.scroll.lerp}` : `스크롤 ${t.scroll.duration}초`;
+  info.textContent = `${s} · 움직임 배율 ${t.motion.speed} · ${t.motion.ease.out}`;
+}
+themes.forEach((t) => {
+  const b = document.createElement("button");
+  b.textContent = t.name; b.dataset.id = t.id;
+  b.onclick = () => { engine.setTheme(t.id); history.replaceState(null, "", `?theme=${t.id}`); paint(); };
+  box.appendChild(b);
+});
+document.getElementById("src").onchange = (e) => document.documentElement.classList.toggle("show-source", e.target.checked);
+paint();
+</script>
+</body>
+</html>

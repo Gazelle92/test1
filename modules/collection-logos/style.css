@@ -1,0 +1,56 @@
+[data-module="collection-logos"]{--gm:clamp(20px,2.8vw,40px);--gut:clamp(12px,1.4vw,20px);overflow:hidden;padding:var(--space-section) 0}
+[data-module="collection-logos"] .cl-wrap{padding:0 var(--gm);text-align:center}
+[data-module="collection-logos"] .cl-title{max-width:620px;margin:0 auto var(--gm);font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:clamp(34px,3.3vw,52px);line-height:1.05}
+[data-module="collection-logos"] .cl-text{max-width:520px;margin:0 auto 40px;font-size:clamp(16px,1.3vw,19px);line-height:1.45}
+[data-module="collection-logos"] .cl-text span,[data-module="collection-logos"] .cl-trust-text span{color:var(--c-muted)}
+
+/* 예시 카드 3장 */
+[data-module="collection-logos"] .cl-list{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gut);margin:0;padding:0 0 calc(var(--gm)*2);list-style:none;text-align:left}
+[data-module="collection-logos"] .cl-top{position:relative;display:grid;place-items:center;aspect-ratio:1;margin:0 0 10px;border-radius:var(--radius);background:var(--c-surface);border:1px solid var(--c-line);perspective:100vw}
+[data-module="collection-logos"] .cl-date{position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:999px;background:var(--c-bg);border:1px solid var(--c-line);font-size:12px;letter-spacing:.04em}
+[data-module="collection-logos"] .cl-media{width:73%;will-change:transform}
+[data-module="collection-logos"] .cl-art{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:calc(var(--radius)*.5);background:var(--c-fg)}
+[data-module="collection-logos"] .cl-bg{position:absolute;inset:0;background:radial-gradient(90% 80% at 80% 20%,color-mix(in srgb,var(--c-accent) 80%,var(--c-bg)),transparent 65%),linear-gradient(160deg,color-mix(in srgb,var(--c-accent) 40%,var(--c-fg)),color-mix(in srgb,var(--c-accent) 25%,var(--c-bg)));filter:hue-rotate(calc(var(--i)*55deg))}
+[data-module="collection-logos"] .cl-art i{position:absolute;display:block}
+[data-module="collection-logos"] .cl-orb{left:16%;top:34%;width:30%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--c-bg),color-mix(in srgb,var(--c-accent) 55%,var(--c-bg)) 70%)}
+[data-module="collection-logos"] .cl-orb2{left:58%;top:14%;width:14%;background:var(--c-bg)}
+[data-module="collection-logos"] .cl-bars{position:absolute;inset:24% 20%;display:flex;align-items:flex-end;gap:7%}
+[data-module="collection-logos"] .cl-bars .cl-bar{position:relative;flex:1;height:100%;border-radius:999px;background:var(--c-bg);transform-origin:50% 100%}
+[data-module="collection-logos"] .cl-sq{left:50%;top:50%;width:34%;aspect-ratio:1;margin:-17% 0 0 -17%;border-radius:calc(var(--radius)*.4);border:2px solid var(--c-bg)}
+[data-module="collection-logos"] .cl-sq2{width:22%;margin:-11% 0 0 -11%;background:var(--c-bg)}
+[data-module="collection-logos"] .cl-sq3{width:48%;margin:-24% 0 0 -24%;opacity:.4}
+[data-module="collection-logos"] .cl-ctas{position:absolute;right:14px;bottom:14px;display:flex;gap:8px}
+[data-module="collection-logos"] .cl-ctas a{padding:7px 12px;border-radius:999px;background:var(--c-fg);color:var(--c-bg);font-size:12px;text-decoration:none}
+[data-module="collection-logos"] .cl-label{display:flex;flex-direction:column;font-size:13px;letter-spacing:.04em;line-height:1.4}
+[data-module="collection-logos"] .cl-label span:last-child{color:var(--c-muted)}
+
+/* 버튼 */
+[data-module="collection-logos"] .cl-cta{display:inline-flex;align-items:center;height:50px;padding:0 25px;border-radius:999px;background:var(--c-fg);color:var(--c-bg);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.06em}
+[data-module="collection-logos"] .cl-roll{position:relative;display:block;height:1.4em;line-height:1.4em;overflow:hidden}
+[data-module="collection-logos"] .cl-roll span{display:block;transition:transform .45s cubic-bezier(.7,0,.2,1)}
+[data-module="collection-logos"] .cl-cta:hover .cl-roll span{transform:translateY(-100%)}
+
+/* 사용 팀 */
+[data-module="collection-logos"] .cl-trust{padding:calc(var(--space-section)*1.2) 0 0;text-align:center}
+[data-module="collection-logos"] .cl-people{display:flex;justify-content:center;align-items:center}
+[data-module="collection-logos"] .cl-face{display:grid;place-items:center;width:40px;height:40px;margin:0 -5px 0 0;border-radius:50%;border:2px solid var(--c-bg);background:color-mix(in srgb,var(--c-accent) calc(25% + var(--i)*9%),var(--c-surface));color:var(--c-fg);font-size:14px;font-weight:600}
+[data-module="collection-logos"] .cl-tag{margin:0 0 0 -5px;padding:0 10px;line-height:32px;border-radius:16px;background:var(--c-accent);color:var(--c-bg);font-size:13px;font-weight:600}
+[data-module="collection-logos"] .cl-trust-text{margin:var(--gut) 0 0;padding:0 var(--gm);font-size:clamp(16px,1.3vw,19px)}
+[data-module="collection-logos"] .cl-sep{margin:var(--gm) var(--gm);border:0;border-top:1px solid var(--c-line)}
+
+/* 끝없이 흐르는 로고 띠 */
+[data-module="collection-logos"] .cl-band{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+[data-module="collection-logos"] .cl-logos{display:flex;width:max-content;will-change:transform}
+[data-module="collection-logos"] .cl-set{display:flex;align-items:center;gap:72px;padding:0 36px}
+[data-module="collection-logos"] .cl-logo{display:inline-flex;align-items:center;gap:10px;height:36px;white-space:nowrap;color:var(--c-fg);opacity:.72}
+[data-module="collection-logos"] .cl-logo svg{width:22px;height:22px;fill:currentColor}
+[data-module="collection-logos"] .cl-logo b{font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:24px}
+
+@media (max-width:767px){
+  [data-module="collection-logos"] .cl-scroller{margin:0 calc(var(--gm)*-1);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+  [data-module="collection-logos"] .cl-scroller::-webkit-scrollbar{display:none}
+  [data-module="collection-logos"] .cl-list{display:flex;width:max-content;padding:0 var(--gm) calc(var(--gm)*2)}
+  [data-module="collection-logos"] .cl-push{flex:0 0 auto;width:calc(100vw - var(--gm)*2 - 15px);scroll-snap-align:center}
+  [data-module="collection-logos"] .cl-set{gap:48px;padding:0 24px}
+  [data-module="collection-logos"] .cl-logo b{font-size:20px}
+}

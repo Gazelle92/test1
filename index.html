@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>복제본 목록</title>
+<style>
+body{font:15px/1.6 system-ui,sans-serif;margin:40px;color:#222;max-width:860px}
+a{color:#222}h2{margin:32px 0 4px;font-size:20px}.sub{color:#888;font-size:13px;font-weight:400}
+ol{padding-left:20px}li{margin:8px 0}code{color:#888;font-size:13px}
+</style></head>
+<body><h1>모듈 창고</h1>
+<ol><li><a href="/pages/library/">모듈 창고</a> <code>http://localhost:5173/pages/library/</code><br><span class="sub">분류별 모듈 미리보기 · 조합에 담아 순서·배경 정하기 · page.js 만들기</span></li></ol>
+<h1>조합 페이지</h1>
+<ol><li><a href="/pages/compose/?list=jeskojets/01-hero,madewithgsap/03-effects,breakthroughenergy/03-quote,deltacafes/08-closing">원본 섹션 조립(예시)</a> <code>/pages/compose/?list=…</code><br><span class="sub">원본 그대로 이어 붙이고 무드(글꼴·색 보정)만 얹기 · 창고에서 담으면 이 주소가 만들어짐</span></li><li><a href="/pages/pilot/">시범 조합</a> <code>http://localhost:5173/pages/pilot/</code><br><span class="sub">히어로(jeskojets 참고) + 숫자·카드·가격(madewithgsap 참고) · 테마 3개 전환</span></li></ol>
+<h1>복제본</h1><div id="list"></div>
+<script type="module">
+const list = await fetch("/clones/clones.json").then(r => r.json());
+const out = [];
+for (const c of list) {
+  const base = `/clones/${c.name}/`;
+  let secs = [];
+  try { const r = await fetch(base + "sections.json"); if (r.ok) secs = await r.json(); } catch (e) {}
+  out.push(`<h2><a href="${base}">${c.name}</a> <span class="sub">전체 페이지 · <a href="${c.url}" target="_blank">원본</a> ${c.note || ""}</span></h2>`);
+  if (secs.length) out.push("<ol>" + secs.map(s =>
+    `<li><a href="${base}${s.slug}/">${s.title}</a> <code>${location.origin}${base}${s.slug}/</code><br><span class="sub">${s.desc}</span></li>`).join("") + "</ol>");
+}
+document.getElementById("list").innerHTML = out.join("");
+</script></body></html>

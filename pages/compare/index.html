@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>비교 · 현재 모듈 / 킥 모션 보존판 / 원본</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#0d0d0e;color:#eee;font:13px/1.4 -apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+header{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:10px 16px;border-bottom:1px solid #262628;background:#151516}
+header h1{margin:0 6px 0 0;font-size:14px;font-weight:600}
+.grp{display:flex;gap:4px;align-items:center}
+.grp>b{font-weight:500;opacity:.55;margin-right:4px}
+button{padding:5px 10px;border:1px solid #3a3a3d;border-radius:7px;background:transparent;color:#eee;font:inherit;cursor:pointer}
+button.on{background:#eee;color:#111;border-color:#eee}
+label{display:flex;gap:5px;align-items:center;cursor:pointer}
+#bar{display:flex;gap:12px;align-items:center;padding:8px 16px;border-bottom:1px solid #262628}
+#bar input{flex:1}
+#ypos{min-width:150px;font-variant-numeric:tabular-nums;opacity:.85}
+#stage{display:flex;gap:12px;padding:12px 16px;height:calc(100% - 96px);overflow:auto;align-items:flex-start}
+.col{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.col.off{display:none}
+.col h2{margin:0;font-size:13px;font-weight:600;display:flex;justify-content:space-between;gap:8px}
+.col h2 small{font-weight:400;opacity:.55}
+.box{position:relative;overflow:hidden;border-radius:6px;background:#000;outline:1px solid #2a2a2c}
+.box iframe{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform-origin:0 0}
+.read{font-variant-numeric:tabular-nums;font-size:12px;line-height:1.6;color:#cfcfcf;background:#18181a;border-radius:6px;padding:6px 9px;white-space:pre}
+.read .k{color:#ffd166}
+#acts:empty{display:none}
+#acts button{border-color:#ffd166;color:#ffd166}
+.note{font-size:12px;opacity:.6;padding:0 16px 10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="grp" id="sets"><b>섹션</b></div>
+  <div class="grp" id="themes"><b>모듈 테마</b></div>
+  <div class="grp"><b>맞춤</b>
+    <button data-sync="px" class="on" title="섹션 맨 위에서 같은 거리만큼 스크롤">같은 위치(px)</button>
+    <button data-sync="pct" title="각자 전체 길이의 같은 비율만큼 스크롤">같은 진행률(%)</button>
+  </div>
+  <div class="grp" id="show"><b>보기</b>
+    <label><input type="checkbox" data-col="cur" checked> 현재 모듈</label>
+    <label><input type="checkbox" data-col="sig" checked> 보존판</label>
+    <label><input type="checkbox" data-col="org" checked> 원본</label>
+  </div>
+  <div class="grp" id="jumps"><b>원본 구간</b></div>
+  <div class="grp" id="acts"></div>
+</header>
+<div id="bar">
+  <input type="range" id="range" min="0" max="6000" value="0" step="1">
+  <span id="ypos">0px</span>
+</div>
+<div id="stage">
+  <section class="col" data-col="cur"><h2>현재 모듈 <small data-name></small></h2><div class="box"><iframe></iframe></div><div class="read"></div></section>
+  <section class="col" data-col="sig"><h2>킥 모션 보존판 <small data-name></small></h2><div class="box"><iframe></iframe></div><div class="read"></div></section>
+  <section class="col" data-col="org"><h2>원본 <small data-name></small></h2><div class="box"><iframe></iframe></div><div class="read"></div></section>
+</div>
+<script type="module">
+// 같은 섹션의 [현재 모듈 / 킥 모션 보존판 / 원본]을 1440×900으로 띄워 줄여 보여 주고, 스크롤·조작을 함께 보낸다.
+// 주소: /pages/compare/?set=effects|pricing|hero&theme=clean
+import themes from "/engine/themes.js";
+
+const VW = 1440, VH = 900;
+const q = new URLSearchParams(location.search);
+let theme = q.get("theme") || "clean";
+let sync = "px";
+
+// ── 비교 묶음 ───────────────────────────────────────────────
+const W = (d) => d.defaultView;
+const scaleOf = (d, sel) => { const e = d.querySelector(sel); if (!e) return null; const m = new DOMMatrixReadOnly(W(d).getComputedStyle(e).transform); return Math.hypot(m.m11, m.m12, m.m13); };
+const txOf = (d, sel) => { const e = d.querySelector(sel); if (!e) return null; return new DOMMatrixReadOnly(W(d).getComputedStyle(e).transform).m41; };
+const rotY = (d, sel) => { const e = d.querySelector(sel); if (!e) return null; const m = new DOMMatrixReadOnly(W(d).getComputedStyle(e).transform); return Math.round(Math.atan2(-m.m13, m.m11) * 180 / Math.PI); };
+const tyOf = (d, sel) => { const e = d.querySelector(sel); if (!e) return null; return new DOMMatrixReadOnly(W(d).getComputedStyle(e).transform).m42; };
+const pctY = (d, sel) => { const e = d.querySelector(sel); if (!e) return null; return Math.round(new DOMMatrixReadOnly(W(d).getComputedStyle(e).transform).m42 / e.offsetHeight * 100); };
+const cardsLine = (d, sel) => { const cs = [...d.querySelectorAll(sel)]; const sc = cs.map((e) => { const m = new DOMMatrixReadOnly(W(d).getComputedStyle(e).transform); return Math.hypot(m.m11, m.m12); }); return `보이는 카드 ${k(sc.filter((v) => v > 0.05).length)}/${cs.length}장 · 가장 큰 카드 ${k(Math.max(0, ...sc), x2)}배`; };
+const rotX = (d, sel) => { const e = d.querySelector(sel); if (!e) return null; const m = new DOMMatrixReadOnly(W(d).getComputedStyle(e).transform); return Math.round(Math.atan2(m.m23, m.m22) * 180 / Math.PI); };
+const k = (v, f = (x) => x) => `<span class="k">${v == null ? "–" : f(v)}</span>`;
+const x2 = (v) => v.toFixed(2);
+const vw = (v) => `${Math.round(v / VW * 100)}vw`;
+function chars(d, sel, card) {
+  const cs = [...d.querySelectorAll(sel)];
+  const shown = cs.filter((c) => c.style.display !== "none");
+  const gone = shown.filter((c) => { const i = c.firstElementChild; return i && W(d).getComputedStyle(i).visibility === "hidden"; });
+  return { total: cs.length, shown: shown.length - gone.length, gone: gone.length, cards: d.querySelectorAll(card + ".on").length, cardsTotal: d.querySelectorAll(card).length };
+}
+const charLine = (r) => `글자 ${k(r.shown)}/${r.total} 보임` + (r.gone ? ` · ${k(r.gone)}개 흩어짐` : "") + `\n카드 ${k(r.cards)}/${r.cardsTotal}장`;
+const mouse = (el) => { if (!el) return; el.dispatchEvent(new MouseEvent("mouseenter")); el.dispatchEvent(new MouseEvent("mouseover", { bubbles: true })); };
+
+const SETS = {
+  effects: {
+    name: "효과 수·카드",
+    cur: "effects-cards", sig: "effects-cards-sig", org: "/clones/madewithgsap/03-effects/",
+    jumps: [["글자 등장 시작", 90], ["글자 완성", 1800], ["카드 진입·흩어짐", 2700], ["카드 4장", 5100], ["섹션 끝", 5400]],
+    read: {
+      cur: (d) => { const cs = [...d.querySelectorAll(".ec-big .c")]; return `글자 ${k(cs.filter((c) => +W(d).getComputedStyle(c).opacity > 0.5).length)}/${cs.length} 보임\n카드 ${k(d.querySelectorAll(".ec-card.on").length)}/${d.querySelectorAll(".ec-card").length}장`; },
+      sig: (d) => charLine(chars(d, ".ecs-line .char", ".ecs-circle")),
+      org: (d) => charLine(chars(d, ".h-texts .title-l .char", ".h-cards .circle")),
+    },
+  },
+  pricing: {
+    name: "가격",
+    cur: "pricing-flip", sig: "pricing-flip-sig", org: "/clones/madewithgsap/05-pricing/",
+    jumps: [["맨 위", 0], ["카드", 200]],
+    acts: [
+      ["분기 ↔ 연간 전환", { cur: (d) => d.querySelector(".pf-toggle")?.click(), sig: (d) => d.querySelector(".ps-toggle")?.click(), org: (d) => d.querySelector(".s-pricing .toggle-price")?.click() }],
+      ["버튼에 마우스 올리기", { cur: () => {}, sig: (d) => mouse(d.querySelector(".ps-cta:not(.off)")), org: (d) => mouse(d.querySelector(".s-pricing .card .cta-main:not(.off)")) }],
+    ],
+    read: {
+      cur: (d) => `첫 숫자 앞면 회전(X) ${k(rotX(d, ".pf-a"), (v) => v + "°")} · 뒷면 ${k(rotX(d, ".pf-b"), (v) => v + "°")}\n스위치 손잡이 ${k(txOf(d, ".pf-switch i"), (v) => Math.round(v) + "px")}`,
+      sig: (d) => `앞 가격 회전(Y) ${k(rotY(d, ".ps-c1 .ps-rot"), (v) => v + "°")} · 뒤 가격 ${k(rotY(d, ".ps-c2 .ps-rot"), (v) => v + "°")}\n스위치 손잡이 ${k(txOf(d, ".ps-rond"), (v) => Math.round(v) + "px")}`,
+      org: (d) => `앞 가격 회전(Y) ${k(rotY(d, ".center1 .rot"), (v) => v + "°")} · 뒤 가격 ${k(rotY(d, ".center2 .rot"), (v) => v + "°")}\n스위치 손잡이 ${k(txOf(d, ".toggle-price .rond"), (v) => Math.round(v) + "px")}`,
+    },
+  },
+  hero: {
+    name: "히어로",
+    cur: "hero-window", sig: "hero-window-sig", org: "/clones/jeskojets/01-hero/",
+    jumps: [["시작", 0], ["확대 절반", 900], ["확대 끝", 1800], ["소개 문장", 2400], ["소개 끝", 3300]],
+    acts: [["처음 등장 다시 보기", "reload"]],
+    read: {
+      cur: (d) => `창 확대 ${k(scaleOf(d, ".hw-frame"), x2)}배 · 글자 층 ${k(1, x2)}배\n제목 왼쪽 이동 ${k(txOf(d, ".hw-l"), vw)}`,
+      sig: (d) => `창 확대 ${k(scaleOf(d, ".hws-bg"), x2)}배 · 글자 층 ${k(scaleOf(d, ".hws-s"), x2)}배\n제목 왼쪽 이동 ${k(txOf(d, ".hws-grid .hws-l"), vw)} · 블라인드 ${k((tyOf(d, ".hws-blind") ?? 0) < -10 ? "열림" : "닫힘")}`,
+      org: (d) => `창 확대 ${k(scaleOf(d, ".hero-w_bg"), x2)}배 · 글자 층 ${k(scaleOf(d, ".hero-s"), x2)}배\n제목 왼쪽 이동 ${k(txOf(d, ".hero-s_title-l"), vw)} · 블라인드 ${k((tyOf(d, "[preloader-window-c]") ?? 0) < -10 ? "열림" : "닫힘")}`,
+    },
+  },
+  showcase: {
+    name: "쇼케이스",
+    cur: "showcase-pinned", sig: "showcase-pinned-sig", org: "/clones/madewithgsap/07-showcase/",
+    jumps: [["맨 위", 0], ["고정 시작", 424], ["절반", 1100], ["끝 무렵", 1700]],
+    acts: [["버튼에 마우스 올리기", { cur: (d) => mouse(d.querySelector(".sp-cta")), sig: (d) => mouse(d.querySelector(".sps-cta")), org: (d) => mouse(d.querySelector(".h-showcase .cta-main")) }]],
+    read: {
+      cur: (d) => cardsLine(d, ".sp-card"),
+      sig: (d) => cardsLine(d, ".sps-media"),
+      org: (d) => cardsLine(d, ".h-showcase .media"),
+    },
+  },
+  fleet: {
+    name: "기체 소개",
+    cur: "jet-fleet", sig: "jet-fleet-sig", org: "/clones/jeskojets/02-fleet/",
+    jumps: [["시작", 0], ["기체 등장", 900], ["화면 교대", 1500], ["기체 지우기", 2160], ["끝", 2700]],
+    read: {
+      cur: (d) => `기체 크기 ${k(scaleOf(d, ".jf-craft"), x2)}배 · 소개 화면 아래로 ${k(pctY(d, ".jf-intro"), (v) => v + "%")}\n기체 지움 ${k(W(d).getComputedStyle(d.querySelector(".jf-craft")).getPropertyValue("--m").trim() || "0%")}`,
+      sig: (d) => `기체 크기 ${k(scaleOf(d, ".jfs-jet"), x2)}배 · 소개 화면 아래로 ${k(pctY(d, ".jfs-w"), (v) => v + "%")}\n기체 마스크 ${k(W(d).getComputedStyle(d.querySelector(".jfs-img")).getPropertyValue("--mask-size").trim())} · 밝은 배경 ${k(+W(d).getComputedStyle(d.querySelector(".jfs-light")).opacity, x2)}`,
+      org: (d) => `기체 크기 ${k(scaleOf(d, ".jet"), x2)}배 · 소개 화면 아래로 ${k(pctY(d, ".jet-w"), (v) => v + "%")}\n기체 마스크 ${k(W(d).getComputedStyle(d.querySelector(".img-jet")).getPropertyValue("--mask-size").trim())} · 밝은 배경 ${k(+W(d).getComputedStyle(d.querySelector(".light-bg")).opacity, x2)}`,
+    },
+  },
+};
+const setId = SETS[q.get("set")] ? q.get("set") : "effects";
+const SET = SETS[setId];
+document.title = `비교 · ${SET.name}`;
+const src = {
+  cur: () => `/pages/preview/?list=${SET.cur}&panel=0&theme=${theme}`,
+  sig: () => `/pages/preview/?list=${SET.sig}&panel=0&theme=${theme}`,
+  org: () => SET.org,
+};
+Object.entries(SETS).forEach(([id, s]) => {
+  const b = document.createElement("button"); b.textContent = s.name; b.classList.toggle("on", id === setId);
+  b.onclick = () => { const u = new URL(location.href); u.searchParams.set("set", id); location.href = u; };
+  document.getElementById("sets").appendChild(b);
+});
+
+const cols = [...document.querySelectorAll(".col")].map((el) => ({
+  id: el.dataset.col, el, box: el.querySelector(".box"), frame: el.querySelector("iframe"), read: el.querySelector(".read"), max: 0, ready: false,
+}));
+
+// 줄여 보이기
+function fit() {
+  cols.forEach((c) => {
+    const s = c.box.clientWidth / VW;
+    c.frame.style.transform = `scale(${s})`;
+    c.box.style.height = VH * s + "px";
+  });
+}
+addEventListener("resize", fit);
+
+// 불러오기 + 휠 가로채기
+function load(c) {
+  c.ready = false;
+  c.frame.src = src[c.id]();
+  c.frame.onload = () => {
+    const w = c.frame.contentWindow;
+    const grab = (e) => { e.preventDefault(); e.stopImmediatePropagation(); onWheel(e); };
+    w.addEventListener("wheel", grab, { capture: true, passive: false });
+    w.addEventListener("keydown", (e) => { if (onKey(e)) { e.preventDefault(); e.stopImmediatePropagation(); } }, { capture: true });
+    // 원본은 주소 되돌리기·스크롤 엔진 준비에 시간이 걸린다
+    setTimeout(() => { c.ready = true; measure(); push(true); }, c.id === "org" ? 4200 : 800);
+    setTimeout(measure, 6500);
+  };
+}
+function measure() {
+  cols.forEach((c) => {
+    if (!c.ready) return;
+    const d = c.frame.contentDocument;
+    c.max = Math.max(0, d.documentElement.scrollHeight - VH);
+  });
+  range.max = Math.max(1, ...cols.map((c) => c.max));
+}
+
+// 스크롤 상태(바깥 하나)
+const range = document.getElementById("range"), ypos = document.getElementById("ypos");
+let target = 0, y = 0;
+const topY = () => Math.max(1, ...cols.map((c) => c.max));
+const setTarget = (v) => { target = Math.min(topY(), Math.max(0, v)); };
+function onWheel(e) { setTarget(target + (e.deltaMode === 1 ? e.deltaY * 40 : e.deltaY)); }
+function onKey(e) {
+  const map = { ArrowDown: 80, ArrowUp: -80, PageDown: VH * 0.9, PageUp: -VH * 0.9, " ": VH * 0.9, Home: -1e9, End: 1e9 };
+  if (!(e.key in map)) return false;
+  setTarget(target + map[e.key]); return true;
+}
+addEventListener("wheel", (e) => { e.preventDefault(); onWheel(e); }, { passive: false });
+addEventListener("keydown", (e) => { if (onKey(e)) e.preventDefault(); });
+range.oninput = () => { target = y = +range.value; push(true); };
+
+function frameY(c) {
+  if (sync === "px") return Math.min(y, c.max);
+  return (y / topY()) * c.max;
+}
+function push(force) {
+  cols.forEach((c) => {
+    if (!c.ready || c.el.classList.contains("off")) return;
+    const w = c.frame.contentWindow, v = Math.round(frameY(c));
+    const l = w.engine?.lenis;
+    if (l) {
+      if (l.limit < Math.min(v, c.max) - 1) l.resize(); // 섹션 높이가 늦게 잡혀도 Lenis가 끝을 0으로 기억하지 않게
+      l.scrollTo(v, { immediate: true, force: true });
+    } else { w.scrollTo(0, v); w.ScrollTrigger?.update(); }
+  });
+}
+function loop() {
+  const ny = y + (target - y) * 0.12;
+  if (Math.abs(ny - y) > 0.3 || Math.abs(target - y) > 0.3) { y = Math.abs(target - ny) < 0.3 ? target : ny; push(); range.value = y; }
+  ypos.textContent = `${Math.round(y)}px · ${(y / VH).toFixed(2)}화면`;
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+// 숫자 표시
+setInterval(() => {
+  cols.forEach((c) => {
+    if (!c.ready) { c.read.textContent = "불러오는 중…"; return; }
+    let r; try { r = SET.read[c.id](c.frame.contentDocument); } catch (e) { c.read.textContent = "읽기 실패"; return; }
+    const fy = Math.round(c.frame.contentWindow.scrollY);
+    c.read.innerHTML = `스크롤 ${fy}px / 끝 ${c.max}px\n` + r;
+  });
+}, 150);
+
+// 원본 구간 바로가기(900px 높이 기준 원본 숫자)
+SET.jumps.forEach(([t, v]) => {
+  const b = document.createElement("button"); b.textContent = `${t} ${v}`;
+  b.onclick = () => setTarget(v);
+  document.getElementById("jumps").appendChild(b);
+});
+
+// 조작(세 화면에 같은 동작을 동시에 보냄)
+(SET.acts || []).forEach(([t, fn]) => {
+  const b = document.createElement("button"); b.textContent = t;
+  b.onclick = () => {
+    if (fn === "reload") { cols.forEach(load); return; }
+    cols.forEach((c) => { if (c.ready) try { fn[c.id](c.frame.contentDocument); } catch (e) { console.warn(e); } });
+  };
+  document.getElementById("acts").appendChild(b);
+});
+cols.forEach((c) => { c.el.querySelector("[data-name]").textContent = c.id === "org" ? SET.org.replace(/^\/|\/$/g, "") : SET[c.id]; });
+
+// 테마(두 모듈 화면에만 적용, 원본은 그대로)
+const tbox = document.getElementById("themes");
+themes.forEach((t) => {
+  const b = document.createElement("button"); b.textContent = t.name; b.dataset.id = t.id;
+  b.classList.toggle("on", t.id === theme);
+  b.onclick = () => {
+    theme = t.id;
+    tbox.querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b));
+    cols.filter((c) => c.id !== "org" && c.ready).forEach((c) => { c.frame.contentWindow.engine.setTheme(theme); setTimeout(() => { measure(); push(true); }, 300); });
+    const u = new URL(location.href); u.searchParams.set("theme", theme); history.replaceState(null, "", u);
+  };
+  tbox.appendChild(b);
+});
+document.querySelectorAll("[data-sync]").forEach((b) => b.onclick = () => {
+  sync = b.dataset.sync;
+  document.querySelectorAll("[data-sync]").forEach((x) => x.classList.toggle("on", x === b));
+  push(true);
+});
+document.querySelectorAll("#show input").forEach((i) => i.onchange = () => {
+  cols.find((c) => c.id === i.dataset.col).el.classList.toggle("off", !i.checked);
+  fit(); push(true);
+});
+
+cols.forEach(load);
+fit();
+</script>
+</body>
+</html>

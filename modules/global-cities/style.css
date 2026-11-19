@@ -1,0 +1,65 @@
+[data-module="global-cities"]{overflow:clip}
+[data-module="global-cities"] .gc-area{position:relative;height:300vh}
+[data-module="global-cities"] .gc-stick{position:sticky;top:0;height:100vh;overflow:hidden}
+
+/* 도시 줄: 제목 | 선+비행기 | 넘어가는 목록 */
+[data-module="global-cities"] .gc-cities{position:absolute;left:0;right:0;top:0;height:56vh;z-index:2}
+[data-module="global-cities"] .gc-cities-in{height:100%;display:grid;grid-template-columns:1fr minmax(160px,22vw) 1fr;align-items:center;gap:2vw;padding:12vh 5vw 0}
+[data-module="global-cities"] .gc-ctitle{margin:0;text-align:right;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:clamp(22px,2.2vw,34px)}
+[data-module="global-cities"] .gc-diagram{display:flex;align-items:center;gap:12px}
+[data-module="global-cities"] .gc-ln{flex:1;height:1px}
+[data-module="global-cities"] .gc-ln-r{background:linear-gradient(270deg,color-mix(in srgb,var(--c-fg) 30%,transparent),transparent)}
+[data-module="global-cities"] .gc-ln-l{background:linear-gradient(90deg,color-mix(in srgb,var(--c-fg) 30%,transparent),transparent)}
+[data-module="global-cities"] .gc-icon{width:24px;height:24px;fill:var(--c-accent)}
+[data-module="global-cities"] .gc-mask{position:relative;height:clamp(220px,34vh,360px);overflow:hidden;-webkit-mask-image:linear-gradient(180deg,transparent,#000 35%,#000 65%,transparent);mask-image:linear-gradient(180deg,transparent,#000 35%,#000 65%,transparent)}
+[data-module="global-cities"] .gc-list{position:relative;margin:0;padding:0;list-style:none}
+[data-module="global-cities"] .gc-list li{padding:6px 0;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:clamp(22px,2.2vw,34px);line-height:1.15;color:color-mix(in srgb,var(--c-fg) 16%,transparent);transition:color .3s}
+[data-module="global-cities"] .gc-list li.is-on{color:var(--c-fg)}
+
+/* 큰 글씨(지구본 뒤) + 지구본 */
+[data-module="global-cities"] .gc-word{position:absolute;left:0;right:0;bottom:26vh;z-index:0;overflow:hidden;text-align:center;pointer-events:none}
+[data-module="global-cities"] .gc-word span{display:inline-block;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:clamp(80px,19vw,340px);line-height:.95;white-space:nowrap;color:color-mix(in srgb,var(--c-fg) 90%,var(--c-accent))}
+[data-module="global-cities"] .gc-globe-w{--s:min(58vh,46vw);position:absolute;left:50%;bottom:3vh;z-index:1;width:var(--s);height:var(--s);margin-left:calc(var(--s) / -2);transform-origin:50% 50%;will-change:transform}
+[data-module="global-cities"] .gc-globe{width:100%;height:100%;overflow:visible}
+[data-module="global-cities"] .gc-sphere{fill:color-mix(in srgb,var(--c-fg) 7%,var(--c-bg))}
+[data-module="global-cities"] .gc-rim{fill:none;stroke:color-mix(in srgb,var(--c-fg) 35%,transparent);stroke-width:.6}
+[data-module="global-cities"] .gc-grid{fill:none;stroke:var(--c-fg);stroke-opacity:.14;stroke-width:.4}
+[data-module="global-cities"] .gc-dots{fill:var(--c-fg);fill-opacity:.6}
+[data-module="global-cities"] .gc-arcs{fill:none;stroke:var(--c-accent);stroke-width:.8;stroke-linecap:round;stroke-dasharray:6 3}
+
+/* 숫자 카드: 무대 위로 지나감 */
+[data-module="global-cities"] .gc-fact{position:relative;z-index:3;height:100vh;display:flex;align-items:center;justify-content:flex-end;padding:0 5vw;pointer-events:none}
+[data-module="global-cities"] .gc-card{width:min(420px,100%);padding:28px;border:1px solid var(--c-line);border-radius:var(--radius);background:color-mix(in srgb,var(--c-surface) 82%,transparent);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);pointer-events:auto}
+[data-module="global-cities"] .gc-num{position:relative;padding-right:44px}
+[data-module="global-cities"] .gc-num h3{margin:0;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:clamp(56px,6vw,96px);line-height:1}
+[data-module="global-cities"] .gc-num small{font-size:.3em;letter-spacing:0;color:var(--c-muted)}
+[data-module="global-cities"] .gc-bar{position:absolute;right:0;top:0;width:30px;height:100%;fill:var(--c-fg)}
+[data-module="global-cities"] .gc-card h4{margin:24px 0 0;padding-top:12px;border-top:1px solid var(--c-line);font-size:14px;font-weight:600}
+[data-module="global-cities"] .gc-card p{margin:40px 0 0;font-size:14px;color:var(--c-muted)}
+
+/* 연락처: 맨 아래 */
+[data-module="global-cities"] .gc-cta{position:absolute;left:0;right:0;bottom:0;z-index:4;min-height:48vh;display:grid;grid-template-columns:1.4fr 1fr;gap:5vw;padding:12vh 5vw 5vh;pointer-events:none;background:linear-gradient(180deg,transparent,var(--c-bg) 40%)}
+[data-module="global-cities"] .gc-cta-l,[data-module="global-cities"] .gc-cta-r{display:flex;flex-direction:column;justify-content:space-between;gap:32px;pointer-events:auto}
+[data-module="global-cities"] .gc-cta-t{margin:0;max-width:14em;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);letter-spacing:var(--display-tracking);font-size:clamp(30px,3.6vw,58px);line-height:1.05}
+[data-module="global-cities"] .gc-copy{padding-top:16px;border-top:1px solid var(--c-line);font-size:13px;color:var(--c-muted)}
+[data-module="global-cities"] .gc-cta-r{justify-content:flex-start;align-items:flex-end;text-align:right}
+[data-module="global-cities"] .gc-ask{font-size:13px;letter-spacing:.06em;color:var(--c-muted);padding-bottom:12px;border-bottom:1px solid var(--c-line);align-self:stretch}
+[data-module="global-cities"] .gc-link{font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:clamp(20px,2vw,30px);color:var(--c-fg);text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .4s}
+[data-module="global-cities"] .gc-link:hover{background-size:100% 1px;color:var(--c-accent)}
+
+@media (max-width:767px){
+  [data-module="global-cities"] .gc-area{height:auto;padding-top:var(--space-section)}
+  [data-module="global-cities"] .gc-stick{position:relative;height:auto;overflow:visible}
+  [data-module="global-cities"] .gc-cities{position:relative;height:auto}
+  [data-module="global-cities"] .gc-cities-in{grid-template-columns:1fr;gap:16px;padding:0 6vw;text-align:center}
+  [data-module="global-cities"] .gc-ctitle{text-align:center}
+  [data-module="global-cities"] .gc-diagram{width:60%;margin:0 auto}
+  [data-module="global-cities"] .gc-mask{height:200px}
+  [data-module="global-cities"] .gc-word{position:relative;bottom:auto;margin-top:48px}
+  [data-module="global-cities"] .gc-word span{font-size:20vw}
+  [data-module="global-cities"] .gc-globe-w{--s:86vw;position:relative;left:auto;bottom:auto;margin:-12vw auto 0}
+  [data-module="global-cities"] .gc-fact{height:auto;padding:48px 6vw;justify-content:stretch}
+  [data-module="global-cities"] .gc-card{width:100%}
+  [data-module="global-cities"] .gc-cta{position:relative;min-height:0;grid-template-columns:1fr;padding:24px 6vw var(--space-section)}
+  [data-module="global-cities"] .gc-cta-r{align-items:flex-start;text-align:left}
+}

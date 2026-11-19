@@ -1,0 +1,22 @@
+[
+ {
+  "slug": "01-hero",
+  "title": "히어로",
+  "desc": "창문 → 구름 → 소개 문구로 이어지는 첫 화면"
+ },
+ {
+  "slug": "02-fleet",
+  "title": "기체",
+  "desc": "Fly in Luxury → 비행기 등장 → 기내 배치도 일러스트 + 제원"
+ },
+ {
+  "slug": "03-service",
+  "title": "서비스",
+  "desc": "A better way to fly — 아코디언 + 기내 사진 + 아래 국가 수·두바이 시각 띠"
+ },
+ {
+  "slug": "04-global",
+  "title": "글로벌",
+  "desc": "Fly anywhere 도시 목록 + 5K+ flights·지구본 + 마지막 연락처"
+ }
+]
