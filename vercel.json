@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/__clone-proxy/:path*", "destination": "/api/clone-proxy?u=:path*" },
+
+    { "source": "/assets/:path*", "destination": "https://www.breakthroughenergy.org/assets/:path*" },
+
+    { "source": "/_nuxt/:path*", "destination": "https://deltacafes.com/_nuxt/:path*" },
+    { "source": "/_i18n/:path*", "destination": "https://deltacafes.com/_i18n/:path*" },
+    { "source": "/imgs/:path*", "destination": "https://deltacafes.com/imgs/:path*" },
+    { "source": "/rives/:path*", "destination": "https://deltacafes.com/rives/:path*" },
+    { "source": "/fonts/:path*", "destination": "https://deltacafes.com/fonts/:path*" },
+    { "source": "/en/:file(_payload.*)", "destination": "https://deltacafes.com/en/:file" },
+    { "source": "/pt/:file(_payload.*)", "destination": "https://deltacafes.com/pt/:file" },
+
+    { "source": "/_scripts/:path*", "destination": "/_empty.js" }
+  ],
+  "headers": [
+    { "source": "/clones/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+  ]
+}

@@ -80,8 +80,53 @@ const cloneTools = () => ({
   },
 });
 
+// ── Vercel 배포용 빌드(npm run build) ─────────────────────────────
+// 모든 화면을 함께 만들고, 원본 섹션(clones/)은 가공 없이 그대로 복사한다.
+// 원본 사이트 파일 연결·대신 받기는 vercel.json과 api/clone-proxy.js가 맡는다(개발 서버의 cloneTools 역할).
+const PAGES = ["", "pages/library", "pages/preview", "pages/compose", "pages/pilot", "pages/compare", "pages/compare-effects"];
+const SITES = ["jeskojets", "madewithgsap", "breakthroughenergy", "deltacafes"];
+// deltacafes: 원본은 Vercel 이미지 최적화(/_vercel/image?url=…)로 사진을 부르는데, 이 경로는 Vercel이 예약해 둬서
+// 원본 서버로 넘길 수 없다 → 대신 받기(/__clone-proxy/)로 바꾼다(매니저 빌드와 같은 방식)
+const VIMG = '<script data-clone="vimg">(function(){var R=/\\/_vercel\\/image\\?url=([^&]+)[^ ,"]*/g;function fix(v){if(!v)return v;if(v.indexOf("/_vercel/image")>-1)v=v.replace(R,function(_,u){return decodeURIComponent(u).replace(/^https:\\/\\//,"/__clone-proxy/")});return v.replace(/https:\\/\\/cdn\\.sanity\\.io\\//g,"/__clone-proxy/cdn.sanity.io/")}' +
+  'function el(n){if(n.nodeType!==1)return;["src","srcset"].forEach(function(a){var v=n.getAttribute(a);var f=fix(v);if(f!==v)n.setAttribute(a,f)});if(n.querySelectorAll)n.querySelectorAll("img,source").forEach(el)}' +
+  'new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==="attributes")el(m.target);else m.addedNodes.forEach(el)})}).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:["src","srcset"]})})();</script>';
+const copyClones = () => ({
+  name: "copy-clones",
+  apply: "build",
+  closeBundle() {
+    const out = path.join(process.cwd(), "dist");
+    const put = (rel, body) => { const f = path.join(out, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, body); };
+    put("clones/clones.json", fs.readFileSync(path.join(process.cwd(), "clones", "clones.json")));
+    let n = 0;
+    for (const site of SITES) {
+      const src = path.join(process.cwd(), "clones", site);
+      if (!fs.existsSync(src)) continue;
+      if (fs.existsSync(path.join(src, "sections.json"))) put(`clones/${site}/sections.json`, fs.readFileSync(path.join(src, "sections.json")));
+      for (const p of ["", ...fs.readdirSync(src).filter((d) => /^\d\d-/.test(d))]) {
+        let html = fs.readFileSync(path.join(src, p, "index.html"), "utf8");
+        if (site === "deltacafes") {
+          html = html.replace(/\/_vercel\/image\?url=([^&"'\s]+)(?:&amp;[^"'\s,]*|&[^"'\s,]*)?/g, (_, u) => decodeURIComponent(u).replace(/^https:\/\//, "/__clone-proxy/"));
+          html = html.replace(/(src|srcset)="https:\/\/cdn\.sanity\.io\//g, '$1="/__clone-proxy/cdn.sanity.io/');
+          html = html.replace("</head>", VIMG + "</head>");
+        }
+        put(`clones/${site}/${p ? p + "/" : ""}index.html`, html);
+        n++;
+      }
+    }
+    put("_empty.js", "/* 복제본: 분석 스크립트 차단 */");
+    console.log(`원본 섹션 페이지 ${n}개를 dist/clones/ 에 그대로 복사함`);
+  },
+});
+
 export default defineConfig({
-  plugins: [react(), cloneTools()],
+  plugins: [react(), cloneTools(), copyClones()],
+  build: {
+    target: "es2022", // 첫 화면(index.html)이 최상위 await를 씀
+    assetsDir: "_m", // 원본(breakthroughenergy)이 쓰는 /assets 경로와 겹치지 않게
+    rollupOptions: {
+      input: Object.fromEntries(PAGES.map((p) => [p ? p.split("/").pop() : "main", path.resolve(process.cwd(), p, "index.html")])),
+    },
+  },
   server: {
     port: 5173,
     strictPort: true,
