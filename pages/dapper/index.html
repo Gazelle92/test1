@@ -36,7 +36,7 @@ html[data-theme]:not([data-theme="dapper"]) .dp-header{display:none}
 <div id="panel">
   <div class="row" id="themes"></div>
   <small id="info"></small>
-  <a href="/pages/design-system/?id=dapper" target="_blank">디자인 시스템 보기 ↗</a>
+  <a id="ds-link" href="/pages/design-system/?id=dapper" target="_blank">디자인 시스템 보기 ↗</a>
   <label><input type="checkbox" id="src"> 모듈 출처 표시</label>
 </div>
 <script type="module">
@@ -54,6 +54,9 @@ function paint() {
   box.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.id === t.id));
   const s = t.scroll.lerp ? `스크롤 lerp ${t.scroll.lerp}` : `스크롤 ${t.scroll.duration}초`;
   info.textContent = `${s} · 움직임 배율 ${t.motion.speed} · ${t.motion.ease.out}`;
+  const ds = document.getElementById("ds-link");
+  ds.hidden = !t.system;
+  if (t.system) ds.href = `/pages/design-system/?id=${t.id}`;
 }
 themes.forEach((t) => {
   const b = document.createElement("button");
