@@ -22,7 +22,7 @@
 [data-module="pricing-flip-sig"] .ps-rot,[data-module="pricing-flip-sig"] .ps-rot>*{transform:translate3d(0,0,-450px);transform-style:preserve-3d}
 [data-module="pricing-flip-sig"] .ps-rot>*{transform:translate3d(0,0,450px)}
 [data-module="pricing-flip-sig"] .ps-c2 .ps-rot{transform:translate3d(0,0,-450px) rotateY(54deg)}
-[data-module="pricing-flip-sig"] .ps-price{margin:0;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:65px;line-height:1.02;letter-spacing:-.02em}
+[data-module="pricing-flip-sig"] .ps-price{display:flex;justify-content:center;white-space:nowrap;margin:0;font-family:var(--font-display);font-weight:var(--display-weight);font-style:var(--display-style);font-size:65px;line-height:1.02;letter-spacing:-.02em}
 [data-module="pricing-flip-sig"] .ps-label{margin:0;padding:7px 0 20px;font:500 13px/1.49 var(--font-body);letter-spacing:.06em;text-transform:uppercase}
 [data-module="pricing-flip-sig"] .ps-note{margin:0;font:500 12px/1.4 var(--font-body);letter-spacing:-.02em;color:var(--ps-grey)}
 

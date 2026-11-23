@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>시범 조합 3 · 디자인 시스템 적용(대퍼)</title>
+<link rel="stylesheet" href="/engine/base.css">
+<style>
+/* 머리말: 레퍼런스의 화면 위 가운데 떠 있는 흰 메뉴 막대(모서리 6px) + 민트 화살표 칸. 테마 토큰을 따른다 */
+.dp-header{position:fixed;z-index:90;left:50%;top:14px;transform:translateX(-50%);display:flex;align-items:center;gap:28px;padding:6px 6px 6px 16px;border-radius:6px;background:#fff;color:var(--c-dark,#212121);font:500 12px/1 var(--font-body);letter-spacing:-.01em;white-space:nowrap}
+.dp-logo{display:flex;align-items:center;gap:8px;color:inherit;text-decoration:none;font:700 17px/1 var(--font-display);letter-spacing:-.03em}
+.dp-logo i{width:14px;height:12px;background:var(--c-dark,#212121);clip-path:polygon(0 0,100% 0,60% 100%,0 70%)}
+.dp-header nav{display:flex;gap:18px}
+.dp-header nav a{color:inherit;text-decoration:none}
+.dp-header nav a small{font-size:9px;margin-left:2px}
+.dp-talk{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;font-weight:700}
+.dp-talk b{display:grid;place-items:center;width:28px;height:28px;border-radius:3px;background:var(--c-primary,#74f5a1);font-size:13px}
+html[data-theme]:not([data-theme="dapper"]) .dp-header{display:none}
+@media (max-width:767px){.dp-header nav{display:none}}
+#panel{position:fixed;z-index:100;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:12px;background:rgba(20,20,20,.88);color:#fff;font:13px/1.4 -apple-system,'Apple SD Gothic Neo',sans-serif;backdrop-filter:blur(8px)}
+#panel .row{display:flex;gap:6px;flex-wrap:wrap}
+#panel button{padding:7px 12px;border:1px solid rgba(255,255,255,.25);border-radius:8px;background:transparent;color:#fff;font:inherit;cursor:pointer}
+#panel button.on{background:#fff;color:#111}
+#panel small{opacity:.65}
+#panel a{color:#fff;opacity:.8}
+#panel label{display:flex;gap:6px;align-items:center;cursor:pointer}
+</style>
+</head>
+<body>
+<header class="dp-header" aria-label="머리말">
+  <a class="dp-logo" href="#"><i aria-hidden="true"></i>STAY HAUS</a>
+  <nav aria-label="주 메뉴"><a href="#">호텔 <small>▾</small></a><a href="#">식당 + 바 <small>▾</small></a><a href="#">예술</a><a href="#">소식</a><a href="#">소개</a></nav>
+  <a class="dp-talk" href="#">예약 문의 <b aria-hidden="true">↗</b></a>
+</header>
+<main id="page"></main>
+<div id="panel">
+  <div class="row" id="themes"></div>
+  <small id="info"></small>
+  <a href="/pages/design-system/?id=dapper" target="_blank">디자인 시스템 보기 ↗</a>
+  <label><input type="checkbox" id="src"> 모듈 출처 표시</label>
+</div>
+<script type="module">
+import { createEngine } from "/engine/engine.js";
+import themes from "/engine/themes.js";
+import page from "./page.js";
+
+const qs = new URLSearchParams(location.search);
+const engine = createEngine({ root: document.getElementById("page"), sections: page.sections, themes, theme: qs.get("theme") || page.theme });
+window.engine = engine;
+
+const box = document.getElementById("themes"), info = document.getElementById("info");
+function paint() {
+  const t = engine.theme;
+  box.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.id === t.id));
+  const s = t.scroll.lerp ? `스크롤 lerp ${t.scroll.lerp}` : `스크롤 ${t.scroll.duration}초`;
+  info.textContent = `${s} · 움직임 배율 ${t.motion.speed} · ${t.motion.ease.out}`;
+}
+themes.forEach((t) => {
+  const b = document.createElement("button");
+  b.textContent = t.name; b.dataset.id = t.id;
+  b.onclick = () => { engine.setTheme(t.id); history.replaceState(null, "", `?theme=${t.id}`); paint(); };
+  box.appendChild(b);
+});
+document.getElementById("src").onchange = (e) => document.documentElement.classList.toggle("show-source", e.target.checked);
+paint();
+</script>
+</body>
+</html>

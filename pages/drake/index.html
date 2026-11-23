@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>시범 조합 2 · 디자인 시스템 적용</title>
+<link rel="stylesheet" href="/engine/base.css">
+<style>
+/* 머리말: 레퍼런스의 네모 상자 메뉴(1px 선 · 흰 바탕 · 모노 대문자). 테마 색·글꼴 토큰을 따른다 */
+.ds-header{position:fixed;z-index:90;left:var(--grid-margin,32px);right:var(--grid-margin,32px);top:16px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none}
+.ds-header>*{pointer-events:auto}
+.ds-left{display:flex;align-items:flex-start}
+.ds-logo{display:grid;place-items:center;width:88px;height:88px;border:1px solid var(--c-fg,#222);background:var(--c-bg,#fff);color:var(--c-fg,#222);font:600 22px/.9 var(--font-display);letter-spacing:-.02em;text-align:center;text-decoration:none}
+.ds-menus{display:flex;flex-direction:column;margin-left:-1px}
+.ds-row{display:flex}
+.ds-row a,.ds-right a{display:flex;align-items:center;gap:10px;height:44px;padding:0 12px;margin:-1px 0 0 -1px;border:1px solid var(--c-fg,#222);background:var(--c-bg,#fff);color:var(--c-fg,#222);font:400 12px/1 var(--font-mono,var(--font-body));text-transform:uppercase;text-decoration:none;white-space:nowrap}
+.ds-row:first-child a:first-child{margin-top:0}
+.ds-row a:hover,.ds-right a:hover{background:var(--c-fg,#222);color:var(--c-bg,#fff)}
+.ds-right{display:flex}
+html[data-theme]:not([data-theme="drake"]) .ds-header{display:none}
+@media (max-width:767px){.ds-row:last-child{display:none}.ds-logo{width:60px;height:60px;font-size:15px}}
+#panel{position:fixed;z-index:100;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:12px;background:rgba(20,20,20,.88);color:#fff;font:13px/1.4 -apple-system,'Apple SD Gothic Neo',sans-serif;backdrop-filter:blur(8px)}
+#panel .row{display:flex;gap:6px;flex-wrap:wrap}
+#panel button{padding:7px 12px;border:1px solid rgba(255,255,255,.25);border-radius:8px;background:transparent;color:#fff;font:inherit;cursor:pointer}
+#panel button.on{background:#fff;color:#111}
+#panel small{opacity:.65}
+#panel a{color:#fff;opacity:.8}
+#panel label{display:flex;gap:6px;align-items:center;cursor:pointer}
+</style>
+</head>
+<body>
+<header class="ds-header" aria-label="머리말">
+  <div class="ds-left">
+    <a class="ds-logo" href="#">STAY<br>HAUS</a>
+    <nav class="ds-menus" aria-label="주 메뉴">
+      <div class="ds-row"><a href="#">호텔 고르기 <span aria-hidden="true">◉</span></a></div>
+      <div class="ds-row"><a href="#">소개</a><a href="#">호텔</a><a href="#">식당 + 바</a><a href="#">예술 + 문화</a><a href="#">소식</a><a href="#">문의</a></div>
+    </nav>
+  </div>
+  <div class="ds-right"><a href="#">메뉴 <span aria-hidden="true">☰</span></a><a href="#">예약 <span aria-hidden="true">→</span></a></div>
+</header>
+<main id="page"></main>
+<div id="panel">
+  <div class="row" id="themes"></div>
+  <small id="info"></small>
+  <a href="/pages/design-system/?id=drake" target="_blank">디자인 시스템 보기 ↗</a>
+  <label><input type="checkbox" id="src"> 모듈 출처 표시</label>
+</div>
+<script type="module">
+import { createEngine } from "/engine/engine.js";
+import themes from "/engine/themes.js";
+import page from "./page.js";
+
+const qs = new URLSearchParams(location.search);
+const engine = createEngine({ root: document.getElementById("page"), sections: page.sections, themes, theme: qs.get("theme") || page.theme });
+window.engine = engine;
+
+const box = document.getElementById("themes"), info = document.getElementById("info");
+function paint() {
+  const t = engine.theme;
+  box.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.id === t.id));
+  const s = t.scroll.lerp ? `스크롤 lerp ${t.scroll.lerp}` : `스크롤 ${t.scroll.duration}초`;
+  info.textContent = `${s} · 움직임 배율 ${t.motion.speed} · ${t.motion.ease.out}`;
+}
+themes.forEach((t) => {
+  const b = document.createElement("button");
+  b.textContent = t.name; b.dataset.id = t.id;
+  b.onclick = () => { engine.setTheme(t.id); history.replaceState(null, "", `?theme=${t.id}`); paint(); };
+  box.appendChild(b);
+});
+document.getElementById("src").onchange = (e) => document.documentElement.classList.toggle("show-source", e.target.checked);
+paint();
+</script>
+</body>
+</html>

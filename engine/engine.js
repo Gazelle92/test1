@@ -19,10 +19,25 @@ const EASINGS = {
 };
 
 // 테마의 디자인 토큰 → CSS 변수(--이름)
+// 테마에 더 넣을 수 있는 것(모두 선택):
+//   fonts: 불러올 웹 글꼴 주소 목록, css: 이 테마일 때만 켜지는 톤앤매너 스타일,
+//   decorate(el): 모듈을 그린 직후·움직임을 붙이기 전에 한 번 부르는 꾸미기(예: 제목 단어 상자)
+let lastKeys = [];
 export function applyTokens(theme) {
   const s = document.documentElement.style;
+  lastKeys.forEach((k) => s.removeProperty(`--${k}`)); // 이전 테마에만 있던 토큰이 남지 않게
+  lastKeys = Object.keys(theme.tokens);
   for (const [k, v] of Object.entries(theme.tokens)) s.setProperty(`--${k}`, v);
   document.documentElement.dataset.theme = theme.id;
+  (theme.fonts || []).forEach((href) => {
+    if (document.querySelector(`link[data-theme-font="${href}"]`)) return;
+    const l = document.createElement("link");
+    l.rel = "stylesheet"; l.href = href; l.dataset.themeFont = href;
+    document.head.appendChild(l);
+  });
+  let st = document.getElementById("theme-css");
+  if (!st) { st = document.createElement("style"); st.id = "theme-css"; document.head.appendChild(st); }
+  st.textContent = theme.css || "";
 }
 
 // 모듈이 쓰는 모션 도구. 모듈은 이징·길이·간격을 직접 쓰지 않고 이것만 쓴다.
@@ -68,6 +83,7 @@ export function createEngine({ root, sections, themes, theme }) {
       el.dataset.source = `${use.category} · ${use.source}`;
       el.innerHTML = use.render({ ...use.defaults, ...content });
       root.appendChild(el);
+      if (current.decorate) current.decorate(el);
       const ctx = gsap.context(() => use.animate(el, m), el);
       return { el, ctx };
     });

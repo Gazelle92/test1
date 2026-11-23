@@ -83,7 +83,7 @@ const cloneTools = () => ({
 // ── Vercel 배포용 빌드(npm run build) ─────────────────────────────
 // 모든 화면을 함께 만들고, 원본 섹션(clones/)은 가공 없이 그대로 복사한다.
 // 원본 사이트 파일 연결·대신 받기는 vercel.json과 api/clone-proxy.js가 맡는다(개발 서버의 cloneTools 역할).
-const PAGES = ["", "pages/library", "pages/preview", "pages/compose", "pages/pilot", "pages/compare", "pages/compare-effects"];
+const PAGES = ["", "pages/library", "pages/preview", "pages/compose", "pages/pilot", "pages/compare", "pages/compare-effects", "pages/drake", "pages/dapper", "pages/chimp", "pages/aesop", "pages/linear", "pages/design-system"];
 const SITES = ["jeskojets", "madewithgsap", "breakthroughenergy", "deltacafes"];
 // deltacafes: 원본은 Vercel 이미지 최적화(/_vercel/image?url=…)로 사진을 부르는데, 이 경로는 Vercel이 예약해 둬서
 // 원본 서버로 넘길 수 없다 → 대신 받기(/__clone-proxy/)로 바꾼다(매니저 빌드와 같은 방식)

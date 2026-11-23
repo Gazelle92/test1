@@ -1,4 +1,11 @@
 // 테마 = 디자인 토큰 + 모션 토큰 + 스크롤 설정. 이 파일만 바꾸면 모든 모듈의 느낌이 함께 바뀐다.
+// 레퍼런스 사이트를 분석해 만든 디자인 시스템 테마는 따로 파일로 두고 여기서 불러온다(fonts·css·decorate 사용).
+import drake from "./theme-drake.js";
+import dapper from "./theme-dapper.js";
+import chimp from "./theme-chimp.js";
+import aesop from "./theme-aesop.js";
+import linear from "./theme-linear.js";
+
 export default [
   {
     id: "clean",
@@ -81,4 +88,9 @@ export default [
     },
     scroll: { duration: 0.8, easing: "cubic", wheel: 1.2 },
   },
+  drake,
+  dapper,
+  chimp,
+  aesop,
+  linear,
 ];

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>시범 조합 6 · 디자인 시스템 적용(리니어)</title>
+<link rel="stylesheet" href="/engine/base.css">
+<style>
+/* 머리말: 레퍼런스처럼 반투명 검정 + 뒤 흐림, 13px 흐린 메뉴, 오른쪽 '로그인' 글자 + 밝은 알약 */
+.ln-head{position:fixed;z-index:90;left:0;right:0;top:0;height:72px;display:flex;align-items:center;gap:32px;padding:0 32px;background:rgba(8,9,10,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08);font:400 13px/1.5 var(--font-body);color:var(--c-text-2,#8a8f98)}
+.ln-logo{display:flex;align-items:center;gap:10px;color:var(--c-text,#f7f8f8);text-decoration:none;font:590 14px/1 var(--font-body);letter-spacing:-.01em}
+.ln-logo i{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#f7f8f8 45%,transparent 46%),#5e6ad2}
+.ln-head nav{display:flex;gap:24px;margin-left:auto}
+.ln-head nav a,.ln-login{color:inherit;text-decoration:none}
+.ln-head nav a:hover,.ln-login:hover{color:var(--c-text,#f7f8f8)}
+.ln-right{display:flex;align-items:center;gap:6px;margin-left:24px}
+.ln-login{padding:0 12px}
+.ln-cta{display:inline-flex;align-items:center;height:32px;padding:0 12px;border-radius:9999px;background:#e5e5e6;color:#08090a;font-weight:510;text-decoration:none}
+html[data-theme]:not([data-theme="linear"]) .ln-head{display:none}
+@media (max-width:900px){.ln-head nav{display:none}.ln-right{margin-left:auto}}
+#panel{position:fixed;z-index:100;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:12px;background:rgba(20,20,20,.88);color:#fff;font:13px/1.4 -apple-system,'Apple SD Gothic Neo',sans-serif;backdrop-filter:blur(8px)}
+#panel .row{display:flex;gap:6px;flex-wrap:wrap}
+#panel button{padding:7px 12px;border:1px solid rgba(255,255,255,.25);border-radius:8px;background:transparent;color:#fff;font:inherit;cursor:pointer}
+#panel button.on{background:#fff;color:#111}
+#panel small{opacity:.65}
+#panel a{color:#fff;opacity:.8}
+#panel label{display:flex;gap:6px;align-items:center;cursor:pointer}
+</style>
+</head>
+<body>
+<header class="ln-head" aria-label="머리말">
+  <a class="ln-logo" href="#"><i aria-hidden="true"></i>STAY HAUS</a>
+  <nav aria-label="주 메뉴"><a href="#">호텔</a><a href="#">식당 + 바</a><a href="#">예술</a><a href="#">요금</a><a href="#">소식</a><a href="#">문의</a></nav>
+  <div class="ln-right"><a class="ln-login" href="#">로그인</a><a class="ln-cta" href="#">예약하기</a></div>
+</header>
+<main id="page"></main>
+<div id="panel">
+  <div class="row" id="themes"></div>
+  <small id="info"></small>
+  <a href="/pages/design-system/?id=linear" target="_blank">디자인 시스템 보기 ↗</a>
+  <label><input type="checkbox" id="src"> 모듈 출처 표시</label>
+</div>
+<script type="module">
+import { createEngine } from "/engine/engine.js";
+import themes from "/engine/themes.js";
+import page from "./page.js";
+
+const qs = new URLSearchParams(location.search);
+const engine = createEngine({ root: document.getElementById("page"), sections: page.sections, themes, theme: qs.get("theme") || page.theme });
+window.engine = engine;
+
+const box = document.getElementById("themes"), info = document.getElementById("info");
+function paint() {
+  const t = engine.theme;
+  box.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.id === t.id));
+  const s = t.scroll.lerp ? `스크롤 lerp ${t.scroll.lerp}` : `스크롤 ${t.scroll.duration}초`;
+  info.textContent = `${s} · 움직임 배율 ${t.motion.speed} · ${t.motion.ease.out}`;
+}
+themes.forEach((t) => {
+  const b = document.createElement("button");
+  b.textContent = t.name; b.dataset.id = t.id;
+  b.onclick = () => { engine.setTheme(t.id); history.replaceState(null, "", `?theme=${t.id}`); paint(); };
+  box.appendChild(b);
+});
+document.getElementById("src").onchange = (e) => document.documentElement.classList.toggle("show-source", e.target.checked);
+paint();
+</script>
+</body>
+</html>
