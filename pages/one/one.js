@@ -173,12 +173,27 @@ const pre = await preload({ roots: [T, A, F], extra: [{ name: "Symbol", w: 0.15,
 console.info("[mx] 미리 불러오기", pre, "막은 파일", window.__mxBlocked);
 trionn(); focus(); // apekon은 원본 스크립트가 맡음
 // 2단계 그리드: ?step=1 이면 원본 그대로, 그 밖(기본)은 trionn 기준 공통 그리드
-const STEP = new URLSearchParams(location.search).get("step") || "2";
+let STEP = new URLSearchParams(location.search).get("step") || "2";
 const regrid = initGrid([T, A, F], { on: STEP !== "1", onChange: () => ScrollTrigger.refresh() });
 ScrollTrigger.refresh();
 await reveal(); lenis.resize?.(); if (PERF) enableFree();
 addEventListener("load", () => ScrollTrigger.refresh());
 document.fonts.ready.then(() => ScrollTrigger.refresh());
-{ const g = new URLSearchParams(location.search).get("grid") === "1";
-  const a = (st, t) => `<a ${STEP === st ? 'aria-current="page"' : ""} href="?step=${st}${g ? "&grid=1" : ""}">${t}</a>`;
-  document.getElementById("mx-ui").innerHTML = `<b>mix-01 한 페이지</b>${a("1", "1 그대로")}${a("2", "2 그리드")}<a href="?step=${STEP}${g ? "" : "&grid=1"}">${g ? "칸 숨기기" : "칸 보기"}</a><span style="padding:0 6px">3 미리 불러오기·안 쓰는 파일 빼기 적용</span>`; }
+// 시험 도구 버튼: 새로고침 없이 그 자리에서 바꾼다.
+// (링크를 그냥 두면 2번 apekon 원본의 페이지 전환기(barba)가 클릭을 가로채 주소만 바뀌고 화면은 그대로였다)
+{ const ui = document.getElementById("mx-ui"), html = document.documentElement;
+  const draw = () => {
+    const g = html.classList.contains("mxg-show");
+    const q = (st, gg) => `?step=${st}${gg ? "&grid=1" : ""}`;
+    const a = (st, t) => `<a data-barba-prevent="self" data-step="${st}" ${STEP === st ? 'aria-current="page"' : ""} href="${q(st, g)}">${t}</a>`;
+    ui.innerHTML = `<b>mix-01 한 페이지</b>${a("1", "1 그대로")}${a("2", "2 그리드")}<a data-barba-prevent="self" data-grid href="${q(STEP, !g)}">${g ? "칸 숨기기" : "칸 보기"}</a><span style="padding:0 6px">3 미리 불러오기·안 쓰는 파일 빼기 적용</span>`;
+  };
+  ui.addEventListener("click", (e) => {
+    const el = e.target.closest("a"); if (!el) return;
+    e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+    if (el.dataset.step) { STEP = el.dataset.step; regrid.setOn(STEP !== "1"); }
+    if ("grid" in el.dataset) html.classList.toggle("mxg-show");
+    history.replaceState(history.state, "", el.getAttribute("href")); // 주소도 맞춰 둔다(새로고침해도 같은 상태)
+    draw();
+  }, true);
+  draw(); }

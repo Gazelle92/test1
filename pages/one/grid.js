@@ -96,6 +96,7 @@ export function applyGrid(roots, on = true) {
 export function initGrid(roots, { on = true, onChange } = {}) {
   if (new URLSearchParams(location.search).get("grid") === "1") html.classList.add("mxg-show");
   const run = () => { const n = applyGrid(roots, on); onChange?.(n); };
+  run.setOn = (v) => { on = v; run(); }; // 새로고침 없이 켜고 끄기(시험 도구 버튼)
   run();
   let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => { if (N() + "|" + innerWidth !== last) run(); }, 150); });
   return run;
