@@ -45,7 +45,8 @@ export async function preload({ roots, extra = [], minMs = 900, maxMs = 20000 } 
     wait(maxMs),
   ]);
   // 이미지 해독까지 끝내 두면 첫 스크롤에서 버벅이지 않는다
-  await Promise.all(imgs.map((i) => i.decode?.().catch(() => {})));
+  // (백그라운드 탭에서는 decode가 끝나지 않을 수 있어 3초까지만 기다린다)
+  await Promise.race([Promise.all(imgs.map((i) => i.decode?.().catch(() => {}))), wait(3000)]);
   finished = true;
   await until(() => shown >= 1, 1500);
   return { ms: Math.round(performance.now() - t0), images: imgs.length, timedOut: performance.now() - t0 >= maxMs };

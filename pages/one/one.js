@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { initGrid } from "./grid.js";
 import { preload, reveal } from "./preload.js";
+import { initPerf, enableFree, onScreen } from "./perf.js";
 
 gsap.registerPlugin(ScrollTrigger);
 const $ = (s, r = document) => r.querySelector(s);
@@ -114,7 +115,8 @@ function trionn() {
     // 마키: 속도 .8, 화면 절반 넘으면 멈춤
     const row = $(".marquee-wrapper > div", vis); let mqPaused = false;
     if (row) { const one = row.firstElementChild; for (let i = 0; i < 3; i++) row.append(one.cloneNode(true)); let x = 0;
-      gsap.ticker.add(() => { if (mqPaused) return; x -= 0.8; const w = one.offsetWidth; if (w && -x >= w) x += w; row.style.transform = `translate3d(${x}px,0,0)`; }); }
+      const mqVis = onScreen(vis); // 화면 밖이면 마키를 움직이지 않는다
+    gsap.ticker.add(() => { if (mqPaused || !mqVis.on) return; x -= 0.8; const w = one.offsetWidth; if (w && -x >= w) x += w; row.style.transform = `translate3d(${x}px,0,0)`; }); }
   }
 }
 
@@ -163,6 +165,8 @@ function focus() {
 
 // ── 시작 ──
 // 3단계: 처음에 미리 불러오기 → 다 받은 뒤 모션·그리드를 걸고 덮개를 걷는다
+const PERF = new URLSearchParams(location.search).get("perf") !== "0"; // ?perf=0 이면 끔(비교용)
+if (PERF) initPerf([T, A, F]); // 화면 밖 섹션 캔버스는 그리지 않고, 숨긴 캔버스 메모리는 비운다
 scrollTo(0, 0); // 스크롤은 덮개가 휠·터치·키를 막는다(lenis.stop()은 apekon 원본 스크롤 처리기가 준비 전이라 오류가 남)
 const symbolReady = trionnSymbol().catch((e) => console.warn("심볼", e));
 const pre = await preload({ roots: [T, A, F], extra: [{ name: "Symbol", w: 0.15, p: symbolReady }] });
@@ -172,7 +176,7 @@ trionn(); focus(); // apekon은 원본 스크립트가 맡음
 const STEP = new URLSearchParams(location.search).get("step") || "2";
 const regrid = initGrid([T, A, F], { on: STEP !== "1", onChange: () => ScrollTrigger.refresh() });
 ScrollTrigger.refresh();
-await reveal(); lenis.resize?.();
+await reveal(); lenis.resize?.(); if (PERF) enableFree();
 addEventListener("load", () => ScrollTrigger.refresh());
 document.fonts.ready.then(() => ScrollTrigger.refresh());
 { const g = new URLSearchParams(location.search).get("grid") === "1";

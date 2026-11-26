@@ -33,10 +33,12 @@ html = f'''<!doctype html>
 <!-- 3단계 · 안 쓰는 리소스 막기: 원본 코드가 부르지만 이 페이지에서는 쓰지 않는 파일 (화면·기능에는 영향 없음)
      · /assets/hero-spark.mp3, hover-beep.mp3 : trionn 심볼 효과음(소리는 꺼 둠) 각 0.9MB
      · /models/andreas-head.glb, emblem.glb   : 숨겨 둔 apekon 소개·푸터 섹션 3D 모델
-     · /sounds/*.ogg                          : apekon 배경음(소리 꺼 둠) · sw.js 서비스워커 등록도 하지 않음 -->
+     · /sounds/*.ogg                          : apekon 배경음(소리 꺼 둠) · sw.js 서비스워커 등록도 하지 않음
+     · 3D 해상도 상한: 고해상도 화면(배율 2 이상)에서 3D 캔버스를 1.5배까지만 그린다(주소에 ?dpr=2 면 원본 그대로) -->
 <script>(()=>{{const B=[/\\.(mp3|ogg)(\\?|$)/i,/\\/models\\/(andreas-head|emblem)\\.glb/i];const no=u=>{{try{{u=String(u&&u.url||u)}}catch{{return!1}}return B.some(r=>r.test(u))}};
 window.__mxBlocked=[];const f=window.fetch;window.fetch=function(u,o){{if(no(u)){{__mxBlocked.push(String(u&&u.url||u));return Promise.reject(new TypeError("mx: 안 쓰는 리소스라 받지 않음"))}}return f.apply(this,arguments)}};
 const op=XMLHttpRequest.prototype.open,sd=XMLHttpRequest.prototype.send;XMLHttpRequest.prototype.open=function(m,u){{this.__mxNo=no(u);if(this.__mxNo)__mxBlocked.push(String(u));return op.apply(this,arguments)}};
+{{const q=new URLSearchParams(location.search).get("dpr"),cap=q?parseFloat(q):1.5,real=window.devicePixelRatio||1;if(real>cap)try{{Object.defineProperty(window,"devicePixelRatio",{{configurable:true,get:()=>cap}})}}catch(e){{}}}}
 if(navigator.serviceWorker){{navigator.serviceWorker.register=()=>Promise.resolve({{scope:location.origin+"/",active:null,unregister:()=>Promise.resolve(!0)}})}};
 XMLHttpRequest.prototype.send=function(){{if(this.__mxNo){{setTimeout(()=>{{this.dispatchEvent(new ProgressEvent("error"));this.onerror&&this.onerror(new ProgressEvent("error"))}});return}}return sd.apply(this,arguments)}};}})();</script>
 <!-- 3단계 · 처음 미리 불러오기 화면: 첫 그림부터 보이도록 스타일을 문서 안에 둔다 -->
