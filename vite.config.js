@@ -7,10 +7,49 @@ const okName = (s) => /^[\w-]+$/.test(s);
 const okFile = (s) => /^[\w.-]+$/.test(s);
 const capDir = (name) => path.join(process.cwd(), "clones", name, "_capture");
 
+// mix-01 복제본(trionn·apekon·focus): 원본이 "/_next/…", "/assets/…", "/fonts/…"처럼 주소 앞부분 없이 부르는 파일을
+// 어느 복제본이 불렀는지(Referer)로 가려서 그 원본 서버에서 받아 온다. 다른 복제본(브레이크스루 /assets 등)은 건드리지 않는다.
+const MIX_SITES = { trionn: "https://trionn.com", apekon: "https://apekon.com", focus: "https://www.focusindustries.tech" };
+const MIX_PREFIX = { "/_next/": "trionn", "/_astro/": "focus", "/models/": "apekon", "/textures/": "apekon", "/sounds/": "apekon" }; // 이 경로는 한 복제본만 씀
+const mixOwner = new Map(); // 이미 보낸 파일 경로 → 복제본 (CSS 안의 글꼴처럼 Referer가 파일 주소일 때 씀)
+const mixCache = new Map();
+const mixSiteOf = (req) => {
+  const p = req.url.split("?")[0];
+  for (const [k, v] of Object.entries(MIX_PREFIX)) if (p.startsWith(k)) return v;
+  let ref = "";
+  try { ref = new URL(req.headers.referer || "").pathname; } catch { return null; }
+  const m = ref.match(/^\/clones\/(trionn|apekon|focus)\//);
+  if (m) return m[1];
+  for (const [k, v] of Object.entries(MIX_PREFIX)) if (ref.startsWith(k)) return v;
+  return mixOwner.get(ref) || null;
+};
+const mixRoute = () => async (req, res, next) => {
+  if (!["GET", "HEAD"].includes(req.method) || /^\/(clones|pages|engine|modules|tools|api|node_modules|@|__)/.test(req.url) || req.url === "/") return next();
+  const site = mixSiteOf(req);
+  if (!site) return next();
+  const url = MIX_SITES[site] + req.url;
+  const pass = ["accept", "rsc", "next-router-state-tree", "next-router-prefetch", "next-url"].filter((h) => req.headers[h]);
+  const key = pass.length > 1 ? null : url; // 앱 데이터 요청(RSC)은 저장하지 않음
+  try {
+    let hit = key && mixCache.get(key);
+    if (!hit) {
+      const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0 (Macintosh) AppleWebKit/537.36 Chrome/130 Safari/537.36", ...Object.fromEntries(pass.map((h) => [h, req.headers[h]])) } });
+      hit = { status: r.status, type: r.headers.get("content-type") || "application/octet-stream", body: Buffer.from(await r.arrayBuffer()) };
+      if (r.ok && key) mixCache.set(key, hit);
+    }
+    mixOwner.set(req.url.split("?")[0], site);
+    res.statusCode = hit.status;
+    res.setHeader("content-type", hit.type);
+    res.setHeader("access-control-allow-origin", "*");
+    res.end(hit.body);
+  } catch (e) { res.statusCode = 502; res.end(String(e)); }
+};
+
 // 복제 도구(개발용): 저장·원본 받기·원본 HTML 그대로 보내기
 const cloneTools = () => ({
   name: "clone-tools",
   configureServer(server) {
+    server.middlewares.use(mixRoute());
     // localhost 화면에서 만든 내용 저장: POST /__clone-save?name=&file=
     server.middlewares.use("/__clone-save", (req, res) => {
       res.setHeader("Access-Control-Allow-Origin", "*");
@@ -83,7 +122,7 @@ const cloneTools = () => ({
 // ── Vercel 배포용 빌드(npm run build) ─────────────────────────────
 // 모든 화면을 함께 만들고, 원본 섹션(clones/)은 가공 없이 그대로 복사한다.
 // 원본 사이트 파일 연결·대신 받기는 vercel.json과 api/clone-proxy.js가 맡는다(개발 서버의 cloneTools 역할).
-const PAGES = ["", "pages/library", "pages/preview", "pages/compose", "pages/pilot", "pages/compare", "pages/compare-effects", "pages/drake", "pages/dapper", "pages/chimp", "pages/aesop", "pages/linear", "pages/design-system"];
+const PAGES = ["", "pages/library", "pages/preview", "pages/compose", "pages/pilot", "pages/compare", "pages/compare-effects", "pages/drake", "pages/dapper", "pages/chimp", "pages/aesop", "pages/linear", "pages/design-system", "pages/ds-extract", "pages/one"];
 const SITES = ["jeskojets", "madewithgsap", "breakthroughenergy", "deltacafes"];
 // deltacafes: 원본은 Vercel 이미지 최적화(/_vercel/image?url=…)로 사진을 부르는데, 이 경로는 Vercel이 예약해 둬서
 // 원본 서버로 넘길 수 없다 → 대신 받기(/__clone-proxy/)로 바꾼다(매니저 빌드와 같은 방식)
@@ -114,6 +153,11 @@ const copyClones = () => ({
       }
     }
     put("_empty.js", "/* 복제본: 분석 스크립트 차단 */");
+    // mix-01 한 페이지: trionn 3D 심볼 원본 코드는 실행 중에 이 주소로 불러온다(빌드가 모르는 파일이라 그대로 복사)
+    put("clones/trionn/_capture/next_1233qowaitufq.js", fs.readFileSync(path.resolve(process.cwd(), "clones/trionn/_capture/next_1233qowaitufq.js")));
+    // 디자인 시스템 추출기: 레퍼런스 사이트에서 불러 쓰는 스크립트라 빌드 없이 그대로 복사
+    put("tools/ds-extract.js", fs.readFileSync(path.resolve(process.cwd(), "tools/ds-extract.js")));
+    for (const f of ["aesop.json", "linear.json"]) put(`pages/ds-extract/samples/${f}`, fs.readFileSync(path.resolve(process.cwd(), "pages/ds-extract/samples", f)));
     console.log(`원본 섹션 페이지 ${n}개를 dist/clones/ 에 그대로 복사함`);
   },
 });

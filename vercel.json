@@ -16,6 +16,11 @@
     { "source": "/en/:file(_payload.*)", "destination": "https://deltacafes.com/en/:file" },
     { "source": "/pt/:file(_payload.*)", "destination": "https://deltacafes.com/pt/:file" },
 
+    { "source": "/textures/:path*", "destination": "https://apekon.com/textures/:path*" },
+    { "source": "/images/:path*", "destination": "https://apekon.com/images/:path*" },
+    { "source": "/models/:path*", "destination": "https://apekon.com/models/:path*" },
+    { "source": "/sounds/:path*", "destination": "https://apekon.com/sounds/:path*" },
+
     { "source": "/_scripts/:path*", "destination": "/_empty.js" }
   ],
   "headers": [

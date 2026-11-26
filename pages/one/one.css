@@ -1,0 +1,25 @@
+/* mix-01 한 페이지: 세 원본 섹션을 한 문서에 둘 때만 필요한 보정 (원본 CSS는 /clones/one/_capture/*.css) */
+html{background:#000}html,body{margin:0;padding:0}body{background:transparent!important}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.mx-sec{position:relative;display:block;overflow-x:clip!important;overflow-y:visible!important} /* 원본 html·body의 overflow:hidden이 상자에 옮겨오면 sticky가 깨짐 */
+/* trionn 머리글: 원본은 화면에 고정 → 한 페이지에서는 1번 섹션 안에만 */
+[data-mx="trionn"] #nav{position:absolute!important}
+/* 원본이 스크립트로 보이게 하는 요소: 등장 모션이 맡는다 */
+[data-mx] [style*="visibility:hidden"]{visibility:hidden}
+/* 테스트 도구 */
+#mx-ui{position:fixed;z-index:9999;left:12px;bottom:12px;display:flex;gap:6px;align-items:center;padding:6px;border-radius:12px;background:rgba(20,20,20,.92);font:13px/1.4 -apple-system,"Malgun Gothic",sans-serif;color:#ccc}
+#mx-ui b{color:#fff;font-weight:600;padding:0 6px}
+#mx-ui a{color:#fff;text-decoration:none;border:1px solid #3a3a3a;border-radius:8px;padding:8px 12px}
+#mx-ui a[aria-current]{background:#fff;color:#000;border-color:#fff}
+
+/* apekon 원본 로딩 화면은 페이지 맨 앞을 덮으므로 숨긴다(스크립트는 그대로 돈다) */
+[data-mx="apekon"] #loading-screen{position:fixed!important;inset:0!important;visibility:hidden!important;pointer-events:none!important}
+/* apekon: 원본 홈 전체를 두고 #products만 보이게 (원본 섹션 페이지와 같은 숨김 규칙) */
+[data-mx="apekon"] #content>section:not(#products),[data-mx="apekon"] #content>footer,[data-mx="apekon"] .frame,[data-mx="apekon"] #awwwards,[data-mx="apekon"] .scroll-down-btn,[data-mx="apekon"] .footer__chrome-emblem,[data-mx="apekon"] .skip-link{display:none!important}
+/* apekon 카드·배경은 화면 뒤(z-index:-1)에 깔린 원본 WebGL 캔버스가 그린다 → 그 위를 덮는 배경을 비운다 */
+[data-mx="apekon"],[data-mx="apekon"] .page-wrapper,[data-mx="apekon"] #content{background:transparent!important}
+/* apekon WebGL 캔버스: 원본처럼 스크롤바를 뺀 화면 폭(100vw로 두면 스크롤바 폭만큼 가로로 늘어나 보임) */
+[data-mx="apekon"] .canvas-container{width:100%!important;right:0}
+/* apekon 원본은 html에 scrollbar-gutter:stable 이 있어 vw가 스크롤바를 뺀 폭(1440 화면에서 14.25px)이다 → 같은 값으로 */
+[data-mx="apekon"]{--mxvw:calc((100vw - var(--scrollbar-gutter, 0px)) / 100);--mxrem:max(16px, min(calc(.833333 * var(--mxvw)), 1.48148vh))}

@@ -1,0 +1,12 @@
+{
+ "trionn/01-hero": {
+  "hide": "main>*:not(#hero-section),#site-footer{display:none!important}",
+  "range": [0, null]
+ },
+ "apekon/01-products": {
+  "hide": "#content>section:not(#products),#content>footer,.frame .header,#awwwards,.scroll-down-btn,.footer__chrome-emblem,.skip-link{display:none!important}"
+ },
+ "focus/01-domains": {
+  "hide": "main>section:not(#domains):not(#news),body>header,header.fixed{display:none!important}"
+ }
+}

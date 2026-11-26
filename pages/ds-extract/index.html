@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>디자인 시스템 추출기</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{--ink:#161616;--sub:#6b6b6b;--line:#e3e3e3;--bg:#fafaf8;--card:#fff;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Pretendard,system-ui,sans-serif}
+.wrap{max-width:1240px;margin:0 auto;padding:40px 28px 120px}
+h1{font-size:34px;letter-spacing:-.02em;margin:0 0 6px}
+h2{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--sub);margin:0 0 14px;font-weight:600}
+h3{font-size:16px;margin:0 0 8px}
+.lead{color:var(--sub);margin:0 0 28px;max-width:760px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px;margin-bottom:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+ol.steps{margin:0;padding-left:20px}
+ol.steps li{margin:6px 0}
+code,.mono{font-family:var(--mono);font-size:12.5px}
+code{background:#f1f1ee;padding:1px 6px;border-radius:4px}
+button,.btn{appearance:none;border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:6px;padding:8px 14px;font:inherit;font-size:13px;cursor:pointer;text-decoration:none;display:inline-block}
+button.ghost,.btn.ghost{background:transparent;color:var(--ink)}
+textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:8px;padding:12px;font-family:var(--mono);font-size:12px;background:#fff}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--sub);font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:8px 8px;border-top:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--sub);font-size:12px}
+.roles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.role i{display:block;height:84px;border-radius:8px;border:1px solid var(--line)}
+.role b{display:block;margin-top:8px;font-size:13px}
+.role span{font-family:var(--mono);font-size:12px;color:var(--sub)}
+.bar{height:6px;background:#ececea;border-radius:3px;overflow:hidden;min-width:80px}
+.bar>i{display:block;height:100%;background:var(--ink)}
+.sw{display:inline-block;width:22px;height:22px;border-radius:5px;border:1px solid var(--line);vertical-align:middle;margin-right:8px}
+.typerow{display:grid;grid-template-columns:170px 1fr;gap:16px;align-items:baseline;padding:10px 0;border-top:1px solid var(--line)}
+.typerow:first-child{border-top:0}
+.typerow .meta{font-family:var(--mono);font-size:11.5px;color:var(--sub)}
+.sample{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist{display:flex;align-items:flex-end;gap:3px;height:120px;padding-top:8px}
+.hist div{flex:1;background:var(--ink);border-radius:2px 2px 0 0;position:relative;min-width:8px}
+.hist div span{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font:10px var(--mono);color:var(--sub)}
+.btnprev{display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:18px;border-radius:8px}
+.btnprev a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+ul.list{margin:0;padding-left:18px}
+ul.list li{margin:4px 0}
+pre{background:#141414;color:#eaeaea;border-radius:8px;padding:16px;overflow:auto;font:12px/1.55 var(--mono);margin:0}
+.tag{display:inline-block;font:11px var(--mono);padding:2px 6px;border-radius:4px;background:#efefec;color:#555;margin-left:6px}
+.tag.ok{background:#e3f4e6;color:#1f6b33}
+.tag.warn{background:#fbeedd;color:#8a5212}
+#out{display:none}
+#out.on{display:block}
+details summary{cursor:pointer;color:var(--sub);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>디자인 시스템 추출기</h1>
+  <p class="lead">레퍼런스 사이트를 직접 측정해서 색·글꼴·간격·모서리·버튼·움직임을 <b>숫자로</b> 뽑고, 역할(배경·본문·강조…)과 "하지 않는 것"까지 초안으로 정리합니다. 초안은 사람이 시그니처와 쓰임새를 판단해서 다듬는 출발점입니다.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>1. 레퍼런스에서 측정</h2>
+      <ol class="steps">
+        <li>레퍼런스 사이트를 열고 <b>쿠키 배너·팝업을 닫습니다</b>(동의는 하지 않아도 됩니다).</li>
+        <li>개발자 도구 콘솔(F12 → Console)에 스크립트를 붙여 넣습니다. <button id="copyScript" class="ghost" style="padding:3px 10px">스크립트 복사</button></li>
+        <li><code>DSX.collect()</code> — 지금 페이지 측정. 다른 페이지(목록·상세·소개)로 옮겨 다시 붙여 넣고 <code>DSX.collect()</code>를 반복하면 쌓입니다. 모바일 폭(375)도 한 번 재면 좋습니다.</li>
+        <li><code>DSX.report()</code>로 콘솔에서 요약 확인 → <code>DSX.json()</code>을 실행하면 결과가 복사됩니다.</li>
+      </ol>
+      <p class="muted" id="bmWrap" hidden>또는 북마크바에 끌어다 놓고 레퍼런스 페이지에서 누르기: <a id="bookmarklet" class="btn ghost" style="padding:3px 10px">DSX 불러오기</a><br>(사이트 보안 설정에 따라 막힐 수 있어요. 그때는 콘솔에 붙여 넣기)</p>
+    </div>
+    <div class="card">
+      <h2>2. 결과 붙여 넣기</h2>
+      <textarea id="in" placeholder="DSX.json() 결과를 여기에 붙여 넣으세요"></textarea>
+      <div class="row" style="margin-top:10px">
+        <button id="go">결과 보기</button>
+        <button id="sample1" class="ghost">예시: aesop.com</button>
+        <button id="sample2" class="ghost">예시: linear.app</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="out"></div>
+</div>
+
+<script type="module">
+import dsxSource from "/tools/ds-extract.js?raw"; // 원본 그대로(변환 없이) 가져와 복사용으로 쓴다
+const $ = (s) => document.querySelector(s);
+const esc = (v) => String(v ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pct = (x, d = 1) => (x * 100).toFixed(d) + "%";
+const lumOf = (h) => { if (!h || h === "투명") return 0; const n = parseInt(h.split("@")[0].slice(1), 16); return (0.2126 * ((n >> 16) & 255) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255; };
+const solid = (h) => (h || "").split("@")[0];
+const css = (h) => { if (!h) return "transparent"; const [x, a] = h.split("@"); if (!a) return x; const n = parseInt(x.slice(1), 16); return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a / 100})`; };
+
+$("#copyScript").onclick = async (e) => {
+  await navigator.clipboard.writeText(dsxSource);
+  e.target.textContent = "복사됨 ✓"; setTimeout(() => (e.target.textContent = "스크립트 복사"), 1500);
+};
+if (!/^(localhost|127\.)/.test(location.hostname)) {
+  $("#bmWrap").hidden = false;
+  $("#bookmarklet").href = `javascript:(()=>{const s=document.createElement('script');s.src='${location.origin}/tools/ds-extract.js?'+Date.now();s.onload=()=>DSX.collect();document.body.appendChild(s)})()`;
+}
+
+$("#go").onclick = () => { try { render(JSON.parse($("#in").value)); } catch (e) { alert("JSON을 읽지 못했어요: " + e.message); } };
+const loadSample = async (n) => { const t = await (await fetch(`./samples/${n}.json`)).text(); $("#in").value = t; render(JSON.parse(t)); };
+$("#sample1").onclick = () => loadSample("aesop");
+$("#sample2").onclick = () => loadSample("linear");
+
+const fontLinks = new Set();
+function useFont(name) {
+  if (!name || fontLinks.has(name) || /pretendard|system/i.test(name)) return;
+  fontLinks.add(name);
+  const l = document.createElement("link");
+  l.rel = "stylesheet";
+  l.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(name).replace(/%20/g, "+")}:wght@300;400;500;600;700&display=swap`;
+  document.head.appendChild(l);
+}
+
+function render(s) {
+  const out = $("#out");
+  out.classList.add("on");
+  const fam = Object.fromEntries(s.fonts.families.map((f) => [f.family, f.alt?.name || f.family]));
+  Object.values(fam).forEach(useFont);
+  const famCss = (f) => `'${fam[f] || f}', Pretendard, sans-serif`;
+  const r = s.roles;
+  const roleCards = [
+    ["주 배경", r.bg], ...(r.surfaces || []).map((h, i) => [`보조 면 ${i + 1}`, h]),
+    ["제목색", r.text], ...(r.text2 || []).map((h, i) => [i === 0 ? "본문·보조 글자" : `보조 글자 ${i + 1}`, h]),
+    ["강조(측정)", r.accent], ...(s.accentFromVar ? [[`강조(원본 변수 ${s.accentFromVar.name})`, s.accentFromVar.hex]] : []),
+    ["선", r.line], ["어두운 면 위 글자", r.textOnDark],
+  ].filter(([, h]) => h);
+
+  const b = s.buttons || [];
+  const t = s.theme.tokens;
+  const themeCode = `// ${s.meta.host} 에서 측정한 초안 — 쓰임새·시그니처는 사람이 확인해서 다듬기
+export default {
+  id: "${(s.meta.host || "ref").replace(/^www\./, "").split(".")[0]}",
+  name: "${(s.meta.host || "").replace(/^www\./, "")}",
+  fonts: [${[...new Set(Object.values(fam))].filter((f) => !/pretendard/i.test(f)).map((f) => `"https://fonts.googleapis.com/css2?family=${f.replace(/ /g, "+")}:wght@300;400;500;600;700&display=swap"`).join(", ")}],
+  tokens: ${JSON.stringify(Object.fromEntries(Object.entries(t).filter(([, v]) => v != null)), null, 4).replace(/\n}/, "\n  }")},
+  motion: { ease: { out: "power2.out", inOut: "power2.inOut", back: "back.inOut(1.5)", elastic: "elastic.out(0.6,0.3)" }, speed: ${s.theme.motion.durationMs ? (s.theme.motion.durationMs / 250).toFixed(2) : 1}, scrub: true },
+  scroll: { duration: 1.2, easing: "expo" },
+};`;
+
+  out.innerHTML = `
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <div><h2 style="margin:0">측정 대상</h2><h3 style="font-size:22px;margin:6px 0 0">${esc(s.meta.host)}</h3></div>
+      <div class="muted">${s.meta.pages.length}페이지 · ${s.meta.pages.map((p) => `${esc(new URL(p.url).pathname)} (${p.vw}px)`).join(", ")}<br>
+      원본 CSS 변수 ${Object.values(s.vars).reduce((a, x) => a + x.length, 0)}개 ${Object.values(s.vars).some((x) => x.length) ? '<span class="tag ok">근거 있음</span>' : '<span class="tag warn">변수 없음 → 측정값만</span>'}
+      ${s.meta.unreadableSheets ? `· 읽을 수 없는 스타일시트 ${s.meta.unreadableSheets}개` : ""}</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><h2>하지 않는 것 (금지 규칙)</h2><ul class="list">${s.donts.map((d) => `<li>${esc(d)}</li>`).join("") || "<li class='muted'>뚜렷한 금지 규칙 없음</li>"}</ul></div>
+    <div class="card"><h2>특징</h2><ul class="list">${s.notes.map((d) => `<li>${esc(d)}</li>`).join("")}${s.mobile ? `<li>모바일(${s.mobile.pages}페이지): 가장 큰 글자 ${s.mobile.maxSize}px · 섹션 여백 ${s.mobile.sectionPad ?? "-"}px</li>` : "<li class='muted'>모바일 폭 측정 없음 — 375px에서도 한 번 재면 반응형 값을 얻어요</li>"}</ul></div>
+  </div>
+
+  <div class="card">
+    <h2>역할별 색</h2>
+    <div class="roles">${roleCards.map(([n, h]) => `<div class="role"><i style="background:${css(h)}"></i><b>${esc(n)}</b><span>${esc(h)}</span></div>`).join("")}</div>
+    <details style="margin-top:18px"><summary>측정된 색 전체 (${s.colors.length}개)</summary>
+    <table style="margin-top:10px"><tr><th>색</th><th>배경 면적</th><th>글자</th><th>테두리</th><th>버튼·링크</th><th>원본 변수</th></tr>
+    ${s.colors.map((c) => `<tr><td><span class="sw" style="background:${css(c.hex)}"></span><span class="mono">${esc(c.hex)}</span></td>
+      <td><div class="bar"><i style="width:${Math.min(100, c.bgShare * 100)}%"></i></div><span class="muted">${pct(c.bgShare)}</span></td>
+      <td><div class="bar"><i style="width:${Math.min(100, c.textShare * 100)}%"></i></div><span class="muted">${pct(c.textShare)}</span></td>
+      <td class="muted">${c.border || ""}</td><td class="muted">${c.btn || ""}${c.link ? ` · 링크 ${c.link}` : ""}</td><td class="mono">${esc(c.var || "")}</td></tr>`).join("")}
+    </table></details>
+  </div>
+
+  <div class="card">
+    <h2>글꼴</h2>
+    <table><tr><th>레퍼런스 글꼴</th><th>글자 비중</th><th>쓰는 굵기</th><th>최대 크기</th><th>여기서 쓸 무료 글꼴</th></tr>
+    ${s.fonts.families.map((f) => `<tr><td><b>${esc(f.family)}</b></td><td>${pct(f.share, 0)}</td><td class="mono">${f.weights.join(" · ")}</td><td>${f.maxSize}px</td>
+      <td>${f.alt?.name ? `<b style="font-family:'${esc(f.alt.name)}'">${esc(f.alt.name)}</b>` : "—"} <span class="tag ${f.alt?.how === "무료 그대로" ? "ok" : "warn"}">${esc(f.alt?.how || "")}</span></td></tr>`).join("")}
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>글자 단계 <span class="tag">${s.ratio ? `약 ${s.ratio.toFixed(2)}배씩` : ""}</span></h2>
+    ${s.scale.map((x) => `<div class="typerow"><div class="meta">${x.size}px · ${x.weight}<br>줄간격 ${x.lh} · 자간 ${x.ls}em${x.upper ? " · 대문자" : ""}<br>${esc(x.family)} · ${pct(x.share)}</div>
+      <div class="sample" style="font-family:${famCss(x.family)};font-size:min(${x.size}px,${(x.size / 12).toFixed(2)}vw);font-weight:${x.weight};line-height:${x.lh};letter-spacing:${x.ls}em;${x.upper ? "text-transform:uppercase;" : ""}${x.italic ? "font-style:italic;" : ""}">Quiet systems 조용한 시스템 1,234</div></div>`).join("")}
+    <details style="margin-top:12px"><summary>태그별 대표 글자 스타일</summary><table style="margin-top:8px"><tr><th>태그</th><th>글꼴</th><th>크기</th><th>굵기</th><th>줄간격</th><th>자간</th></tr>
+      ${Object.entries(s.byTag).map(([k, v]) => `<tr><td class="mono">${k}</td><td>${esc(v.family)}</td><td>${v.size}px</td><td>${v.weight}</td><td>${v.lh}</td><td>${v.ls}em</td></tr>`).join("")}</table></details>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>간격</h2>
+      <table>
+        <tr><td>기본 단위</td><td><b>${s.spacing.unit}px</b> <span class="muted">(${pct(s.spacing.unitShare, 0)} 일치)</span></td></tr>
+        <tr><td>섹션 간격</td><td><b>${s.spacing.sectionSpace ?? "—"}${s.spacing.sectionSpace ? "px" : ""}</b> <span class="muted">패딩 ${s.spacing.sectionPad ?? "-"} · 블록 사이 ${s.spacing.sectionGap ?? "-"}</span></td></tr>
+        <tr><td>콘텐츠 폭</td><td>${s.spacing.container.map((x) => x + "px").join(", ") || "—"}</td></tr>
+        <tr><td>요소 사이(gap)</td><td>${s.spacing.gaps.map((x) => x + "px").join(", ") || "—"}</td></tr>
+        <tr><td>브레이크포인트</td><td class="mono">${s.breakpoints.join(" · ") || "—"}</td></tr>
+      </table>
+      <div class="hist" style="margin:14px 0 22px">${(() => { const tp = [...s.spacing.top].sort((a, b) => a[0] - b[0]); const mx = Math.max(...tp.map((x) => x[1])); return tp.map(([v, n]) => `<div style="height:${(n / mx) * 100}%" title="${v}px × ${n}"><span>${v}</span></div>`).join(""); })()}</div>
+      <p class="muted" style="margin:0">자주 쓰인 간격 값(px). 막대가 높을수록 많이 씀.</p>
+    </div>
+    <div class="card">
+      <h2>모서리 · 그림자 · 움직임</h2>
+      <table>
+        <tr><td>모서리</td><td>${s.radius.map(([k, n]) => `<span class="mono">${esc(k)}</span> <span class="muted">×${n}</span>`).join(" · ")}</td></tr>
+        <tr><td>그림자</td><td>부품의 ${pct(s.shadow.share, 0)} ${s.shadow.top.length ? `<details><summary>값 보기</summary>${s.shadow.top.map(([k]) => `<div class="mono" style="margin:4px 0">${esc(k)}</div>`).join("")}</details>` : ""}</td></tr>
+        <tr><td>전환 시간</td><td>${s.motion.durations.map(([k, n]) => `<span class="mono">${k}</span> <span class="muted">×${n}</span>`).join(" · ")}</td></tr>
+        <tr><td>이징</td><td>${s.motion.eases.map(([k, n]) => `<div><span class="mono">${esc(k)}</span> <span class="muted">×${n}</span></div>`).join("")}</td></tr>
+        <tr><td>사진·영상</td><td>화면의 ${pct(s.images.share, 0)}${s.images.radius.length ? ` · 모서리 ${s.images.radius.map(([k]) => k).join(", ")}` : ""}${s.images.filters.length ? ` · 필터 ${s.images.filters.map(([k]) => k).join(", ")}` : ""}</td></tr>
+        <tr><td>라이브러리</td><td>${s.libs.join(", ") || '<span class="muted">감지 안 됨</span>'}</td></tr>
+        <tr><td>글자 대비</td><td>${Object.entries(s.contrast.hist).map(([k, n]) => `${k}: ${n}자`).join(" · ")}</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>버튼 (많이 쓰인 순)</h2>
+    <div class="btnprev" style="background:${css(r.bg)}">${b.map((x) => `<span style="padding:14px;border-radius:6px;background:${x.bg === "투명" && lumOf(x.fg) > 0.5 && lumOf(r.bg) > 0.5 ? css([...(r.surfaces || [])].sort((p, q) => lumOf(p) - lumOf(q))[0] || "#222") : "transparent"}"><a style="height:${x.h}px;padding:0 ${x.padX}px;border-radius:${x.radius};background:${x.bg === "투명" ? "transparent" : css(x.bg)};color:${css(x.fg)};border:${x.border === "없음" ? "0" : `${x.border.split(" ")[0]} solid ${css(x.border.split(" ")[1])}`};font-family:${famCss(x.font.split(" ").slice(0, -2).join(" ").replace(/ 대문자$/, ""))};font-size:${x.font.match(/(\d+)px/)?.[1]}px;font-weight:${x.font.match(/px (\d+)/)?.[1]};${/대문자/.test(x.font) ? "text-transform:uppercase;" : ""}">자세히 보기</a></span>`).join("")}</div>
+    <table style="margin-top:12px"><tr><th>높이</th><th>좌우 여백</th><th>모서리</th><th>배경</th><th>글자</th><th>테두리</th><th>글꼴</th><th>개수</th></tr>
+      ${b.map((x) => `<tr><td>${x.h}px</td><td>${x.padX}px</td><td class="mono">${esc(x.radius)}</td><td class="mono">${esc(x.bg)}</td><td class="mono">${esc(x.fg)}</td><td class="mono">${esc(x.border)}</td><td>${esc(x.font)}</td><td>${x.count}</td></tr>`).join("")}</table>
+  </div>
+
+  <div class="card">
+    <h2>원본 CSS 변수 (레퍼런스가 직접 정의한 토큰)</h2>
+    ${["color", "size", "font", "ease", "other"].filter((k) => s.vars[k].length).map((k) => `<details ${k === "color" ? "open" : ""}><summary>${{ color: "색", size: "크기·간격", font: "글꼴", ease: "이징", other: "기타" }[k]} ${s.vars[k].length}개</summary>
+      <table style="margin:8px 0 12px">${s.vars[k].slice(0, 60).map(([n, v]) => `<tr><td class="mono">${esc(n)}</td><td>${k === "color" ? `<span class="sw" style="background:${esc(v)}"></span>` : ""}<span class="mono">${esc(v)}</span></td></tr>`).join("")}</table></details>`).join("") || '<p class="muted">찾은 변수가 없어요 — 측정값만으로 정리했습니다.</p>'}
+  </div>
+
+  ${s.contrast.low.length ? `<div class="card"><h2>대비가 낮은 글자 (3 미만)</h2><table>${s.contrast.low.map((x) => `<tr><td><span style="background:${css(x.bg)};color:${css(x.fg)};padding:3px 8px;border-radius:4px">${esc(x.text)}</span></td><td class="mono">${x.fg} / ${x.bg}</td><td>${x.ratio}</td></tr>`).join("")}</table></div>` : ""}
+
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:12px"><h2 style="margin:0">테마 파일 초안 (engine/theme-*.js 형식)</h2><button id="copyTheme" class="ghost">복사</button></div>
+    <pre id="themeCode">${esc(themeCode)}</pre>
+    <p class="muted" style="margin:12px 0 0">여기서 사람이 할 일: ① 시그니처(제목 꾸밈·질감·이미지 처리)를 찾아 <code>css</code>·<code>decorate</code>로 추가 ② 섹션 톤(어느 섹션에 어떤 면 색을 쓸지) 정하기 ③ 대체 글꼴을 눈으로 비교 ④ 디자인 시스템 페이지용 <code>system</code> 설명 쓰기</p>
+  </div>`;
+  $("#copyTheme").onclick = async (e) => { await navigator.clipboard.writeText(themeCode); e.target.textContent = "복사됨 ✓"; setTimeout(() => (e.target.textContent = "복사"), 1500); };
+  out.scrollIntoView({ behavior: "smooth" });
+}
+</script>
+</body>
+</html>

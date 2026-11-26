@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mix-01 · 섹션 조합 단계 비교</title>
+<style>
+html,body{margin:0;background:#000}
+html.lenis,html.lenis body{height:auto}
+.cb{position:relative}
+.cb-stage{position:sticky;top:0;height:100vh;overflow:hidden}
+.cb iframe{display:block;width:100%;height:100%;border:0;background:#000;transition:filter .3s}
+.cb-wait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#111;color:#888;font:13px -apple-system,"Malgun Gothic",sans-serif;transition:opacity .4s}
+.cb.is-ready .cb-wait{opacity:0;pointer-events:none}
+.ui{position:fixed;z-index:100;font:13px/1.45 -apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:#fff}
+#bar{left:12px;bottom:12px;display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:6px;border-radius:12px;background:rgba(20,20,20,.92);box-shadow:0 8px 30px rgba(0,0,0,.35)}
+#bar button{font:inherit;color:#fff;background:transparent;border:1px solid #3a3a3a;border-radius:8px;min-height:36px;padding:0 12px;cursor:pointer}
+#bar button[aria-pressed=true]{background:#fff;color:#000;border-color:#fff}
+#now{padding:0 8px;color:#bdbdbd;white-space:nowrap}
+#panel{right:12px;bottom:12px;width:min(400px,calc(100vw - 24px));max-height:72vh;overflow:auto;padding:16px 16px 12px;border-radius:12px;background:rgba(20,20,20,.95);box-shadow:0 8px 30px rgba(0,0,0,.35)}
+#panel[hidden]{display:none}
+#panel h4{margin:0 0 6px;font-size:15px}
+#panel p{margin:0 0 10px;color:#d0d0d0}
+#panel table{width:100%;border-collapse:collapse;margin:4px 0 12px;font-size:12px}
+#panel td,#panel th{text-align:left;padding:4px 6px 4px 0;border-top:1px solid #333;vertical-align:top}
+#panel th{color:#999;font-weight:500}
+#panel small{color:#8c8c8c;display:block;margin:4px 0}
+#close{position:absolute;right:8px;top:8px;background:none;border:0;color:#aaa;font-size:18px;width:36px;height:36px;cursor:pointer}
+</style>
+</head>
+<body>
+<main id="page"></main>
+<div class="ui" id="bar" role="toolbar" aria-label="단계">
+  <button data-step="1">1 그대로</button>
+  <button data-step="2">2 폰트·흑백</button>
+  <button data-step="3">3 스크롤·모션</button>
+  <span id="now">불러오는 중…</span>
+  <button id="info" aria-expanded="true" aria-controls="panel">설명</button>
+</div>
+<aside class="ui" id="panel"><button id="close" aria-label="설명 닫기">×</button><div id="ptxt"></div></aside>
+<script type="module" src="./mix.js"></script>
+</body>
+</html>

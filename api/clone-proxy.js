@@ -9,6 +9,10 @@ const ALLOW = new Set([
   "www.breakthroughenergy.org",
   "cdn.prod.website-files.com",
   "assets.slater.app",
+  // mix-01 한 페이지
+  "trionn.com",
+  "apekon.com",
+  "www.focusindustries.tech",
 ]);
 
 export default async function handler(req, res) {

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#121212">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Apekon">
+    <link rel="manifest" href="/manifest.json">
+
+    <noscript>
+        <style>
+            .loading-screen { display: none !important; }
+            body.loading { overflow: visible !important; }
+            .hero__location, .hero__title, .studio-description__text {
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+            .noscript-message { position: fixed; left: 50%; bottom: 4.5rem; z-index: 1002; transform: translateX(-50%);
+                padding: 0.7rem 1.1rem; border-radius: 2rem; background: #FAFAFA; color: #121212; font-size: 0.75rem;
+                white-space: nowrap; }
+        </style>
+    </noscript>
+
+    <script>
+        if (window.matchMedia('(max-width: 1023px)').matches) document.documentElement.classList.add('menu-mode');
+    </script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        (function () {
+            var saved = null;
+            try { saved = JSON.parse(localStorage.getItem('consentMode.v2')); } catch (e) { }
+            gtag('consent', 'default', saved || {
+                'functionality_storage': 'denied',
+                'security_storage': 'denied',
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'analytics_storage': 'denied',
+                'personalization_storage': 'denied',
+                'wait_for_update': 500
+            });
+        })();
+    </script>
+    <script src="/cookie/cookieconsent.js" defer></script>
+
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NR9LZRBZ');</script>
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
+    <link rel="icon" type="image/png" sizes="196x196" href="/icons/favicon-196.png">
+    <meta name="msapplication-square70x70logo" content="/icons/mstile-icon-128.png">
+    <meta name="msapplication-square150x150logo" content="/icons/mstile-icon-270.png">
+    <meta name="msapplication-square310x310logo" content="/icons/mstile-icon-558.png">
+    <meta name="msapplication-wide310x150logo" content="/icons/mstile-icon-558-270.png">
+    <link rel="apple-touch-icon" href="/icons/apple-icon-180.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="preload" href="/icons/emblem_white.svg" as="image" type="image/svg+xml">
+
+    <style>
+        html.lenis,
+        html.lenis body {
+            height: auto;
+        }
+
+        .lenis [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: clip;
+        }
+
+        .lenis.lenis-smooth iframe {
+            pointer-events: none;
+        }
+    </style>
+
+    <link rel="canonical" href="https://apekon.com/">
+    <title>Apekon | Digital Product Strategy &amp; Engineering</title>
+    <meta name="description"
+        content="We turn ambitious ideas into digital products. From AI to product visualization, we bring strategy, engineering and research together to move businesses forward.">
+    <meta name="author" content="Andreas Zorpidis">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Apekon | Digital Product Strategy &amp; Engineering">
+    <meta property="og:description"
+        content="We turn ambitious ideas into digital products. From AI to product visualization, we bring strategy, engineering and research together to move businesses forward.">
+    <meta property="og:url" content="https://apekon.com/">
+    <meta property="og:site_name" content="Apekon">
+    <meta property="og:image" content="https://apekon.com/icons/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Apekon | Digital Product Strategy &amp; Engineering">
+    <meta name="twitter:description"
+        content="We turn ambitious ideas into digital products. From AI to product visualization, we bring strategy, engineering and research together to move businesses forward.">
+    <meta name="twitter:image" content="https://apekon.com/icons/twitter-card.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://apekon.com/#website",
+          "url": "https://apekon.com/",
+          "name": "Apekon",
+          "inLanguage": "en",
+          "publisher": {
+            "@id": "https://apekon.com/#founder"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://apekon.com/#founder",
+          "name": "Andreas Zorpidis",
+          "url": "https://apekon.com/",
+          "image": "https://apekon.com/images/andreas.png",
+          "jobTitle": "Technology leader and engineer",
+          "brand": {
+            "@type": "Brand",
+            "name": "Apekon"
+          },
+          "email": "mailto:hi@apekon.com"
+        }
+      ]
+    }
+    </script>
+
+    
+<link rel="preload" href="/assets/MontserratZ-Regular-BdN--jWN.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+    /* Prevent FOUC */
+    html {
+        scroll-behavior: auto !important;
+        background-color: #000000;
+    }
+
+    body.loading {
+        overflow: hidden;
+    }
+
+    .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        pointer-events: none;
+    }
+
+    .loading-screen__logo-container {
+        position: relative;
+        width: 88px;
+        height: 83px;
+    }
+
+    .loading-screen__emblem {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* No timing of its own: the emblem stays dark grey until the script shows what has actually loaded. */
+
+    .loading-screen.hidden {
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+    }
+
+    /* The canvas (components/awkLoadingScreen.js: empty while loading, on leaving the screen itself, breaking), and the
+       counter: large, bottom left, 000 until the script measures the progress. .is-leaving fades the counter as the
+       intro starts. */
+    .loader__canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .loading-screen__logo-container {
+        z-index: 1;
+    }
+
+    /* The counter is one of the frame's labels (style.css, .frame__section: 0.75rem uppercase, tracked, the number
+       muted), centred on the frame's bottom row on every screen (where the music player shows once the page is in).
+       Placed from the frame's fixed insets, not the live --frame-inset: the script sets that on wide screens only once
+       it runs (utils/awkAnimations.js: 40px at the top of the page above 1440px, 20px otherwise), and following it
+       moved the counter a moment after it appeared. */
+    .loader__count {
+        --inset: 20px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: var(--inset);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        height: 30px;
+        margin: 0;
+        font-family: 'Montserrat Z', sans-serif;
+        font-weight: 400;
+        font-size: 0.75rem;
+        line-height: 1.2;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #FAFAFA;
+        font-variant-numeric: tabular-nums;
+        transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .loader__count-value {
+        display: inline-flex;
+        color: rgba(250, 250, 250, 0.55);
+    }
+
+    /* Each digit rolls (components/awkLoadingScreen.js, counter): a mask one line high over a two-line track, as the
+       nav's letter roll (style.css, .letter-roll__char). */
+    .loader__digit {
+        display: inline-block;
+        height: 1.2em;
+        clip-path: inset(0 -0.1em);
+    }
+
+    .loader__digit-track {
+        display: block;
+        position: relative;
+    }
+
+    .loader__digit-line {
+        display: block;
+    }
+
+    .loader__digit-line--next {
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+
+    @media screen and (min-width: 1441px) {
+        .loader__count {
+            --inset: 40px;
+        }
+    }
+
+    .loading-screen.is-leaving .loader__count {
+        opacity: 0;
+    }
+</style>
+
+  <script type="module" crossorigin src="/assets/script-aGaCdSjC.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/script-Dq7QyeF9.css">
+</head>
+
+<body class="loading" data-barba="wrapper"><!--email_off-->
+
+    
+    
+    <a class="skip-link" href="#content">Skip to content</a>
+
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NR9LZRBZ" title="Google Tag Manager" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+
+    <noscript id="noscript">
+        <div class="noscript-message" role="alert">
+            To view this website, please enable JavaScript in your browser.
+        </div>
+    </noscript>
+
+
+
+<div class="loading-screen" id="loading-screen">
+    <canvas class="loader__canvas" aria-hidden="true"></canvas>
+    <p class="loader__count" aria-hidden="true"><span class="loader__count-value">000</span><span>Loading</span></p>
+    <div class="loading-screen__logo-container">
+        
+        <svg class="loading-screen__emblem" viewBox="0 0 788.53 741.67" role="progressbar" aria-label="Loading Apekon"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><path fill="#505050" d="M432.27,.01c100.04-.75,156.9,37.47,187.27,112.2,11.15,27.42,19.53,55.75,25.97,84.44,16.97,75.53,49.85,143.49,93.14,207.17,23.08,33.94,41.76,70.5,48,111.65,5.61,37.01-.11,71.18-34.31,93.9-26.89,17.86-55.9,17.31-84.81,6.08-40.02-15.55-68.59-45.25-93.2-79.12-40.08-55.16-66.38-117.35-91.36-180.2-9.53-23.98-18.82-48.11-29.38-71.64-34.26-76.31-97.65-97.7-170.41-55.74-50.34,29.03-86.31,71.97-106.41,126.75-15.77,42.98-.46,71.31,43.49,84.49,29.5,8.85,60.04,9.11,90.42,10.58,22.24,1.08,44.59,1.21,66.69,3.59,39.38,4.23,72.85,21.31,100.15,50.15,52.61,55.58,79.47,122.59,87.36,197.86,.99,9.41,1.15,19.1-2.64,28.22-5.41,13.02-15.95,15.12-25.25,4.58-8.84-10.03-13.28-22.62-18.27-34.75-6.56-15.93-13.21-31.78-21.71-46.82-32.61-57.71-97.83-82.17-160.38-60.34-24.22,8.45-46.19,21.02-67.22,35.39-21.36,14.6-42.41,29.69-65.4,41.67-33.68,17.55-69.34,23.88-106.93,16.95C40.89,676.68,2.38,630.9,.15,573.02c-1.78-46.21,12.06-87.65,37-125.84,29.72-45.49,67.09-84.68,104.01-124.12,51.34-54.83,94-115.22,123.24-184.72,7.21-17.15,16.44-33.28,26.02-49.27C326.98,28.11,381.88,.8,432.27,.01Z"/></svg>
+    </div>
+</div>
+
+
+<div class="canvas-container" id="canvas-container">
+    <canvas class="webgl"></canvas>
+</div>
+
+
+<div id="awwwards" data-surface-light data-cursor-wrap="none" style="position: fixed; z-index: 999; transform: translateY(-50%); top: 50%;  right: 0"><a href="https://www.awwwards.com/sites/apekon" target="_blank"><svg width="53.08" height="171.358"><path class="js-color-bg" fill="white" d="M0 0h53.08v171.358H0z"></path><g class="js-color-text" fill="black"><path d="M20.048 153.585v-2.002l6.752-3.757h-6.752v-1.9h10.23v2.002l-6.752 3.757h6.752v1.9zM29.899 142.382a3.317 3.317 0 0 1-1.359 1.293c-.575.297-1.223.446-1.944.446-.721 0-1.369-.149-1.944-.446a3.317 3.317 0 0 1-1.359-1.293c-.331-.564-.497-1.232-.497-2.003 0-.769.166-1.437.497-2.002a3.332 3.332 0 0 1 1.359-1.294c.575-.297 1.224-.445 1.944-.445.722 0 1.369.148 1.944.445a3.326 3.326 0 0 1 1.359 1.294c.33.565.496 1.233.496 2.002.001.77-.166 1.438-.496 2.003m-1.703-3.348c-.435-.331-.967-.497-1.601-.497s-1.167.166-1.601.497c-.434.332-.65.78-.65 1.345s.217 1.014.65 1.346c.434.33.967.496 1.601.496s1.166-.166 1.601-.496c.434-.332.649-.78.649-1.346.001-.565-.215-1.013-.649-1.345M22.912 134.996v-1.812h1.185c-.43-.283-.752-.593-.973-.929-.219-.336-.329-.732-.329-1.19 0-.479.127-.902.38-1.272.254-.37.635-.633 1.141-.79-.478-.262-.851-.591-1.118-.985a2.221 2.221 0 0 1-.402-1.265c0-.682.2-1.218.599-1.607.4-.391.957-.585 1.668-.585h5.218v1.812H25.37c-.682 0-1.023.303-1.023.907 0 .467.264.85.789 1.146.527.299 1.286.446 2.28.446h2.865v1.813H25.37c-.682 0-1.023.303-1.023.906 0 .468.275.851.826 1.147.551.298 1.352.446 2.404.446h2.704v1.812h-7.369zM21.626 122.457c-.225.224-.502.336-.833.336s-.608-.112-.833-.336a1.128 1.128 0 0 1-.336-.833c0-.331.111-.609.336-.833.225-.225.502-.336.833-.336s.608.111.833.336c.225.224.337.502.337.833 0 .332-.112.608-.337.833m1.286-1.739h7.366v1.813h-7.366v-1.813zM22.912 118.668v-1.812h1.185a3.348 3.348 0 0 1-.951-1.009 2.434 2.434 0 0 1-.351-1.272c0-.681.19-1.229.57-1.644.38-.414.931-.621 1.651-.621h5.263v1.812h-4.722c-.418 0-.727.096-.92.285-.195.19-.293.447-.293.769 0 .302.116.58.351.833.233.254.577.458 1.03.613.453.156.992.234 1.615.234h2.938v1.812h-7.366zM29.833 109.129a3.33 3.33 0 0 1-1.432 1.169 4.535 4.535 0 0 1-1.805.373 4.537 4.537 0 0 1-1.807-.373c-.579-.248-1.057-.638-1.432-1.169s-.563-1.196-.563-1.995c0-.771.183-1.413.549-1.93a3.28 3.28 0 0 1 1.382-1.141 4.221 4.221 0 0 1 1.709-.364h.746v5.071c.447-.02.838-.183 1.168-.49.332-.307.498-.724.498-1.248 0-.41-.093-.754-.277-1.031-.186-.278-.473-.529-.863-.753l.542-1.462c.69.303 1.224.724 1.592 1.265.371.541.556 1.235.556 2.083 0 .799-.188 1.464-.563 1.995m-4.085-3.574c-.41.088-.746.261-1.009.52-.262.258-.395.61-.395 1.06 0 .428.137.784.409 1.067.272.282.604.458.994.525v-3.172zM29.833 100.878c-.375.531-.852.921-1.432 1.169a4.552 4.552 0 0 1-3.612 0c-.579-.248-1.057-.638-1.432-1.169s-.563-1.196-.563-1.995c0-.77.183-1.412.549-1.93a3.278 3.278 0 0 1 1.382-1.14 4.222 4.222 0 0 1 1.709-.365h.746v5.072a1.794 1.794 0 0 0 1.168-.49c.332-.307.498-.724.498-1.249 0-.41-.093-.753-.277-1.031-.186-.277-.473-.528-.863-.753l.542-1.462c.69.302 1.224.724 1.592 1.265.371.541.556 1.234.556 2.083 0 .799-.188 1.464-.563 1.995m-4.085-3.573c-.41.088-.746.261-1.009.519-.262.258-.395.611-.395 1.06 0 .429.137.784.409 1.067.272.282.604.458.994.526v-3.172zM35.481 16.926l-4.782 14.969h-3.266l-2.584-9.682-2.584 9.682h-3.268l-4.781-14.969h3.713l2.673 10.276 2.524-10.276h3.445l2.524 10.276 2.674-10.276zM37.979 27.083c1.426 0 2.495 1.068 2.495 2.495 0 1.425-1.069 2.495-2.495 2.495-1.425 0-2.495-1.07-2.495-2.495-.001-1.427 1.07-2.495 2.495-2.495"></path></g></svg></a></div>
+
+<div class="frame">
+            
+        <header class="header">
+            <div class="header__container">
+
+                
+                <a href="/" class="header__logo" aria-label="Apekon home" data-hover-say="Say it: a·pe·kón">
+                    
+                    
+<svg class="header__logo-img header__wordmark" viewBox="0 0 754.49 190.6" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true" focusable="false"><g class="header__wordmark-track" style="--i:0"><g transform="translate(0 0)"><path d="M53.2,153.6c-9.73,0-18.67-2.3-26.8-6.9-8.13-4.6-14.57-11.07-19.3-19.4C2.37,118.97,0,109,0,97.4s2.37-21.37,7.1-29.7c4.73-8.33,11.17-14.77,19.3-19.3,8.13-4.53,17.07-6.8,26.8-6.8s17.27,2,23.8,6c2.27,1.47,4.4,3.2,6.4,5.2v-9.4h38v108.4h-36.2v-10.8c-2.27,2.67-4.8,4.87-7.6,6.6-6.4,4-14.53,6-24.4,6Zm8-30.2c4.27,0,8.1-1,11.5-3s6.13-4.96,8.2-8.9c2.07-3.93,3.1-8.63,3.1-14.1s-1.03-10.1-3.1-13.9c-2.07-3.8-4.8-6.7-8.2-8.7s-7.23-3-11.5-3-8.1,1-11.5,3-6.13,4.9-8.2,8.7c-2.07,3.8-3.1,8.43-3.1,13.9s1.03,10.17,3.1,14.1c2.07,3.93,4.8,6.9,8.2,8.9s7.23,3,11.5,3Z"/></g><g transform="translate(0 196)"><path d="M53.43,153.77c-9.73,0-18.67-2.3-26.8-6.9-8.13-4.6-14.57-11.07-19.3-19.4C2.6,119.14,.23,109.17,.23,97.57s2.37-21.37,7.1-29.7c4.73-8.33,11.17-14.77,19.3-19.3,8.13-4.53,17.07-6.8,26.8-6.8s17.2,2,23.6,6c2.4,1.47,4.53,3.2,6.4,5.2v-9.4h38v108.4h-36.2v-10.8c-2.13,2.67-4.67,4.87-7.6,6.6-6.4,4-14.47,6-24.2,6Zm8-30.2c4.27,0,8.1-1,11.5-3,3.4-2,6.13-4.97,8.2-8.9,2.07-3.93,3.1-8.63,3.1-14.1s-1.03-10.1-3.1-13.9c-2.07-3.8-4.8-6.7-8.2-8.7-3.4-2-7.23-3-11.5-3s-8.1,1-11.5,3c-3.4,2-6.13,4.9-8.2,8.7-2.07,3.8-3.1,8.43-3.1,13.9s1.03,10.17,3.1,14.1c2.07,3.93,4.8,6.9,8.2,8.9,3.4,2,7.23,3,11.5,3Z"/></g><g transform="translate(0 392)"><path d="M53.2,153.6c-9.73,0-18.67-2.3-26.8-6.9-8.13-4.6-14.57-11.07-19.3-19.4C2.37,118.97,0,109,0,97.4s2.37-21.37,7.1-29.7c4.73-8.33,11.17-14.77,19.3-19.3,8.13-4.53,17.07-6.8,26.8-6.8s17.27,2,23.8,6c2.27,1.47,4.4,3.2,6.4,5.2v-9.4h38v108.4h-36.2v-10.8c-2.27,2.67-4.8,4.87-7.6,6.6-6.4,4-14.53,6-24.4,6Zm8-30.2c4.27,0,8.1-1,11.5-3s6.13-4.96,8.2-8.9c2.07-3.93,3.1-8.63,3.1-14.1s-1.03-10.1-3.1-13.9c-2.07-3.8-4.8-6.7-8.2-8.7s-7.23-3-11.5-3-8.1,1-11.5,3-6.13,4.9-8.2,8.7c-2.07,3.8-3.1,8.43-3.1,13.9s1.03,10.17,3.1,14.1c2.07,3.93,4.8,6.9,8.2,8.9s7.23,3,11.5,3Z"/></g></g><g class="header__wordmark-track" style="--i:1"><g transform="translate(0 0)"><path d="M201.24,153.6c-9.2,0-17.07-2-23.6-6-2.4-1.47-4.53-3.2-6.4-5.2v48.2h-38V43.4h36v10.8c2.27-2.67,4.87-4.87,7.8-6.6,6.4-4,14.47-6,24.2-6s18.83,2.3,26.9,6.9c8.07,4.6,14.47,11.07,19.2,19.4,4.73,8.33,7.1,18.23,7.1,29.7s-2.37,21.4-7.1,29.8c-4.73,8.4-11.13,14.87-19.2,19.4-8.07,4.53-17.03,6.8-26.9,6.8Zm-8-30.2c4.27,0,8.1-1,11.5-3s6.13-4.93,8.2-8.8c2.07-3.87,3.1-8.53,3.1-14s-1.03-10.13-3.1-14c-2.07-3.87-4.8-6.8-8.2-8.8s-7.23-3-11.5-3-8.1,1-11.5,3-6.13,4.93-8.2,8.8c-2.07,3.87-3.1,8.53-3.1,14s1.03,10.13,3.1,14c2.07,3.87,4.8,6.8,8.2,8.8s7.23,3,11.5,3Z"/></g><g transform="translate(0 196)"><path d="M210.42,151.67V70.27h-39.2v81.4h-38V43.27h115.2v108.4h-38Z"/></g><g transform="translate(0 392)"><path d="M201.24,153.6c-9.2,0-17.07-2-23.6-6-2.4-1.47-4.53-3.2-6.4-5.2v48.2h-38V43.4h36v10.8c2.27-2.67,4.87-4.87,7.8-6.6,6.4-4,14.47-6,24.2-6s18.83,2.3,26.9,6.9c8.07,4.6,14.47,11.07,19.2,19.4,4.73,8.33,7.1,18.23,7.1,29.7s-2.37,21.4-7.1,29.8c-4.73,8.4-11.13,14.87-19.2,19.4-8.07,4.53-17.03,6.8-26.9,6.8Zm-8-30.2c4.27,0,8.1-1,11.5-3s6.13-4.93,8.2-8.8c2.07-3.87,3.1-8.53,3.1-14s-1.03-10.13-3.1-14c-2.07-3.87-4.8-6.8-8.2-8.8s-7.23-3-11.5-3-8.1,1-11.5,3-6.13,4.93-8.2,8.8c-2.07,3.87-3.1,8.53-3.1,14s1.03,10.13,3.1,14c2.07,3.87,4.8,6.8,8.2,8.8s7.23,3,11.5,3Z"/></g></g><g class="header__wordmark-track" style="--i:2"><g transform="translate(0 0)"><path d="M327.34,153.6c-12.8,0-23.97-2.43-33.5-7.3-9.53-4.87-16.93-11.53-22.2-20-5.27-8.47-7.9-18.1-7.9-28.9s2.6-20.43,7.8-28.9c5.2-8.47,12.3-15.07,21.3-19.8,9-4.73,19.17-7.1,30.5-7.1,10.67,0,20.4,2.17,29.2,6.5,8.8,4.33,15.8,10.7,21,19.1,5.2,8.4,7.8,18.6,7.8,30.6,0,1.33-.07,2.87-.2,4.6-.13,1.73-.27,3.33-.4,4.8h-78.8c.53,1.87,1.33,3.67,2.4,5.4,2.13,3.87,5.27,6.83,9.4,8.9,4.13,2.07,9.07,3.1,14.8,3.1,5.33,0,9.93-.77,13.8-2.3,3.87-1.53,7.6-3.9,11.2-7.1l20,20.8c-5.2,5.73-11.6,10.1-19.2,13.1s-16.6,4.5-27,4.5Zm18.4-66.4c-.4-2.67-1.2-5.07-2.4-7.2-1.87-3.6-4.5-6.4-7.9-8.4s-7.37-3-11.9-3-8.5,1-11.9,3c-3.4,2-6.03,4.8-7.9,8.4-1.07,2.13-1.87,4.53-2.4,7.2h44.4Z"/></g><g transform="translate(0 196)"><path d="M339.33,148.17c-6.13,3.2-41.18,12.6-67.2-3.7-10.11-6.33-15.4-14.3-15.4-24.7,0-4.93,1.5-10.83,4.5-15.7,3-4.87,7.3-8.03,12.9-9.5-3.87-1.6-6.87-6.27-9-10-2.53-4.53-3.42-18.68,3.68-28.28,3.77-5.1,10.78-9.31,18.12-11.95,17.13-6.16,44.07-.97,50.4,1.83l-3,21.8c-23.37-4.02-33.31,.92-33.2,8,.15,9.51,23,7.4,23,7.4v21.4s-27.29-3.61-27.8,9.6c-.46,11.88,27.95,8.84,38.8,6.4l4.2,27.4Z"/><path d="M351.11,151.97V42.77h30v109.2h-30Z"/></g><g transform="translate(0 392)"><path d="M327.34,153.6c-12.8,0-23.97-2.43-33.5-7.3-9.53-4.87-16.93-11.53-22.2-20-5.27-8.47-7.9-18.1-7.9-28.9s2.6-20.43,7.8-28.9c5.2-8.47,12.3-15.07,21.3-19.8,9-4.73,19.17-7.1,30.5-7.1,10.67,0,20.4,2.17,29.2,6.5,8.8,4.33,15.8,10.7,21,19.1,5.2,8.4,7.8,18.6,7.8,30.6,0,1.33-.07,2.87-.2,4.6-.13,1.73-.27,3.33-.4,4.8h-78.8c.53,1.87,1.33,3.67,2.4,5.4,2.13,3.87,5.27,6.83,9.4,8.9,4.13,2.07,9.07,3.1,14.8,3.1,5.33,0,9.93-.77,13.8-2.3,3.87-1.53,7.6-3.9,11.2-7.1l20,20.8c-5.2,5.73-11.6,10.1-19.2,13.1s-16.6,4.5-27,4.5Zm18.4-66.4c-.4-2.67-1.2-5.07-2.4-7.2-1.87-3.6-4.5-6.4-7.9-8.4s-7.37-3-11.9-3-8.5,1-11.9,3c-3.4,2-6.03,4.8-7.9,8.4-1.07,2.13-1.87,4.53-2.4,7.2h44.4Z"/></g></g><g class="header__wordmark-track" style="--i:3"><g transform="translate(0 0)"><path d="M471.96,151.84l-30.2-38-11.4,11.4v26.6h-38V42.64h38v38.4l38.8-37.6h45l-45,46.4,48.8,62h-46Z"/></g><g transform="translate(0 196)"><path d="M472.1,151.97l-30.2-38-11.4,11.4v26.6h-38V42.77h38v38.4l38.8-37.6h45l-45,46.4,48.8,62h-46Z"/></g><g transform="translate(0 392)"><path d="M471.96,151.84l-30.2-38-11.4,11.4v26.6h-38V42.64h38v38.4l38.8-37.6h45l-45,46.4,48.8,62h-46Z"/></g></g><g class="header__wordmark-track" style="--i:4"><g transform="translate(0 0)"><path d="M566.36,153.6c-11.87,0-22.4-2.4-31.6-7.2-9.2-4.8-16.43-11.43-21.7-19.9-5.27-8.47-7.9-18.17-7.9-29.1s2.63-20.6,7.9-29c5.27-8.4,12.5-14.96,21.7-19.7,9.2-4.73,19.73-7.1,31.6-7.1s22.43,2.37,31.7,7.1c9.27,4.73,16.5,11.3,21.7,19.7,5.2,8.4,7.8,18.07,7.8,29s-2.6,20.63-7.8,29.1c-5.2,8.47-12.43,15.1-21.7,19.9-9.27,4.8-19.83,7.2-31.7,7.2Zm0-30.2c4.4,0,8.3-1,11.7-3,3.4-2,6.1-4.96,8.1-8.9,2-3.93,3-8.63,3-14.1s-1-10.1-3-13.9-4.7-6.7-8.1-8.7c-3.4-2-7.3-3-11.7-3s-8.1,1-11.5,3c-3.4,2-6.13,4.9-8.2,8.7-2.07,3.8-3.1,8.43-3.1,13.9s1.03,10.17,3.1,14.1c2.07,3.93,4.8,6.9,8.2,8.9,3.4,2,7.23,3,11.5,3Zm-17.4-93l11.2-30.4h34.2l-22.4,30.4h-23Z"/></g><g transform="translate(0 196)"><path d="M566.24,153.77c-11.87,0-22.4-2.4-31.6-7.2-9.2-4.8-16.43-11.43-21.7-19.9-5.27-8.47-7.9-18.17-7.9-29.1s2.63-20.6,7.9-29c5.27-8.4,12.5-14.97,21.7-19.7,9.2-4.73,19.73-7.1,31.6-7.1s22.6,2.37,31.8,7.1c9.2,4.73,16.43,11.3,21.7,19.7,5.27,8.4,7.9,18.07,7.9,29s-2.63,20.63-7.9,29.1c-5.27,8.47-12.5,15.1-21.7,19.9-9.2,4.8-19.8,7.2-31.8,7.2Zm0-30.2c4.4,0,8.3-1,11.7-3,3.4-2,6.1-4.97,8.1-8.9,2-3.93,3-8.63,3-14.1s-1-10.1-3-13.9c-2-3.8-4.7-6.7-8.1-8.7-3.4-2-7.23-3-11.5-3s-8.3,1-11.7,3c-3.4,2-6.1,4.9-8.1,8.7-2,3.8-3,8.43-3,13.9s1,10.17,3,14.1c2,3.93,4.7,6.9,8.1,8.9,3.4,2,7.23,3,11.5,3Zm-12.8-93L564.64,.17h34l-22.4,30.4h-22.8Z"/></g><g transform="translate(0 392)"><path d="M566.36,153.6c-11.87,0-22.4-2.4-31.6-7.2-9.2-4.8-16.43-11.43-21.7-19.9-5.27-8.47-7.9-18.17-7.9-29.1s2.63-20.6,7.9-29c5.27-8.4,12.5-14.96,21.7-19.7,9.2-4.73,19.73-7.1,31.6-7.1s22.43,2.37,31.7,7.1c9.27,4.73,16.5,11.3,21.7,19.7,5.2,8.4,7.8,18.07,7.8,29s-2.6,20.63-7.8,29.1c-5.2,8.47-12.43,15.1-21.7,19.9-9.27,4.8-19.83,7.2-31.7,7.2Zm0-30.2c4.4,0,8.3-1,11.7-3,3.4-2,6.1-4.96,8.1-8.9,2-3.93,3-8.63,3-14.1s-1-10.1-3-13.9-4.7-6.7-8.1-8.7c-3.4-2-7.3-3-11.7-3s-8.1,1-11.5,3c-3.4,2-6.13,4.9-8.2,8.7-2.07,3.8-3.1,8.43-3.1,13.9s1.03,10.17,3.1,14.1c2.07,3.93,4.8,6.9,8.2,8.9,3.4,2,7.23,3,11.5,3Zm-17.4-93l11.2-30.4h34.2l-22.4,30.4h-23Z"/></g></g><g class="header__wordmark-track" style="--i:5"><g transform="translate(0 0)"><path d="M709.69,41.6c8.53,0,16.17,1.7,22.9,5.1,6.73,3.4,12.07,8.63,16,15.7,3.93,7.07,5.9,16.2,5.9,27.4v62h-38v-55.8c0-7.73-1.57-13.37-4.7-16.9-3.13-3.53-7.5-5.3-13.1-5.3-4,0-7.67,.9-11,2.7-3.33,1.8-5.9,4.57-7.7,8.3-1.8,3.73-2.7,8.6-2.7,14.6v52.4h-38V43.4h36v11.8c2.93-3.07,6.27-5.6,10-7.6,7.2-4,15.33-6,24.4-6Z"/></g><g transform="translate(0 196)"><path d="M671.66,151.82l-45.8-108.4h39.2l23,66.2,24.4-66.2h36l-44.6,108.4h-32.2Z"/></g><g transform="translate(0 392)"><path d="M709.69,41.6c8.53,0,16.17,1.7,22.9,5.1,6.73,3.4,12.07,8.63,16,15.7,3.93,7.07,5.9,16.2,5.9,27.4v62h-38v-55.8c0-7.73-1.57-13.37-4.7-16.9-3.13-3.53-7.5-5.3-13.1-5.3-4,0-7.67,.9-11,2.7-3.33,1.8-5.9,4.57-7.7,8.3-1.8,3.73-2.7,8.6-2.7,14.6v52.4h-38V43.4h36v11.8c2.93-3.07,6.27-5.6,10-7.6,7.2-4,15.33-6,24.4-6Z"/></g></g></svg>
+
+                </a>
+
+                
+                <nav class="header__nav" id="site-nav" aria-label="Main navigation">
+                    <ul class="header__nav-list">
+
+                        <li class="header__nav-item" data-surface-own><a href="/#about" class="header__nav-link" data-letter-roll data-cut>About</a></li>
+                        
+                        <li class="header__nav-item" data-surface-own><a href="/#services" class="header__nav-link" data-letter-roll data-cut>Services</a></li>
+                        <li class="header__nav-item" data-surface-own><a href="/#products" class="header__nav-link" data-letter-roll data-cut>Products</a></li>
+                        <li class="header__nav-item" data-surface-own><a href="/#industries" class="header__nav-link" data-letter-roll data-cut>Experience</a></li>
+                        <li class="header__nav-item" data-surface-own><a href="/#footer" class="header__nav-link" data-letter-roll data-cut>Contact</a></li>
+
+                    </ul>
+                    <a href="mailto:hi@apekon.com" class="header__nav-email btn-white">hi@apekon.com</a>
+                    
+                    <ul class="header__nav-social">
+                        <li><a href="https://www.instagram.com/apekoncom" target="_blank" rel="noopener">Instagram</a></li>
+                        <li><a href="https://www.linkedin.com/company/apekon/" target="_blank" rel="noopener">LinkedIn</a></li>
+                        <li><a href="https://www.facebook.com/apekoncom" target="_blank" rel="noopener">Facebook</a></li>
+                    </ul>
+                </nav>
+                <div class="header__actions">
+                    <a href="mailto:hi@apekon.com" class="header__email btn-white" data-copy-email data-magnetic data-magnetic-pull="0.35" data-magnetic-reach="220" data-magnetic-field="165" data-tooltip-title="Let’s build something ;)">hi@apekon.com</a>
+
+                    
+                    <button class="header__menu-toggle btn-white" aria-label="Toggle menu" aria-controls="site-nav" aria-expanded="false">
+                        <span class="header__menu-text">Menu</span>
+                    </button>
+                </div>
+
+            </div>
+        </header>
+
+    
+<div class="frame__bottom">
+    <div class="frame__start">
+        <a href="#" class="page-emblem" aria-label="Back to top" data-tooltip-title="Back to top">
+            <span class="page-emblem__marks" aria-hidden="true">
+                <img class="page-emblem__mark--apekon" src="/icons/emblem_white.svg" alt="" width="32" height="30">
+                <img class="page-emblem__mark--founder" src="/icons/andreas-zorpidis-logo.svg" alt="" width="32" height="24">
+            </span>
+        </a>
+        
+        <div class="frame__section" aria-hidden="true" hidden>
+            <span class="frame__section-number" hidden></span>
+            <span class="frame__section-label"></span>
+        </div>
+    </div>
+    <div class="frame__end">
+        <div class="frame__player"></div>
+        <div class="page-tools"></div>
+    </div>
+</div>
+
+</div>
+
+    <div class="page-wrapper">
+
+        <main id="content" tabindex="-1" data-barba="container" data-barba-namespace="home" data-rhythm="compact" data-scroll-loop class="barba-container barba-container--fade">
+            <section class="hero hero--statement" id="hero" data-autoscroll-wait data-autoscroll-invite data-orb data-orb-range="4.3" data-autoscroll-exit="match" data-insight-name="the opening">
+                
+                <h1 class="visually-hidden">Apekon: Digital Product Strategy &amp; Engineering</h1>
+                <div class="hero__content">
+                    
+                    <span class="hero__location">Athens, GR · Worldwide</span>
+                    <p class="hero__title">We turn ambitious ideas into scalable digital products through strategy, engineering and research.</p>
+                </div>
+            </section>
+            <section class="studio-description" id="studio-description" data-autoscroll-stop="3.4" data-autoscroll-hold="1.4" data-scroll-next data-scroll-position="middle" data-background-waves="off" data-insight-name="the introduction">
+                <div class="studio-description__content">
+                    <p class="studio-description__text">
+                        From AI that writes like you to interfaces controlled by your thoughts.
+                    </p>
+                </div>
+            </section>
+
+            <section class="home-section home-about surface-white" data-surface-layer="silk" data-scroll-buffer="0.7" data-orb-reveal data-bend="0" id="about" data-insight-name="About" data-autoscroll-stop="2.8" data-autoscroll-ease="steady" data-autoscroll-pace="0.8" data-scroll-next>
+                <div class="about__pin" data-bend-copy data-scroll-tail="0.6">
+                    <p class="section-label"><span>01</span>Point of view</p>
+                    <h2 class="home-section__heading about__heading"><span class="about__line">We see the&nbsp;business</span> <span class="about__line about__line--end">behind the technology.</span></h2>
+                    <div class="about__intro">
+                        <div class="home-section__copy about__copy" data-reveal="none">
+                            <p data-autoscroll-stop="4" data-autoscroll-ease="linear">Apekon is an independent technology partner for product teams, business leaders and agencies. We work as an extension of your team, with a direct, collaborative approach from the first conversation to delivery.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-section home-services" data-scroll-buffer="0.7" id="services" data-insight-name="Services" data-autoscroll-pace="1">
+                <p class="section-label"><span>02</span>What we offer</p>
+                <div class="services__head">
+                    <h2 class="home-section__heading">The thinking.<br>The build.<br><span>The way forward.</span></h2>
+                    <p class="services__intro" data-reveal="fade">Bring us the challenge: a product to define, a system to improve or a project to get back on track.</p>
+                </div>
+                <div class="services">
+                    <aside class="services__aside" aria-hidden="true">
+                        <div class="services__counter"><span class="services__digits"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span></span><span class="services__total">/08</span></div>
+                        <div class="services__ticks"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                    </aside>
+                    <ol class="services__list">
+                        <li class="service" data-autoscroll-stop="3.3" data-autoscroll-ease="cinematic" data-autoscroll-hold="2" data-reveal="row" data-insight><span class="service__num" aria-hidden="true">01</span><h3 class="service__title">AI &amp; Applied Research</h3><div class="service__body"><p class="service__text">Find where AI can make a difference. We research, prototype and develop applications around your data, workflows and product goals.</p><ul class="service__tags"><li>Applied AI</li><li>Research</li><li>Prototyping</li><li>Evaluation</li></ul></div></li>
+                        <li class="service" data-autoscroll-stop="2" data-autoscroll-ease="linear" data-reveal="row" data-insight><span class="service__num" aria-hidden="true">02</span><h3 class="service__title">Digital Transformation &amp; Automation</h3><div class="service__body"><p class="service__text">Less time maintaining. More time moving forward. We establish workflows, connect systems and automate repetitive work to reduce maintenance time, costs and delivery friction.</p><ul class="service__tags"><li>Workflow optimization</li><li>Automation</li><li>Systems integration</li></ul></div></li>
+                        <li class="service" data-autoscroll-stop="2" data-autoscroll-ease="linear" data-reveal="row" data-insight><span class="service__num" aria-hidden="true">03</span><h3 class="service__title">Technical Consulting &amp; Leadership</h3><div class="service__body"><p class="service__text">Strong technology starts with strong teams. We guide technical decisions, develop people and help engineering teams work together with clear responsibilities and shared priorities.</p><ul class="service__tags"><li>Solutions architecture</li><li>Technical direction</li><li>Development processes</li><li>People management</li><li>Mentoring</li><li>Team development</li></ul></div></li>
+                        <li class="service" data-autoscroll-stop="2" data-autoscroll-ease="linear" data-reveal="row" data-insight><span class="service__num" aria-hidden="true">04</span><h3 class="service__title">Product Strategy &amp; Management</h3><div class="service__body"><p class="service__text">Give your product a clear direction, from its first idea to its next release. We shape roadmaps, prioritize opportunities and connect customer needs with business goals and hands-on development.</p><ul class="service__tags"><li>Product design</li><li>Roadmaps</li><li>Prioritization</li></ul></div></li>
+                        <li class="service" data-autoscroll-stop="2" data-autoscroll-ease="linear" data-reveal="row" data-insight><span class="service__num" aria-hidden="true">05</span><h3 class="service__title">Creative Development &amp; Interactive&nbsp;3D</h3><div class="service__body"><p class="service__text">Websites and experiences people remember. We design and build immersive, motion-rich websites, real-time 3D and product visualization that invite exploration.</p><ul class="service__tags"><li>WebGL</li><li>Motion &amp; interaction</li><li>3D configurators</li><li>Product visualization</li></ul></div></li>
+                        <li class="service" data-autoscroll-stop="2" data-autoscroll-ease="linear" data-reveal="row" data-insight><span class="service__num" aria-hidden="true">06</span><h3 class="service__title">White-Label Partnerships</h3><div class="service__body"><p class="service__text">Technical expertise. Under your brand. We provide agencies and consultancies with technical consulting, leadership and development, from the first proposal to delivery.</p><ul class="service__tags"><li>Agency partnerships</li><li>Development</li><li>Web applications</li><li>E-commerce</li><li>Delivery support</li></ul></div></li>
+                        <li class="service" data-autoscroll-stop="2" data-autoscroll-ease="linear" data-reveal="row" data-insight><span class="service__num" aria-hidden="true">07</span><h3 class="service__title">Technical Debt &amp; Project Recovery</h3><div class="service__body"><p class="service__text">Get stalled projects moving again. We untangle technical debt, improve architecture and help teams recover delayed or failed projects with a clear path to completion.</p><ul class="service__tags"><li>Technical debt</li><li>Code audits</li><li>Modernization</li><li>Project recovery</li></ul></div></li>
+                        <li class="service" data-autoscroll-stop="2" data-autoscroll-ease="linear" data-autoscroll-hold="2" data-reveal="row" data-insight><span class="service__num" aria-hidden="true">08</span><h3 class="service__title">Adaptive Interfaces</h3><div class="service__body"><p class="service__text">Interfaces that adapt to the people using them. We research and develop personalized experiences, including interaction driven by biosignals and brain-computer interfaces.</p><ul class="service__tags"><li>Personalization</li><li>Adaptive interaction</li><li>Biosignals</li><li>Brain-computer interfaces</li></ul></div></li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="home-section home-products" data-scroll-buffer="0.7" id="products" data-insight-name="Products" data-autoscroll-stop="1.3" data-autoscroll-hold="0" data-autoscroll-exit="match" data-autoscroll-pace="0.7" data-speed-say="Slow down, there’s a lot here.">
+                <div class="products__intro">
+                    <p class="section-label"><span>03</span>Products &amp; research</p>
+                    <h2 class="home-section__heading">Ideas, <span>put to work.</span></h2>
+                </div>
+                <div class="product-stack">
+                    <div class="product-stage" data-nav-compact>
+                    <article aria-labelledby="product-apekon-studio-name" class="product-panel surface-white" data-surface-layer="silk" data-bend="0.035" data-focus-stop data-insight data-autoscroll-stop="0.8" data-autoscroll-hold="1" data-autoscroll-exit="match">
+                        <div class="product-panel__head" data-bend-copy>
+                            <h3 class="product-panel__name" id="product-apekon-studio-name">Apekon Studio</h3>
+                            <span class="product-panel__status">In development</span>
+                            <span class="product-panel__rule" aria-hidden="true"></span>
+                        </div>
+                        <div class="product-panel__body">
+                            <div class="product-panel__info" data-bend-copy>
+                                <p id="product-apekon-studio-text" class="product-panel__text">Load a model, choose the finishes and render it the same way every time, one view or a whole batch, starting from studio presets.</p>
+                                <a href="/apekon-studio" id="product-apekon-studio-link" class="text-link" data-reveal="triangles" data-triangle-button aria-describedby="product-apekon-studio-text">Explore Apekon Studio <svg class="text-link__arrow" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a>
+                            </div>
+                            <canvas class="product-panel__media" data-follows-link="product-apekon-studio-link" data-tooltip-title="Explore Apekon Studio" data-surface-dark data-visual="head" data-layout="banner" aria-hidden="true"></canvas>
+                        </div>
+                    </article>
+                    <article aria-labelledby="product-tamplo-name" class="product-panel surface-white" data-surface-layer="silk" data-bend="0.035" data-focus-stop data-insight data-autoscroll-stop="3" data-autoscroll-hold="1" data-autoscroll-exit="match">
+                        <div class="product-panel__head" data-bend-copy>
+                            <h3 class="product-panel__name" id="product-tamplo-name">Tamplo.io</h3>
+                            <span class="product-panel__status">Beta</span>
+                            <span class="product-panel__rule" aria-hidden="true"></span>
+                        </div>
+                        <div class="product-panel__body">
+                            <div class="product-panel__info" data-bend-copy>
+                                <p id="product-tamplo-text" class="product-panel__text">Cloud platforms for IoT devices and brain-computer interfaces. Collect device readings and brain signals, manage them, and watch them live.</p>
+                                <a href="/tamplo" id="product-tamplo-link" class="text-link" data-reveal="triangles" data-triangle-button aria-describedby="product-tamplo-text">Explore Tamplo.io <svg class="text-link__arrow" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a>
+                            </div>
+                            <canvas class="product-panel__media" data-follows-link="product-tamplo-link" data-tooltip-title="Explore Tamplo.io" data-visual="signals" data-layout="banner" aria-hidden="true"></canvas>
+                        </div>
+                    </article>
+                    <article aria-labelledby="product-writerspec-name" class="product-panel surface-white" data-surface-layer="silk" data-bend="0.035" data-focus-stop data-insight data-autoscroll-stop="3" data-autoscroll-hold="1" data-autoscroll-exit="match">
+                        <div class="product-panel__head" data-bend-copy>
+                            <h3 class="product-panel__name" id="product-writerspec-name">WriterSpec</h3>
+                            <span class="product-panel__status">In development</span>
+                            <span class="product-panel__rule" aria-hidden="true"></span>
+                        </div>
+                        <div class="product-panel__body">
+                            <div class="product-panel__info" data-bend-copy>
+                                <p id="product-writerspec-text" class="product-panel__text">Research into writing style. It learns how you write from your past work and turns that into rules a model can follow in your voice.</p>
+                                <a href="/writerspec" id="product-writerspec-link" class="text-link" data-reveal="triangles" data-triangle-button aria-describedby="product-writerspec-text">Explore WriterSpec <svg class="text-link__arrow" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a>
+                            </div>
+                            <canvas class="product-panel__media" data-follows-link="product-writerspec-link" data-tooltip-title="Explore WriterSpec" data-visual="manuscript" data-layout="banner" aria-hidden="true"></canvas>
+                        </div>
+                    </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-section home-industries" data-scroll-buffer="0.7" id="industries" data-insight-name="Experience" data-autoscroll-stop="3.3" data-autoscroll-pace="0.75" aria-labelledby="industries-heading">
+                <div class="about-steps">
+                    <div class="about-steps__pin">
+                        <p class="section-label"><span>04</span>Industries</p>
+                        <div class="about-steps__bar">
+                            <h2 class="home-section__heading about-steps__label" id="industries-heading">Experience across industries</h2>
+                            <span class="about-steps__rail" data-reveal="fade" aria-hidden="true"><span></span></span>
+                            <div class="about-steps__counter" aria-hidden="true"></div>
+                        </div>
+                        <p class="about-steps__note">Selected experience from the founder’s roles and collaborations.</p>
+                        <ul class="about-steps__track">
+                            <li class="about-step" data-focus-stop data-reveal="row" data-insight data-autoscroll-hold="0.6">
+                                <div class="about-step__body">
+                                    <h3 class="about-step__title">Finance, Insurance &amp; Fintech</h3>
+                                    <p class="about-step__clients"><span>Allianz Direct</span> <span>Generali</span> <span>Optasia</span> <span>DigitalRates</span></p>
+                                </div>
+                            </li>
+                            <li class="about-step" data-focus-stop data-reveal="row" data-insight data-autoscroll-stop="1.8" data-autoscroll-hold="0.6">
+                                <div class="about-step__body">
+                                    <h3 class="about-step__title">Media, Sports &amp; Broadcasting</h3>
+                                    <p class="about-step__clients"><span>Alpha TV</span> <span>Fortune Greece</span> <span>SPORT24</span> <span>News 24/7</span> <span>Greece-Is</span></p>
+                                </div>
+                            </li>
+                            <li class="about-step" data-focus-stop data-reveal="row" data-insight data-autoscroll-stop="1.8" data-autoscroll-hold="0.6">
+                                <div class="about-step__body">
+                                    <h3 class="about-step__title">Research &amp; Emerging Technology</h3>
+                                    <p class="about-step__clients"><span>HCILAB, University of Ioannina</span> <span>Epirus XR Center</span> <span>Q base R&amp;D</span> <span>Neuron Energy Solutions</span></p>
+                                </div>
+                            </li>
+                            <li class="about-step" data-focus-stop data-reveal="row" data-insight data-autoscroll-stop="1.8" data-autoscroll-hold="0.6">
+                                <div class="about-step__body">
+                                    <h3 class="about-step__title">Public Sector &amp; Academia</h3>
+                                    <p class="about-step__clients"><span>University of Ioannina</span> <span>Municipality of Ioannina</span> <span>Regional Union of Municipalities of Ionian Islands</span></p>
+                                </div>
+                            </li>
+                            <li class="about-step" data-focus-stop data-reveal="row" data-insight data-autoscroll-stop="1.8" data-autoscroll-hold="0.6">
+                                <div class="about-step__body">
+                                    <h3 class="about-step__title">E-Commerce &amp; Consumer Brands</h3>
+                                    <p class="about-step__clients"><span>Husqvarna &amp; Gardena</span> <span>Carpo</span> <span>Branda</span> <span>Charma</span></p>
+                                </div>
+                            </li>
+                            <li class="about-step" data-focus-stop data-reveal="row" data-insight data-autoscroll-stop="1.8" data-autoscroll-hold="0.6">
+                                <div class="about-step__body">
+                                    <h3 class="about-step__title">Hospitality &amp; Tourism</h3>
+                                    <p class="about-step__clients"><span>Palladium Boutique Hotel</span> <span>Ethereum Mykonos</span> <span>Amazon Mykonos</span> <span>Domus Elegance Collection</span> <span>Villabeat</span> <span>Galaxy Hotel Iraklio</span> <span>Alkyon Resort Hotel &amp; Spa</span></p>
+                                </div>
+                            </li>
+                            <li class="about-step" data-focus-stop data-reveal="row" data-insight data-autoscroll-stop="1.8" data-autoscroll-hold="0.6">
+                                <div class="about-step__body">
+                                    <h3 class="about-step__title">Healthcare &amp; Medical Research</h3>
+                                    <p class="about-step__clients"><span>SFEE</span> <span>Rea Maternity Hospital</span> <span>HERBAL AID</span></p>
+                                </div>
+                            </li>
+                            <li class="about-step about-step--cta" data-focus-stop data-reveal="row" data-autoscroll-stop="1.8" data-autoscroll-hold="0.6">
+                                <p class="about-step__prompt" data-reveal="row">Don’t see your industry?</p>
+                                <a href="#footer" class="about-step__cta" data-reveal="triangles" data-triangle-button data-magnetic data-magnetic-say="Do you feel it?|Do you feel the tension?" data-tooltip-title="Ahh… phew.">Let’s <span>talk.</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-section founder" id="about-content" data-insight-name="Founder" data-autoscroll-pace="0.8" data-emblem="founder">
+                <p class="section-label"><span>05</span>The founder</p>
+                <div class="founder__stage" data-scroll-buffer="0.7" data-land="0.75" data-autoscroll-stop="6" data-autoscroll-ease="linear" data-autoscroll-exit="match">
+                    <div class="founder__pin">
+                        <figure class="founder__portrait" data-tickle-say="That tickles.">
+                            <img src="/images/andreas_full.webp" data-clay="/images/andreas_chrome.webp" alt="Andreas Zorpidis, founder of Apekon" width="1200" height="1680" loading="lazy">
+                        </figure>
+                        <h2 class="home-section__heading founder__name" data-reveal="none"><span class="founder__first">Andreas</span> <span class="founder__last">Zorpidis</span></h2>
+                    </div>
+                </div>
+                <div class="founder__story">
+                    <div class="founder__story-pin" data-autoscroll-stop="2.4" data-autoscroll-exit="match">
+                        <span class="founder__aside" data-reveal="fade">(Behind Apekon)</span>
+                        <p class="founder__statement" data-autoscroll-stop="10" data-autoscroll-ease="linear" data-autoscroll-hold="0">Apekon is led by Andreas Zorpidis, a technology leader and engineer with over a decade of experience delivering digital products and driving digital transformation. His work spans technology strategy, solutions architecture and team leadership, connecting business goals with the systems and people that bring them to life.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="pre-footer-spacer" id="pre-footer-spacer" data-autoscroll-pace="1.6">
+                <div class="pre-footer-spacer__content">
+
+                </div>
+            </section>
+
+            <footer class="footer" id="footer" data-autoscroll-stop="3" data-autoscroll-ease="flow" role="contentinfo" data-reveal-line="0.3">
+                <div class="footer__content">
+                    <div class="footer__row">
+                        <div class="footer__middle">
+                            <img src="/icons/emblem_white.svg" alt="Apekon emblem" width="789" height="742">
+                        </div>
+                    </div>
+                    <div class="footer__contact">
+                        <button type="button" class="footer__email" data-reveal="triangles" data-triangle-button data-email="hi@apekon.com" data-tooltip-title="Copy email address" aria-label="Copy email address hi@apekon.com">hi@apekon.com</button>
+                        <div class="footer__contact-status">
+                            <span class="footer__copied" aria-live="polite"></span>
+                        </div>
+                    </div>
+                    <div class="footer__meta">
+                        <ul class="footer__social-links" data-reveal="fade">
+                            <li><a href="https://www.instagram.com/apekoncom" target="_blank" rel="noopener">Instagram</a></li>
+                            <li><a href="https://www.linkedin.com/company/apekon/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://www.facebook.com/apekoncom" target="_blank" rel="noopener">Facebook</a></li>
+                        </ul>
+                        <ul class="footer__quick-links" data-reveal="fade">
+                            <li><a href="/terms-of-use" class="footer__link">Terms</a></li>
+                            <li><a href="/privacy-policy" class="footer__link">Privacy</a></li>
+                            <li><a href="#" class="footer__link cookie-consent-banner-open" aria-haspopup="dialog">Cookies</a></li>
+                            <li><span class="footer__link">© <span class="footer__year">2026</span></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+
+<!--/email_off--></body>
+
+</html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mix-01 · 한 페이지</title>
+<style>html,body{margin:0;background:#000}</style>
+</head>
+<body>
+<div id="mx-root"></div>
+<div id="mx-ui"></div>
+<script type="module">
+// 개발용 껍데기: 원본 섹션 HTML·CSS(clones/one/_capture)와 one.js 를 매번 새로 불러온다
+// (개발 서버가 바뀐 파일을 놓치는 경우가 있어 주소에 시각을 붙임)
+const v = Date.now(), SITES = ["trionn", "apekon", "focus"];
+const css = await Promise.all([...SITES.map((s) => `/clones/one/_capture/${s}.css`), "/pages/one/one.css"].map((u) => import(/* @vite-ignore */ `${u}?inline&import&v=${v}`)));
+css.forEach((m) => { const st = document.createElement("style"); st.textContent = m.default; document.head.append(st); });
+const html = await Promise.all(SITES.map((s) => import(/* @vite-ignore */ `/clones/one/_capture/${s}.html?raw&import&v=${v}`)));
+document.getElementById("mx-root").outerHTML = SITES.map((s, i) => `<div class="mx-sec" data-mx="${s}">${html[i].default}</div>`).join("\n");
+await import(/* @vite-ignore */ `/pages/one/one.js?import&v=${v}`);
+</script>
+</body>
+</html>
