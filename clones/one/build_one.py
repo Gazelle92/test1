@@ -1,6 +1,10 @@
 # 한 페이지(iframe 없음) 조립: python3 clones/one/build_one.py  (프로젝트 폴더에서)
 # tools/mx-capture.js 로 뽑은 _capture/{site}.html·.css 를 [data-mx="site"] 상자에 넣어 pages/one/index.html 을 만든다.
 import os, time
+import json
+# apekon에서 숨겨 둔 부분(카드 스택만 씀). 지워도 섹션 높이·카드 동작 같음을 확인.
+# 특히 #studio-description·#pre-footer-spacer는 크기 0인 채 고정(pin)이 매 프레임 다시 만들어져 15~19ms씩 먹었음
+DROP = json.dumps(["#hero", "#studio-description", "#about", "#services", "#industries", "#about-content", "#pre-footer-spacer", "#footer"])
 V = str(int(time.time()))  # 개발 서버가 바뀐 파일을 놓치는 경우가 있어 주소에 버전을 붙인다
 here = os.path.dirname(os.path.abspath(__file__))
 root = os.path.dirname(os.path.dirname(here))
@@ -59,6 +63,9 @@ html.mx-preloading,html.mx-preloading body{{overflow:hidden!important}}
 {chr(10).join(body)}
 <!-- apekon 원본 스크립트: 원본처럼 문서 읽기와 같은 때 실행(늦게 불러오면 시작 코드가 돌지 않음). 만든 Lenis(window.lenis)를 페이지 전체가 같이 씀.
      배포 빌드(vite build)가 이 주소를 묶으려다 실패하지 않도록 작은 스크립트가 그 자리에 태그를 써 넣는다 -->
+<!-- apekon에서 숨겨 둔(안 쓰는) 부분은 원본 스크립트가 돌기 전에 지운다: 숨긴 채 두면 그 위 고정·애니메이션이 매 프레임 헛돈다.
+     ?drop=none 이면 안 지움, ?drop=.a,#b 이면 그것만 지움 -->
+<script>{{const q=new URLSearchParams(location.search).get("drop"),def={DROP},list=q==null?def:q==="none"?[]:q.split(","),box=document.querySelector('[data-mx="apekon"]');if(box)list.forEach(sel=>box.querySelectorAll(sel).forEach(e=>e.remove()));window.__mxDropped=list}}</script>
 <script>document.write('<script type="module" src="/__clone-proxy/apekon.com/assets/script-aGaCdSjC.js"><\\/script>')</script>
 <div id="mx-ui"></div>
 <script type="module" src="./one.js?v={V}"></script>

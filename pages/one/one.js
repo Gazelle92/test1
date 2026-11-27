@@ -6,6 +6,7 @@ import Lenis from "lenis";
 import { initGrid } from "./grid.js";
 import { preload, reveal } from "./preload.js";
 import { initPerf, enableFree, onScreen } from "./perf.js";
+import { initMist } from "./mist.js";
 
 gsap.registerPlugin(ScrollTrigger);
 const $ = (s, r = document) => r.querySelector(s);
@@ -168,15 +169,20 @@ function focus() {
 const PERF = new URLSearchParams(location.search).get("perf") !== "0"; // ?perf=0 이면 끔(비교용)
 if (PERF) initPerf([T, A, F]); // 화면 밖 섹션 캔버스는 그리지 않고, 숨긴 캔버스 메모리는 비운다
 scrollTo(0, 0); // 스크롤은 덮개가 휠·터치·키를 막는다(lenis.stop()은 apekon 원본 스크롤 처리기가 준비 전이라 오류가 남)
-const symbolReady = trionnSymbol().catch((e) => console.warn("심볼", e));
-const pre = await preload({ roots: [T, A, F], extra: [{ name: "Symbol", w: 0.15, p: symbolReady }] });
+// 1번 첫 화면 배경: ?hero=mist(기본, 안개) · ?hero=3d(원본 3D 심볼) · ?hero=both(둘 다)
+const HERO = new URLSearchParams(location.search).get("hero") || "mist";
+const extra = [];
+if (HERO === "mist") { const st = document.createElement("style"); st.textContent = "#s1-stats{opacity:0!important;pointer-events:none}"; document.head.append(st); } // 3D 심볼 전용 안내문(누르면 폭발)은 숨김
+if (HERO !== "3d") { const mist = initMist($("#hero-section", T), { fadeTo: $(".home-about", T) }); window.__mxMist = mist; extra.push({ name: "Mist", w: 0.1, p: mist.ready }); }
+if (HERO !== "mist") { const symbolReady = trionnSymbol().catch((e) => console.warn("심볼", e)); extra.push({ name: "Symbol", w: 0.15, p: symbolReady }); }
+const pre = await preload({ roots: [T, A, F], extra });
 console.info("[mx] 미리 불러오기", pre, "막은 파일", window.__mxBlocked);
 trionn(); focus(); // apekon은 원본 스크립트가 맡음
 // 2단계 그리드: ?step=1 이면 원본 그대로, 그 밖(기본)은 trionn 기준 공통 그리드
 let STEP = new URLSearchParams(location.search).get("step") || "2";
 const regrid = initGrid([T, A, F], { on: STEP !== "1", onChange: () => ScrollTrigger.refresh() });
 ScrollTrigger.refresh();
-await reveal(); lenis.resize?.(); if (PERF) enableFree();
+window.__mxMist?.refresh(); await reveal(); lenis.resize?.(); if (PERF) enableFree();
 addEventListener("load", () => ScrollTrigger.refresh());
 document.fonts.ready.then(() => ScrollTrigger.refresh());
 // 시험 도구 버튼: 새로고침 없이 그 자리에서 바꾼다.
@@ -184,13 +190,15 @@ document.fonts.ready.then(() => ScrollTrigger.refresh());
 { const ui = document.getElementById("mx-ui"), html = document.documentElement;
   const draw = () => {
     const g = html.classList.contains("mxg-show");
-    const q = (st, gg) => `?step=${st}${gg ? "&grid=1" : ""}`;
+    const q = (st, gg, h = HERO) => `?step=${st}${gg ? "&grid=1" : ""}${h !== "mist" ? "&hero=" + h : ""}`;
+    const hb = (h, t) => `<a data-barba-prevent="self" data-hero="${h}" ${HERO === h ? 'aria-current="page"' : ""} href="${q(STEP, g, h)}">${t}</a>`;
     const a = (st, t) => `<a data-barba-prevent="self" data-step="${st}" ${STEP === st ? 'aria-current="page"' : ""} href="${q(st, g)}">${t}</a>`;
-    ui.innerHTML = `<b>mix-01 한 페이지</b>${a("1", "1 그대로")}${a("2", "2 그리드")}<a data-barba-prevent="self" data-grid href="${q(STEP, !g)}">${g ? "칸 숨기기" : "칸 보기"}</a><span style="padding:0 6px">3 미리 불러오기·안 쓰는 파일 빼기 적용</span>`;
+    ui.innerHTML = `<b>mix-01 한 페이지</b>${a("1", "1 그대로")}${a("2", "2 그리드")}<a data-barba-prevent="self" data-grid href="${q(STEP, !g)}">${g ? "칸 숨기기" : "칸 보기"}</a><span style="padding:0 6px;opacity:.6">|</span>${hb("mist", "배경: 안개")}${hb("3d", "3D 심볼")}${hb("both", "안개+3D")}`;
   };
   ui.addEventListener("click", (e) => {
     const el = e.target.closest("a"); if (!el) return;
     e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+    if (el.dataset.hero) { location.href = el.getAttribute("href"); return; } // 배경은 처음부터 다시 불러온다
     if (el.dataset.step) { STEP = el.dataset.step; regrid.setOn(STEP !== "1"); }
     if ("grid" in el.dataset) html.classList.toggle("mxg-show");
     history.replaceState(history.state, "", el.getAttribute("href")); // 주소도 맞춰 둔다(새로고침해도 같은 상태)
